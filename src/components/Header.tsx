@@ -1,4 +1,3 @@
-import { Flex } from "@radix-ui/themes"
 import CartContents from './shop/CartContents'
 import CategorySelect from './shop/CategorySelect'
 import { Link } from "react-router"
@@ -11,13 +10,34 @@ library.add(fas)
 
 const Header = () => {
   return (
-    <Flex className="w-full bg-blue-800 py-5 px-2 text-white mb-8" justify="between">
-     <div><Link to="/"><FontAwesomeIcon icon={faSackDollar} size="2xl" />[Simple Shop]</Link></div>
-     <div className="flex align-middle">Explore &nbsp; <CategorySelect /></div>
-     <div>
-        <CartContents />
-     </div>
-     </Flex>
+    <header className="w-full bg-blue-800 py-3 sm:py-5 px-4 sm:px-6 text-white mb-4 sm:mb-8">
+      <div className="flex flex-col sm:flex-row justify-between items-center max-w-7xl mx-auto">
+        <div className="mb-2 sm:mb-0">
+          <Link to="/" className="flex items-center gap-2 text-xl font-bold hover:text-blue-200 transition-colors">
+            <FontAwesomeIcon icon={faSackDollar} size="lg" className="sm:text-2xl" />
+            <span>[Simple Shop]</span>
+          </Link>
+        </div>
+        
+        <div className="flex items-center gap-4">
+          <div className="hidden sm:flex items-center">
+            <span className="mr-2">Explore</span>
+            <CategorySelect />
+          </div>
+          
+          <div>
+            <CartContents />
+          </div>
+        </div>
+        
+        <div className="sm:hidden w-full mt-3">
+          <div className="flex items-center justify-center">
+            <span className="mr-2">Explore</span>
+            <CategorySelect />
+          </div>
+        </div>
+      </div>
+    </header>
   )
 }
 

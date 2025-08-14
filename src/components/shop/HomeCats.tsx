@@ -2,7 +2,6 @@ import { useGetHomeProductCategoriesQuery } from '../../features/shop/productsAp
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../app/hooks'
 import { setCartCategory } from '../../features/shop/cartSlice'
-import { Flex } from '@radix-ui/themes'
 
 const HomeCats = () => {
     const { data, isError, isLoading, isUninitialized } = useGetHomeProductCategoriesQuery(undefined);
@@ -10,25 +9,55 @@ const HomeCats = () => {
     const dispatch = useAppDispatch()
 
     if(isLoading || isUninitialized) {
-        return <div>Loading categories...</div>
+        return (
+          <div className="flex justify-center items-center h-40 w-full">
+            <div className="text-lg animate-pulse">Loading categories...</div>
+          </div>
+        )
     }
 
     if(isError) {
-        return <div>Problem loading categories</div>
+        return (
+          <div className="flex justify-center items-center h-40 w-full">
+            <div className="text-lg text-red-500">Problem loading categories</div>
+          </div>
+        )
     }
 
     const { categories } = data;
 
-    const handleClick = (e: React.MouseEvent<HTMLImageElement>) => {
-        const categoryName = e.currentTarget.alt;   
+    const handleClick = (e: React.MouseEvent<HTMLImageElement | HTMLSpanElement>) => {
+        // For span clicks, we need to get the category name differently
+        const categoryName = 'alt' in e.currentTarget 
+          ? e.currentTarget.alt
+          : e.currentTarget.textContent || '';
+          
         // Navigate to the shop page with the selected category
         dispatch(setCartCategory(categoryName))
         void navigate('/shop');
     }
+    
   return (
-    <Flex direction="row" justify="between" gap="2" wrap="wrap">{
-        categories.map((category) => <div key={category.name} className="text-center"><img key={category.name} src={category.imgUrl} alt={category.name} className="p-3 border border-gray-300 rounded-sm w-35 h-35 cursor-pointer hover:opacity-75" onClick={handleClick} /><span onClick={handleClick} className="cursor-pointer">{category.name}</span></div>)
-    }</Flex>
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 w-full">
+      {categories.map((category) => (
+        <div key={category.name} className="flex flex-col items-center">
+          <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 w-full">
+            <img 
+              src={category.imgUrl} 
+              alt={category.name} 
+              className="p-3 border border-gray-200 rounded-lg w-full aspect-square object-contain cursor-pointer hover:opacity-80 transition-opacity" 
+              onClick={handleClick}
+            />
+          </div>
+          <span 
+            onClick={handleClick} 
+            className="cursor-pointer mt-2 text-center text-sm sm:text-base font-medium hover:text-blue-600 transition-colors"
+          >
+            {category.name}
+          </span>
+        </div>
+      ))}
+    </div>
   )
 }
 

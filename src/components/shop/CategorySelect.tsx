@@ -15,11 +15,11 @@ const CategorySelect = () => {
     const { data, isError, isLoading, isUninitialized } = useGetProductCategoriesQuery(undefined);
 
     if (isLoading || isUninitialized) {
-        return <div>Loading categories...</div>
+        return <div className="text-sm min-w-[120px] sm:min-w-[150px] animate-pulse">Loading...</div>
     }
 
     if (isError) {
-        return <div>Problem loading categories</div>
+        return <div className="text-sm text-red-300 min-w-[120px] sm:min-w-[150px]">Error loading</div>
     }
     const { categories } = data;
 
@@ -35,9 +35,9 @@ const CategorySelect = () => {
     }
 
   return (
-    <div>
+    <div className="min-w-[120px] sm:min-w-[150px]">
         <Select.Root size="1" value={category} onValueChange={onValueChange}>
-        <Select.Trigger placeholder="Select Category"/>
+        <Select.Trigger placeholder="Select Category" className="w-full"/>
         <Select.Content>
             <Select.Group>
                 <Select.Label>Select Category</Select.Label>
