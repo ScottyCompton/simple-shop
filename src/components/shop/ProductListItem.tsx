@@ -1,7 +1,7 @@
 import type { Product } from '../../types'
 import { Flex, Link } from '@radix-ui/themes'
 import QuantitySelect from './QuantitySelect'
-import { Link as RRLink } from 'react-router'
+import { Link as RRLink } from 'react-router-dom'
 
 type ProductListItemProps = {
     product: Product
@@ -10,15 +10,28 @@ type ProductListItemProps = {
 const ProductListItem:React.FC<ProductListItemProps> = ({product}: ProductListItemProps) => {
 
   return (
-    <Flex gap="3" key={product.id} className="p-2 rounded mb-2 bg-slate-50 justify-items">
-    <div className="flex-none"><RRLink to={`/shop/products/${product.id.toString()}`}><img src={product.imgUrl} className="border border-gray-300 rounded-sm w-25 h-25" /></RRLink></div>
-    <div className="text-base text-left flex-grow"> <span className="text-xl text-bold"><Link href={`/shop/products/${product.id.toString()}`}>{product.mfgName} {product.name}</Link></span><br />{product.shortDesc}</div>
-    <Flex direction="column" className="text-right items-end flex-none">
-      <div className="text-base text-right">${product.price}</div>
-      <QuantitySelect product={product} />
-    </Flex>
-
-    {/* <div className="text-base">{product.category}</div>    */}
+    <Flex gap="3" key={product.id} className="p-3 rounded shadow-sm mb-2 bg-slate-50 flex-col sm:flex-row">
+      <div className="flex-none mb-2 sm:mb-0">
+        <RRLink to={`/shop/products/${product.id.toString()}`}>
+          <img 
+            src={product.imgUrl} 
+            className="border border-gray-300 rounded-sm w-full h-auto sm:w-24 sm:h-24 object-cover" 
+            alt={`${product.mfgName} ${product.name}`}
+          />
+        </RRLink>
+      </div>
+      <div className="text-base text-left flex-grow">
+        <span className="text-xl font-bold block mb-1">
+          <Link href={`/shop/products/${product.id.toString()}`}>
+            {product.mfgName} {product.name}
+          </Link>
+        </span>
+        <div className="text-sm text-gray-600">{product.shortDesc}</div>
+      </div>
+      <Flex direction="column" className="text-right items-end flex-none mt-3 sm:mt-0">
+        <div className="text-base text-right font-medium mb-2">${product.price}</div>
+        <QuantitySelect product={product} />
+      </Flex>
     </Flex>
   )
 }

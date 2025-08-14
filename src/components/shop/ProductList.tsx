@@ -24,13 +24,12 @@ const ProductList = () => {
 
   return (
     <>
-    <div>
+    <div className="grid gap-4 w-full">
         {products.map((product) => {
             return (
                 <ProductListItem key={product.id} product={product} />
             )
         })}
-
     </div>
     </>
   )
