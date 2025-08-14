@@ -5,7 +5,7 @@ import { useAppDispatch } from '../../app/hooks'
 import { useAppSelector } from '../../app/hooks';
 import { cartItems } from '../../features/shop/cartSlice';
 import toast from 'react-hot-toast'
-import type { Product } from '../../types';
+import type { CartItem, Product } from '../../types';
 
 
 const qtyArray = [1,2,3,4,5,6,7,8,9,10]
@@ -67,8 +67,10 @@ const QuantitySelect:React.FC<QuantitySelectProps> = ({product, className}: Quan
       return;
     }
 
-    const item = {
-      ...product,
+    const item:CartItem = {
+      id: product.id,
+      name: product.name,
+      price: product.price,
       qty: parseInt(selectedValue)
     }
 
