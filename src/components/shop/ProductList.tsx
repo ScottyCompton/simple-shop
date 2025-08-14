@@ -21,10 +21,6 @@ const ProductList = () => {
 
     const { products } = data;
 
-    // const getCartCount = (id: number) => {
-    //     const item = currCartItems.find(item => item.id === id)
-    //     return item ? item.qty.toString() : ''
-    // }
 
   return (
     <>

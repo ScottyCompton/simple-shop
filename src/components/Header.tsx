@@ -12,7 +12,7 @@ library.add(fas)
 const Header = () => {
   return (
     <Flex className="w-full bg-blue-800 py-5 px-2 text-white mb-8" justify="between">
-     <div><Link to="/"><FontAwesomeIcon icon={faSackDollar} size="2xl" />[Pointless]</Link></div>
+     <div><Link to="/"><FontAwesomeIcon icon={faSackDollar} size="2xl" />[Simple Shop]</Link></div>
      <div className="flex align-middle">Explore &nbsp; <CategorySelect /></div>
      <div>
         <CartContents />

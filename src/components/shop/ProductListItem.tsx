@@ -13,8 +13,10 @@ const ProductListItem:React.FC<ProductListItemProps> = ({product}: ProductListIt
     <Flex gap="3" key={product.id} className="p-2 rounded mb-2 bg-slate-50 justify-items">
     <div className="flex-none"><RRLink to={`/shop/products/${product.id.toString()}`}><img src={product.imgUrl} className="border border-gray-300 rounded-sm w-25 h-25" /></RRLink></div>
     <div className="text-base text-left flex-grow"> <span className="text-xl text-bold"><Link href={`/shop/products/${product.id.toString()}`}>{product.mfgName} {product.name}</Link></span><br />{product.shortDesc}</div>
-    <div className="text-base text-right flex-none">${product.price}</div>
-    <QuantitySelect product={product} />
+    <Flex direction="column" className="text-right items-end flex-none">
+      <div className="text-base text-right">${product.price}</div>
+      <QuantitySelect product={product} />
+    </Flex>
 
     {/* <div className="text-base">{product.category}</div>    */}
     </Flex>
