@@ -26,20 +26,45 @@ const ProductDetail:React.FC<ProductDetailProps> = ({id}: ProductDetailProps) =>
     const {product} = data
 
   return (
-    <div>
-        <div className="py-5"><h1 className="text-3xl bold">{product.mfgName} {product.name}</h1>{product.shortDesc}</div>
-        <Flex direction="column" gap="5" className="mb-5">
-            <Flex gap="3" className="p-2 mb-2 bg-slate-50 justify-items">
-                <div className="flex-none"><img src={product.imgUrl} className="border border-gray-300 rounded-lg shadow-md w-75 h-75" /></div>
-                <div className="text-base text-left flex-grow px-5"> 
-                    <div>
-                        <div className="text-md font-bold">About this product:</div> 
-                        <div className="p-3 text-sm">{product.longDesc}</div>
+    <div className="w-full px-4 sm:px-6 md:px-8">
+        <div className="py-3 sm:py-5">
+          <h1 className="text-2xl sm:text-3xl font-bold mb-2">{product.mfgName} {product.name}</h1>
+          <p className="text-sm sm:text-base">{product.shortDesc}</p>
+        </div>
+        <Flex direction="column" gap="3" className="mb-5">
+            <div className="p-2 sm:p-4 mb-2 bg-slate-50 rounded-lg shadow-sm">
+                {/* Mobile-first layout that stacks on small screens and becomes flex on medium+ */}
+                <div className="flex flex-col md:flex-row gap-4 md:gap-6">
+                    {/* Image - centered on mobile, left-aligned on larger screens */}
+                    <div className="flex-none mx-auto md:mx-0">
+                        <img 
+                          src={product.imgUrl} 
+                          className="border border-gray-300 rounded-lg shadow-md w-full max-w-xs md:max-w-sm object-contain h-auto" 
+                          alt={`${product.mfgName} ${product.name}`}
+                        />
+                    </div>
+                    
+                    {/* Product details - full width on mobile */}
+                    <div className="flex flex-col flex-grow">
+                        <div className="text-base text-left px-1 sm:px-3 md:px-5"> 
+                            <div>
+                                <div className="text-md font-bold mt-2 md:mt-0">About this product:</div> 
+                                <div className="p-2 sm:p-3 text-sm">{product.longDesc}</div>
+                            </div>
+                        </div>
+                        
+                        {/* Price and quantity - aligned properly on both mobile and desktop */}
+                        <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                            <div className="text-xl font-bold text-left w-full sm:w-auto">
+                                ${product.price}
+                            </div>
+                            <div className="w-full sm:w-auto">
+                                <QuantitySelect product={product} />
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div className="text-base text-right flex-none">${product.price}</div>
-            </Flex>
-            <div className="items-end"><QuantitySelect product={product} /></div>
+            </div>
         </Flex>
     </div>
   )

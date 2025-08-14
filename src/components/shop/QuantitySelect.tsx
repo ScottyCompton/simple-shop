@@ -84,10 +84,10 @@ const QuantitySelect:React.FC<QuantitySelectProps> = ({product, className}: Quan
 
 
   return (
-    <Flex direction="row" gap="1" align="center" justify="end" className={className}>
+    <Flex direction="row" gap="1" align="center" justify="end" className={`w-full sm:w-auto ${className ?? ''}`}>
       <div className="flex-none">
         <Select.Root size="1" value={qtyInCart ? selectedValue : selectedValue.replace('0','')} onValueChange={handleChange}>
-          <Select.Trigger placeholder="Qty"/>
+          <Select.Trigger placeholder="Qty" className="min-w-[80px]"/>
           <Select.Content className="text-sm">
               <Select.Group>
                   <Select.Label>Qty</Select.Label>
@@ -97,7 +97,11 @@ const QuantitySelect:React.FC<QuantitySelectProps> = ({product, className}: Quan
           </Select.Content>
         </Select.Root>
       </div>
-      <div className="flex-none"><Button size="1" onClick={handleClick}><span className="cursor-pointer">{btnText}</span></Button></div>
+      <div className="flex-none flex-grow sm:flex-grow-0">
+        <Button size="1" onClick={handleClick} className="w-full sm:w-auto">
+          <span className="cursor-pointer whitespace-nowrap">{btnText}</span>
+        </Button>
+      </div>
     </Flex>
   )
 }
