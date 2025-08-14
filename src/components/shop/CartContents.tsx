@@ -17,7 +17,7 @@ const CartContents = () => {
     const count = useAppSelector(cartCount)
 
   return (
-    <div> <Link to="/cart"><FontAwesomeIcon icon={faShoppingCart} />{count} items</Link></div>
+    <div> <Link to="/cart" className="text-xs"><FontAwesomeIcon icon={faShoppingCart} />{count} items</Link></div>
   )
 }
 

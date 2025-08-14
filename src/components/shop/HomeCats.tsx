@@ -11,7 +11,7 @@ const HomeCats = () => {
     if(isLoading || isUninitialized) {
         return (
           <div className="flex justify-center items-center h-40 w-full">
-            <div className="text-lg animate-pulse">Loading categories...</div>
+            <div className="text-lg animate-pulse">Loading products...</div>
           </div>
         )
     }

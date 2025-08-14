@@ -9,7 +9,7 @@ const Home = () => {
       <p className="mb-8 text-center text-sm sm:text-base">
         The #1 place on the internet to buy stuff you don't need.
         <br />
-        <span className="font-medium">Explore product categories below:</span>
+        <span className="font-medium">Explore our vast inventory below!</span>
       </p>
      </Flex>
     <div className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
