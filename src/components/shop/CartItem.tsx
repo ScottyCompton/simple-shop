@@ -1,28 +1,96 @@
 import { useGetProductDetailsQuery } from '../../features/shop/productsApiSlice';
 import QuantitySelect from './QuantitySelect';
-
+import { useAppSelector } from '../../app/hooks';
+import { cartItems } from '../../features/shop/cartSlice';
+import { Link } from 'react-router-dom';
+import { Flex } from '@radix-ui/themes';
 
 const CartItem: React.FC<{ cartItemId: number }> = ({ cartItemId }) => {
     const {data, isLoading, isError, isUninitialized} = useGetProductDetailsQuery(cartItemId)
+    const cartItem = useAppSelector(cartItems).find(item => item.id === cartItemId)
+    
     if (isLoading || isUninitialized) {
-      return <div>Loading...</div>
+      return (
+        <div className="bg-slate-50 p-4 rounded-lg shadow-sm animate-pulse">
+          <div className="h-24 w-full bg-gray-200 rounded"></div>
+        </div>
+      )
     }
 
-    if (isError) {
-      return <div>Error loading product details</div>
+    if (isError || !cartItem) {
+      return (
+        <div className="bg-slate-50 p-4 rounded-lg shadow-sm">
+          <div className="text-red-500">Error loading product details</div>
+        </div>
+      )
     }
 
     const {product} = data;
+    const subtotal = product.price * cartItem.qty;
 
   return (
-    <>
-    <div>{product.name}</div>
-    <div>{product.price}</div>
-    <div>{product.shortDesc}</div>
-    <div>{product.category}</div>
-    <div><img src={product.imgUrl} alt={product.name} /></div>
-    <div><QuantitySelect product={product} /></div>
-    </>
+    <div className="bg-slate-50 p-3 sm:p-4 rounded-lg shadow-sm">
+      {/* Mobile layout (stacked) */}
+      <div className="block sm:hidden">
+        <Flex direction="row" gap="3" align="start" className="mb-3">
+          <div className="flex-none">
+            <Link to={`/shop/products/${product.id.toString()}`}>
+              <img 
+                src={product.imgUrl} 
+                alt={product.name} 
+                className="border border-gray-300 rounded-sm w-16 h-16 object-cover"
+              />
+            </Link>
+          </div>
+          <div className="flex-grow">
+            <Link to={`/shop/products/${product.id.toString()}`} className="font-medium hover:text-blue-600">
+              {product.mfgName} {product.name}
+            </Link>
+            <div className="text-sm text-gray-600 mt-1">{product.shortDesc}</div>
+          </div>
+        </Flex>
+        <Flex justify="between" className="mb-2 text-sm">
+          <span>Price:</span>
+          <span className="font-medium">${product.price}</span>
+        </Flex>
+        <Flex justify="between" className="mb-3">
+          <span className="text-sm">Quantity:</span>
+          <QuantitySelect product={product} className="max-w-[180px]" />
+        </Flex>
+        <Flex justify="between" className="pt-2 border-t border-gray-200">
+          <span className="font-medium">Subtotal:</span>
+          <span className="font-bold">${subtotal.toFixed(2)}</span>
+        </Flex>
+      </div>
+
+      {/* Desktop layout (grid) */}
+      <div className="hidden sm:grid grid-cols-12 gap-2 items-center">
+        <div className="col-span-6">
+          <Flex direction="row" gap="3" align="center">
+            <div className="flex-none">
+              <Link to={`/shop/products/${product.id.toString()}`}>
+                <img 
+                  src={product.imgUrl} 
+                  alt={product.name} 
+                  className="border border-gray-300 rounded-sm w-16 h-16 object-cover" 
+                />
+              </Link>
+            </div>
+            <div className="flex-grow">
+              <Link to={`/shop/products/${product.id.toString()}`} className="font-medium hover:text-blue-600">
+                {product.mfgName} {product.name}
+              </Link>
+              <div className="text-sm text-gray-600 mt-1">{product.shortDesc}</div>
+            </div>
+          </Flex>
+        </div>
+        <div className="col-span-2 text-center">${product.price}</div>
+        <div className="col-span-2 text-center">
+          <QuantitySelect product={product} />
+        </div>
+        <div className="col-span-2 text-right font-bold">${subtotal.toFixed(2)}</div>
+      </div>
+    </div>
   )
 }
 

@@ -1,9 +1,8 @@
 import CartSummary from "../components/shop/CartSummary"
 
-
 const Cart = () => {
   return (
-    <div>
+    <div className="w-full px-4 sm:px-6 md:px-8">
       <CartSummary />
     </div>
   )
