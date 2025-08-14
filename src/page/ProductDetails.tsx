@@ -8,7 +8,9 @@ const ProductDetails = () => {
   const id = currPath.split('/').pop()
 
   return (
-    <div>{id && <ProductDetail id={parseInt(id)} />}</div>
+    <div className="w-full max-w-full">
+      {id && <ProductDetail id={parseInt(id)} />}
+    </div>
   )
 }
 
