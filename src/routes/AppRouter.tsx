@@ -2,6 +2,7 @@ import {Home, Cart, Shop, ProductDetails} from '../page/'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from '../components/Layout'
 import Checkout from '../page/Checkout';
+import Login from '../page/Login';
 
 const AppRouter = () => {
   return (
@@ -15,6 +16,7 @@ const AppRouter = () => {
                       </Route>
                       <Route path="/cart" element={<Cart />} />
                       <Route path="/checkout" element={<Checkout />} />
+                      <Route path="/login" element={<Login />} />
                       {/* <Route path="/product" element={<ProductDetails />} /> */}
                   </Route>
               </Routes>

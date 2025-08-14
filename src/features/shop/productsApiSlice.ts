@@ -8,7 +8,6 @@ import type { ProductListApiResponse,
   CategoryApiDataResponse, 
   ProductListApiDataResponse,
  } from "../../types";
-// import productsData from './data/products.json'
 
 
 export const productsApiSlice = createApi({
