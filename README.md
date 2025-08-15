@@ -98,7 +98,7 @@ The application follows a feature-based architecture with Redux Toolkit for stat
 
 ## 👨‍💻 Created By
 
-Scotty Compton ([@ScottyCompton](https://github.com/ScottyCompton))
+Scott C. Lonis ([@ScottyCompton](https://github.com/ScottyCompton))
 
 ## 📄 License
 
