@@ -19,7 +19,7 @@ const HomeCats = () => {
     if(isError) {
         return (
           <div className="flex justify-center items-center h-40 w-full">
-            <div className="text-lg text-red-500">Problem loading categories</div>
+            <div className="text-lg text-red-500">No categories found - he's dead, Jim!</div>
           </div>
         )
     }
