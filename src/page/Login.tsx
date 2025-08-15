@@ -1,11 +1,11 @@
-import { Button, TextField, Heading, Card, Flex, Text } from '@radix-ui/themes';
+import { Button, TextField, Heading, Card, Flex, Text, Spinner } from '@radix-ui/themes';
 import { useAuthenticateUserMutation } from '../features/shop/userApiSlice';
 import { setUser } from '../features/shop/usersSlice';
 import { useAppDispatch } from '../app/hooks';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLock, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faLock, faSackDollar } from '@fortawesome/free-solid-svg-icons';
 
 
 const Login = () => {
@@ -49,7 +49,7 @@ const Login = () => {
         <div className="p-6 sm:p-8">
           <div className="flex flex-col items-center mb-6">
             <div className="bg-blue-800 text-white p-4 rounded-full mb-4">
-              <FontAwesomeIcon icon={faUser} size="lg" />
+              <FontAwesomeIcon icon={faSackDollar} size="lg" />
             </div>
             <Heading size="5">Sign in to your account</Heading>
             <Text color="gray" size="2" className="text-center mt-1">
@@ -70,7 +70,7 @@ const Login = () => {
               </Text>
               <Flex>
                 <div className="flex items-center justify-center bg-gray-100 px-3 rounded-l-md border border-r-0 border-gray-300">
-                  <FontAwesomeIcon icon={faUser} className="text-gray-500" />
+                  <FontAwesomeIcon icon={faSackDollar} className="text-gray-500" />
                 </div>
                 <TextField.Root 
                   placeholder="you@youremail.com" 
@@ -106,7 +106,7 @@ const Login = () => {
               className="w-full bg-blue-800 hover:bg-blue-700"
               disabled={isLoading}
             >
-              {isLoading ? 'Signing in...' : 'Sign in'}
+              {isLoading && <Spinner />} Sign in
             </Button>
 
             <div className="text-center mt-4">

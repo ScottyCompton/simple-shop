@@ -19,7 +19,6 @@ const CartSummary:React.FC<CartSummaryProps> = ({isCheckout = false}: CartSummar
 
   return (
     <div className="w-full">
-        <h2 className="text-xl sm:text-2xl font-bold mb-6">Your Cart</h2>
         {items.length === 0 ? (
           <div className="p-8 text-center bg-slate-50 rounded-lg shadow-sm">
             <p className="text-lg text-gray-600 mb-4">Your cart is empty</p>

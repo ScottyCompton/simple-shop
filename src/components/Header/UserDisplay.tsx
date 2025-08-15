@@ -7,7 +7,7 @@ const UserDisplay = () => {
 
   if(!user) {
     return (
-        <div><Link to="/login">Login</Link></div>
+        <div><Link to="/login" className="text-xs">Login</Link></div>
     )
   }
 

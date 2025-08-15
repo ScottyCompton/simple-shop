@@ -1,0 +1,19 @@
+/* Checkout form specific styles */
+
+/* Shipping method radio custom styling */
+input[type="radio"]:checked + label {
+  background-color: #f0f9ff;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 1px #3b82f6;
+}
+
+input[type="radio"]:checked + label .shipping-method-dot {
+  display: block !important;
+}
+
+/* Form focus states */
+input:focus, select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px #3b82f6;
+}

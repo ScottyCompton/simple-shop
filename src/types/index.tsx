@@ -85,6 +85,19 @@ export type UserDetailApiResponse = {
 };
 
 
+export type StatesApiDataResponse = {
+    states: StateItem[];
+}
+
+export type StatesApiResponse = {
+    data: {
+      states: StateItem[];
+    }
+}
+
+
+
+
 export type UserDetailApiDataResponse = {
     user: UserDetail;
 }
@@ -97,11 +110,15 @@ export type User = {
     email: string;
     // Add any other user fields you need
 };
-       
-type UserDetail = {
+
+export type UserDetail = {
     user: User,
-    billing: {
-        firstName: string;
+    billing: UserBilling,
+    shipping: UserShipping
+}
+
+export type UserShipping = {
+          firstName: string;
         lastName: string;
         address1: string;
         address2: string;
@@ -109,9 +126,11 @@ type UserDetail = {
         state: string;
         zip: string;
         phone: string;
-    },
-    shipping: {
-        firstName: string;
+        shippingMethod?: string;
+}
+
+export type UserBilling = {
+          firstName: string;
         lastName: string;
         address1: string;
         address2: string;
@@ -119,5 +138,9 @@ type UserDetail = {
         state: string;
         zip: string;
         phone: string;
-    }
+}
+
+export type StateItem = {
+    abbr: string;
+    state: string;
 }

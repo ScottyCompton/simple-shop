@@ -1,6 +1,6 @@
-import CartContents from './shop/CartContents'
-import UserDisplay from './shop/UserDisplay'
-import CategorySelect from './shop/CategorySelect'
+import CartContents from './CartContents'
+import UserDisplay from './UserDisplay'
+import CategorySelect from './CategorySelect'
 import { Link } from "react-router"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
