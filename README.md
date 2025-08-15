@@ -21,7 +21,7 @@ A sleek, modern e-commerce application built with React 19, Redux Toolkit, and V
 - **Build Tool**: Vite
 - **Form Management**: React Hook Form
 - **Testing**: Vitest, React Testing Library
-- **API**: Custom Node.js/Express backend (included)
+- **API**: Custom Node.js/Express backend (definitely not included)
 
 ## 🔧 Getting Started
 
@@ -55,42 +55,7 @@ The app will be available at http://localhost:5173
 
 ### Backend Setup (Simple Shop API)
 
-1. Navigate to the API directory:
-
-```bash
-cd ../simple-shop-api
-```
-
-2. Install dependencies:
-
-```bash
-npm install
-```
-
-3. Start the API server:
-
-```bash
-npm run dev
-```
-
-The API will be available at http://localhost:3000
-
-## 📖 Available Scripts
-
-- `npm run dev` / `npm start` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build locally
-- `npm run test` - Run tests
-- `npm run lint` - Run linter
-- `npm run format` - Format code with Prettier
-
-## 🔐 Environment Variables
-
-Create a `.env` file in the project root with the following variables:
-
-```
-VITE_API_URL=http://localhost:3000/api
-```
+1. tbd - more on this if I'm so inclined:
 
 ## 🧠 Architecture
 
