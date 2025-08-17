@@ -1,4 +1,4 @@
-import CartSummary from "../CartSummary"
+import CartSummary from "../cart/CartSummary"
 import CheckoutBillingShipping from "./CheckoutBillingShipping"
 import * as Accordion from "@radix-ui/react-accordion"
 import "../../../css/accordion.css"
@@ -6,12 +6,7 @@ import { useState } from "react"
 import { Button, Flex } from "@radix-ui/themes"
 import CheckoutPayment from "./CheckoutPayment"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { library } from "@fortawesome/fontawesome-svg-core"
-import {
-  fas,
-  faArrowLeft,
-  faArrowRight,
-} from "@fortawesome/free-solid-svg-icons"
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons"
 
 const CheckoutForm = () => {
   const [activeAccordion, setActiveAccordion] = useState<string>("checkout-1")
@@ -143,7 +138,7 @@ const CheckoutForm = () => {
                 <div className="grow flex justify-end">
                   <button
                     type="submit"
-                    className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-md shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                    className="cursor-pointer bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-md shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                   >
                     Complete Purchase
                   </button>
