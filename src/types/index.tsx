@@ -64,3 +64,84 @@ export type HomeCategory = {
     imgUrl: string;
     productCount: number;
 }
+
+export type UserApiLoginResponse = {
+    data: {
+        user: User
+    }
+};
+
+
+export type UserApiDataLoginResponse = {
+    user: User;
+}
+
+
+
+export type UserDetailApiResponse = {
+    data: {
+        user: UserDetail
+    }
+};
+
+
+export type StatesApiDataResponse = {
+    states: StateItem[];
+}
+
+export type StatesApiResponse = {
+    data: {
+      states: StateItem[];
+    }
+}
+
+
+
+
+export type UserDetailApiDataResponse = {
+    user: UserDetail;
+}
+
+
+export type User = {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    // Add any other user fields you need
+};
+
+export type UserDetail = {
+    user: User,
+    billing: UserBilling,
+    shipping: UserShipping
+}
+
+export type UserShipping = {
+        firstName: string;
+        lastName: string;
+        address1: string;
+        address2: string;
+        city: string;
+        state: string;
+        zip: string;
+        phone: string;
+        shippingMethod?: string;
+}
+
+export type UserBilling = {
+        firstName: string;
+        lastName: string;
+        address1: string;
+        address2: string;
+        city: string;
+        state: string;
+        zip: string;
+        sameAsShipping: boolean
+        phone: string;
+}
+
+export type StateItem = {
+    abbr: string;
+    state: string;
+}

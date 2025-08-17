@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 const CategorySelect = () => {
     const dispatch = useAppDispatch()
+    // const cartCategory = useAppSelector(cartCategory)
     const [category, setCategory] = useState<string>(useAppSelector(cartCategory))
     const location = useLocation()
     const navigate = useNavigate()

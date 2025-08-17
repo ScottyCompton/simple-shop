@@ -1,5 +1,6 @@
-import {Home, Cart, Shop, ProductDetails} from '../page/'
+import {Home, Cart, Shop, ProductDetails, Checkout, Login} from '../page/'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ProtectedRoute from './ProtectedRoute'
 import Layout from '../components/Layout'
 
 const AppRouter = () => {
@@ -13,7 +14,8 @@ const AppRouter = () => {
                           <Route path="products/:productId" element={<ProductDetails />} />
                       </Route>
                       <Route path="/cart" element={<Cart />} />
-                      {/* <Route path="/product" element={<ProductDetails />} /> */}
+                      <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
+                      <Route path="/login" element={<Login />} />
                   </Route>
               </Routes>
             </Router>

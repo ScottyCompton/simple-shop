@@ -1,7 +1,7 @@
 import { StrictMode } from "react"
 import { Provider } from "react-redux"
 import { store } from "./app/store"
-import "./App.css"
+import "./css/App.css"
 import { Theme } from "@radix-ui/themes"
 import "@radix-ui/themes/styles.css";
 import AppRouter from './routes/AppRouter'

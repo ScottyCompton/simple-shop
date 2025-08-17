@@ -16,7 +16,7 @@ const ProductList = () => {
     }
 
     if (isError) {
-        return <div>Problem loading products</div>
+        return <div>No products - he's dead, Jim!</div>
     }
 
     const { products } = data;

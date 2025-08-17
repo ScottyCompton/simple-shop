@@ -1,5 +1,6 @@
-import CartContents from './shop/CartContents'
-import CategorySelect from './shop/CategorySelect'
+import CartContents from './CartContents'
+import UserDisplay from './UserDisplay'
+import CategorySelect from './CategorySelect'
 import { Link } from "react-router"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -21,10 +22,12 @@ const Header = () => {
         
         <div className="flex items-center gap-4">
           <div className="hidden sm:flex items-center">
-            <span className="mr-2">Explore</span>
+            <span className="mr-2 text-xs">Explore</span>
             <CategorySelect />
           </div>
-          
+          <div>
+            <UserDisplay />
+          </div>
           <div>
             <CartContents />
           </div>
@@ -32,7 +35,7 @@ const Header = () => {
         
         <div className="sm:hidden w-full mt-3">
           <div className="flex items-center justify-center">
-            <span className="mr-2">Explore</span>
+            <span className="mr-2 text-xs">Explore</span>
             <CategorySelect />
           </div>
         </div>

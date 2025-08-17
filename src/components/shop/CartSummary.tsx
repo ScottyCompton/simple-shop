@@ -1,10 +1,15 @@
 import { useAppSelector } from "../../app/hooks"
 import { cartItems } from "../../features/shop/cartSlice"
-import CartItem from "./CartItem"
+import CartSummaryItem from "./CartSummaryItem"
 import { Flex, Button } from "@radix-ui/themes"
 import { Link } from "react-router-dom"
 
-const CartSummary = () => {
+
+type CartSummaryProps = {
+  isCheckout?: boolean;
+}
+
+const CartSummary:React.FC<CartSummaryProps> = ({isCheckout = false}: CartSummaryProps) => {
   const items = useAppSelector(cartItems)
   
   // Calculate total price
@@ -14,7 +19,6 @@ const CartSummary = () => {
 
   return (
     <div className="w-full">
-        <h2 className="text-xl sm:text-2xl font-bold mb-6">Your Cart</h2>
         {items.length === 0 ? (
           <div className="p-8 text-center bg-slate-50 rounded-lg shadow-sm">
             <p className="text-lg text-gray-600 mb-4">Your cart is empty</p>
@@ -32,7 +36,7 @@ const CartSummary = () => {
             </div>
             <div className="space-y-3">
               {items.map(item => (
-                <CartItem key={item.id} cartItemId={item.id} />
+                <CartSummaryItem isCheckout={isCheckout} key={item.id} cartItemId={item.id} />
               ))}
             </div>
             
@@ -51,14 +55,14 @@ const CartSummary = () => {
                   <span className="text-lg font-bold">Total:</span>
                   <span className="text-lg font-bold">${totalPrice.toFixed(2)}</span>
                 </Flex>
-                <Flex direction="column" gap="2" className="mt-4">
+                {!isCheckout && <Flex direction="column" gap="2" className="mt-4">
                   <Button size="3" className="w-full">
-                    Proceed to Checkout
+                    <Link to="/checkout">Proceed to Checkout</Link>
                   </Button>
                   <Button variant="outline" asChild size="3" className="w-full">
                     <Link to="/shop">Continue Shopping</Link>
                   </Button>
-                </Flex>
+                </Flex>}
               </div>
             </Flex>
           </div>

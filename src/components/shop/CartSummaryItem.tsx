@@ -5,10 +5,16 @@ import { cartItems } from '../../features/shop/cartSlice';
 import { Link } from 'react-router-dom';
 import { Flex } from '@radix-ui/themes';
 
-const CartItem: React.FC<{ cartItemId: number }> = ({ cartItemId }) => {
+type CartSummaryItemProps = {
+  cartItemId: number;
+  isCheckout?: boolean
+}
+
+
+const CartSummaryItem: React.FC<CartSummaryItemProps> = ({ cartItemId, isCheckout = false }: CartSummaryItemProps) => {
     const {data, isLoading, isError, isUninitialized} = useGetProductDetailsQuery(cartItemId)
     const cartItem = useAppSelector(cartItems).find(item => item.id === cartItemId)
-    
+
     if (isLoading || isUninitialized) {
       return (
         <div className="bg-slate-50 p-4 rounded-lg shadow-sm animate-pulse">
@@ -55,7 +61,11 @@ const CartItem: React.FC<{ cartItemId: number }> = ({ cartItemId }) => {
         </Flex>
         <Flex justify="between" className="mb-3">
           <span className="text-sm">Quantity:</span>
-          <QuantitySelect product={product} className="max-w-[180px]" />
+          {isCheckout ? (
+            <span className="font-medium">{cartItem.qty}</span>
+          ) : (
+            <QuantitySelect product={product} className="max-w-[180px]" />
+          )}
         </Flex>
         <Flex justify="between" className="pt-2 border-t border-gray-200">
           <span className="font-medium">Subtotal:</span>
@@ -86,7 +96,11 @@ const CartItem: React.FC<{ cartItemId: number }> = ({ cartItemId }) => {
         </div>
         <div className="col-span-2 text-center">${product.price}</div>
         <div className="col-span-2 text-center">
-          <QuantitySelect product={product} />
+          {isCheckout ? (
+            <span className="font-medium">{cartItem.qty}</span>
+          ) : (
+            <QuantitySelect product={product} className="max-w-[180px]" />
+          )}
         </div>
         <div className="col-span-2 text-right font-bold">${subtotal.toFixed(2)}</div>
       </div>
@@ -94,4 +108,4 @@ const CartItem: React.FC<{ cartItemId: number }> = ({ cartItemId }) => {
   )
 }
 
-export default CartItem
+export default CartSummaryItem

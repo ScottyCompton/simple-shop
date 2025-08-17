@@ -11,7 +11,7 @@ const HomeCats = () => {
     if(isLoading || isUninitialized) {
         return (
           <div className="flex justify-center items-center h-40 w-full">
-            <div className="text-lg animate-pulse">Loading categories...</div>
+            <div className="text-lg animate-pulse">Loading products...</div>
           </div>
         )
     }
@@ -19,12 +19,13 @@ const HomeCats = () => {
     if(isError) {
         return (
           <div className="flex justify-center items-center h-40 w-full">
-            <div className="text-lg text-red-500">Problem loading categories</div>
+            <div className="text-lg text-red-500">No categories found - he's dead, Jim!</div>
           </div>
         )
     }
 
     const { categories } = data;
+
 
     const handleClick = (e: React.MouseEvent<HTMLImageElement | HTMLSpanElement>) => {
         // For span clicks, we need to get the category name differently
