@@ -118,7 +118,7 @@ export type UserDetail = {
 }
 
 export type UserShipping = {
-          firstName: string;
+        firstName: string;
         lastName: string;
         address1: string;
         address2: string;
@@ -130,13 +130,14 @@ export type UserShipping = {
 }
 
 export type UserBilling = {
-          firstName: string;
+        firstName: string;
         lastName: string;
         address1: string;
         address2: string;
         city: string;
         state: string;
         zip: string;
+        sameAsShipping: boolean
         phone: string;
 }
 

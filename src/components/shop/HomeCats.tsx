@@ -26,6 +26,7 @@ const HomeCats = () => {
 
     const { categories } = data;
 
+
     const handleClick = (e: React.MouseEvent<HTMLImageElement | HTMLSpanElement>) => {
         // For span clicks, we need to get the category name differently
         const categoryName = 'alt' in e.currentTarget 

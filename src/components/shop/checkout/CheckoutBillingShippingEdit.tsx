@@ -1,29 +1,51 @@
 
 import { useForm } from 'react-hook-form';
-import type { UserShipping as ShippingFormData } from '../../types';
+// import { useEffect, useState } from 'react';
+import type { UserBilling as BillingFormData } from '../../../types';
 import '../../css/checkout.css';
-import StateSelect from '../StateSelect';
+import StateSelect from '../../StateSelect';
 
+const CheckoutBilling = () => {
+  // State for storing states data
+  // const [states, setStates] = useState<StateItem[]>([]);
 
-// Shipping methods
-const shippingMethods = [
-  { id: 'ups', name: 'UPS', description: 'Delivery in 3-5 business days', price: '$9.99' },
-  { id: 'fedex', name: 'FedEx', description: 'Delivery in 2-3 business days', price: '$14.99' },
-  { id: 'usps', name: 'USPS', description: 'Delivery in 4-7 business days', price: '$7.99' },
-];
+  // const { data: statesData, isLoading } = useGetUserStatesQuery();
 
-const CheckoutShipping = () => {
+  // useEffect(() => {
+  //   if (statesData) {
+  //     setStates(statesData.states);
+  //   }
+  // }, [statesData]);
 
+  // const [isLoading, setIsLoading] = useState<boolean>(true);
+  
+  // // Fetch states data from API
+  // useEffect(() => {
+  //   const fetchStates = async () => {
+  //     try {
+  //       setIsLoading(true);
+  //       const response = await fetch('http://localhost:3000/api/states/abbr');
+  //       const result = await response.json();
+  //       setStates(result.data as StateItem[]);
+  //     } catch (err) {
+  //       console.error('Error fetching states:', err);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+    
+  //   void fetchStates();
+  // }, []);
 
   // Initialize form with react-hook-form
   const { 
     register, 
     handleSubmit, 
     formState: { errors }
-  } = useForm<ShippingFormData>();
+  } = useForm<BillingFormData>();
   
   // Handle form submission
-  const submitHandler = (data: ShippingFormData) => {
+  const submitHandler = (data: BillingFormData) => {
     console.log(data);
     // In a real app, you would save this data or pass it to a parent component
   };
@@ -177,49 +199,13 @@ const CheckoutShipping = () => {
           )}
         </div>
         
-        {/* Shipping Methods */}
-        <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-gray-900">Shipping Method</h3>
-          <div className="grid grid-cols-1 gap-3">
-            {shippingMethods.map((method) => (
-              <div key={method.id} className="relative">
-                <input
-                  type="radio"
-                  id={method.id}
-                  value={method.id}
-                  {...register('shippingMethod', { required: 'Please select a shipping method' })}
-                  className="absolute opacity-0 w-0 h-0"
-                />
-                <label
-                  htmlFor={method.id}
-                  className="flex items-center justify-between p-4 cursor-pointer w-full border border-gray-200 rounded-md hover:bg-gray-50 transition-colors focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-600"
-                >
-                  <div className="flex items-center">
-                    <div className="w-5 h-5 mr-3 rounded-full border border-gray-400 flex items-center justify-center">
-                      <div className="w-2.5 h-2.5 rounded-full bg-blue-600 hidden shipping-method-dot"></div>
-                    </div>
-                    <div>
-                      <span className="block text-sm font-medium text-gray-900">{method.name}</span>
-                      <span className="block text-xs text-gray-500">{method.description}</span>
-                    </div>
-                  </div>
-                  <span className="text-sm font-medium text-gray-900">{method.price}</span>
-                </label>
-              </div>
-            ))}
-          </div>
-          {errors.shippingMethod && (
-            <p className="text-sm text-red-500 mt-1">{errors.shippingMethod.message}</p>
-          )}
-        </div>
-        
         {/* Submit Button */}
         <div className="flex justify-end">
           <button
             type="submit"
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
-            Continue to Billing
+            Continue to Payment
           </button>
         </div>
       </form>
@@ -227,4 +213,4 @@ const CheckoutShipping = () => {
   );
 };
 
-export default CheckoutShipping;
+export default CheckoutBilling;

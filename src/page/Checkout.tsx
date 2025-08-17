@@ -1,4 +1,4 @@
-import CheckoutForm from "../components/shop/CheckoutForm"
+import CheckoutForm from "../components/shop/checkout/CheckoutForm"
 import { cartCount } from '../features/shop/cartSlice'
 import { useAppSelector } from "../app/hooks"
 import { useNavigate } from "react-router-dom"
