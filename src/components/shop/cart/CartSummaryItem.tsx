@@ -1,38 +1,43 @@
-import { useGetProductDetailsQuery } from '../../features/shop/productsApiSlice';
-import QuantitySelect from './QuantitySelect';
-import { useAppSelector } from '../../app/hooks';
-import { cartItems } from '../../features/shop/cartSlice';
-import { Link } from 'react-router-dom';
-import { Flex } from '@radix-ui/themes';
+import { useGetProductDetailsQuery } from "../../../features/shop/productsApiSlice"
+import QuantitySelect from "../QuantitySelect"
+import { useAppSelector } from "../../../app/hooks"
+import { cartItems } from "../../../features/shop/cartSlice"
+import { Link } from "react-router-dom"
+import { Flex } from "@radix-ui/themes"
 
 type CartSummaryItemProps = {
-  cartItemId: number;
+  cartItemId: number
   isCheckout?: boolean
 }
 
+const CartSummaryItem: React.FC<CartSummaryItemProps> = ({
+  cartItemId,
+  isCheckout = false,
+}: CartSummaryItemProps) => {
+  const { data, isLoading, isError, isUninitialized } =
+    useGetProductDetailsQuery(cartItemId)
+  const cartItem = useAppSelector(cartItems).find(
+    item => item.id === cartItemId,
+  )
 
-const CartSummaryItem: React.FC<CartSummaryItemProps> = ({ cartItemId, isCheckout = false }: CartSummaryItemProps) => {
-    const {data, isLoading, isError, isUninitialized} = useGetProductDetailsQuery(cartItemId)
-    const cartItem = useAppSelector(cartItems).find(item => item.id === cartItemId)
+  if (isLoading || isUninitialized) {
+    return (
+      <div className="bg-slate-50 p-4 rounded-lg shadow-sm animate-pulse">
+        <div className="h-24 w-full bg-gray-200 rounded"></div>
+      </div>
+    )
+  }
 
-    if (isLoading || isUninitialized) {
-      return (
-        <div className="bg-slate-50 p-4 rounded-lg shadow-sm animate-pulse">
-          <div className="h-24 w-full bg-gray-200 rounded"></div>
-        </div>
-      )
-    }
+  if (isError || !cartItem) {
+    return (
+      <div className="bg-slate-50 p-4 rounded-lg shadow-sm">
+        <div className="text-red-500">Error loading product details</div>
+      </div>
+    )
+  }
 
-    if (isError || !cartItem) {
-      return (
-        <div className="bg-slate-50 p-4 rounded-lg shadow-sm">
-          <div className="text-red-500">Error loading product details</div>
-        </div>
-      )
-    }
-
-    const {product} = data;
-    const subtotal = product.price * cartItem.qty;
+  const { product } = data
+  const subtotal = product.price * cartItem.qty
 
   return (
     <div className="bg-slate-50 p-3 sm:p-4 rounded-lg shadow-sm">
@@ -41,18 +46,23 @@ const CartSummaryItem: React.FC<CartSummaryItemProps> = ({ cartItemId, isCheckou
         <Flex direction="row" gap="3" align="start" className="mb-3">
           <div className="flex-none">
             <Link to={`/shop/products/${product.id.toString()}`}>
-              <img 
-                src={product.imgUrl} 
-                alt={product.name} 
+              <img
+                src={product.imgUrl}
+                alt={product.name}
                 className="border border-gray-300 rounded-sm w-16 h-16 object-cover"
               />
             </Link>
           </div>
           <div className="flex-grow">
-            <Link to={`/shop/products/${product.id.toString()}`} className="font-medium hover:text-blue-600">
+            <Link
+              to={`/shop/products/${product.id.toString()}`}
+              className="font-medium hover:text-blue-600"
+            >
               {product.mfgName} {product.name}
             </Link>
-            <div className="text-sm text-gray-600 mt-1">{product.shortDesc}</div>
+            <div className="text-sm text-gray-600 mt-1">
+              {product.shortDesc}
+            </div>
           </div>
         </Flex>
         <Flex justify="between" className="mb-2 text-sm">
@@ -79,18 +89,23 @@ const CartSummaryItem: React.FC<CartSummaryItemProps> = ({ cartItemId, isCheckou
           <Flex direction="row" gap="3" align="center">
             <div className="flex-none">
               <Link to={`/shop/products/${product.id.toString()}`}>
-                <img 
-                  src={product.imgUrl} 
-                  alt={product.name} 
-                  className="border border-gray-300 rounded-sm w-16 h-16 object-cover" 
+                <img
+                  src={product.imgUrl}
+                  alt={product.name}
+                  className="border border-gray-300 rounded-sm w-16 h-16 object-cover"
                 />
               </Link>
             </div>
             <div className="flex-grow">
-              <Link to={`/shop/products/${product.id.toString()}`} className="font-medium hover:text-blue-600">
+              <Link
+                to={`/shop/products/${product.id.toString()}`}
+                className="font-medium hover:text-blue-600"
+              >
                 {product.mfgName} {product.name}
               </Link>
-              <div className="text-sm text-gray-600 mt-1">{product.shortDesc}</div>
+              <div className="text-sm text-gray-600 mt-1">
+                {product.shortDesc}
+              </div>
             </div>
           </Flex>
         </div>
@@ -102,7 +117,9 @@ const CartSummaryItem: React.FC<CartSummaryItemProps> = ({ cartItemId, isCheckou
             <QuantitySelect product={product} className="max-w-[180px]" />
           )}
         </div>
-        <div className="col-span-2 text-right font-bold">${subtotal.toFixed(2)}</div>
+        <div className="col-span-2 text-right font-bold">
+          ${subtotal.toFixed(2)}
+        </div>
       </div>
     </div>
   )

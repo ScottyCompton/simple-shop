@@ -1,47 +1,54 @@
-import { Button, TextField, Heading, Card, Flex, Text, Spinner } from '@radix-ui/themes';
-import { useAuthenticateUserMutation } from '../features/shop/userApiSlice';
-import { setUser } from '../features/shop/usersSlice';
-import { useAppDispatch } from '../app/hooks';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLock, faSackDollar } from '@fortawesome/free-solid-svg-icons';
-
+import {
+  Button,
+  TextField,
+  Heading,
+  Card,
+  Flex,
+  Text,
+  Spinner,
+} from "@radix-ui/themes"
+import { useAuthenticateUserMutation } from "@/features/shop/userApiSlice"
+import { setUser } from "@/features/shop/usersSlice"
+import { useAppDispatch } from "@/app/hooks"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faLock, faSackDollar } from "@fortawesome/free-solid-svg-icons"
 
 const Login = () => {
-  const [authenticateUser] = useAuthenticateUserMutation();
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [authenticateUser] = useAuthenticateUserMutation()
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("")
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError('');
-    
+    e.preventDefault()
+    setIsLoading(true)
+    setError("")
+
     try {
-      const {data} = await authenticateUser({ email, password });
+      const { data } = await authenticateUser({ email, password })
 
       if (data) {
-        dispatch(setUser(data.user));
-        const prev = document.referrer;
-        if (prev.includes('/checkout')) {
-          void navigate('/checkout');
+        dispatch(setUser(data.user))
+        const prev = document.referrer
+        if (prev.includes("/checkout")) {
+          void navigate("/checkout")
         } else {
-          void navigate('/shop');
+          void navigate("/shop")
         }
       } else {
-        setError('Invalid email or password');
+        setError("Invalid email or password")
       }
     } catch {
-      setError('Login failed. Please try again.');
+      setError("Login failed. Please try again.")
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
     <div className="grid place-items-center h-[70vh]">
@@ -63,19 +70,34 @@ const Login = () => {
             </div>
           )}
 
-          <form onSubmit={(e) => { void handleLogin(e); }} className="space-y-4">
+          <form
+            onSubmit={e => {
+              void handleLogin(e)
+            }}
+            className="space-y-4"
+          >
             <div>
-              <Text as="label" size="2" weight="medium" className="block mb-1.5">
+              <Text
+                as="label"
+                size="2"
+                weight="medium"
+                className="block mb-1.5"
+              >
                 Email
               </Text>
               <Flex>
                 <div className="flex items-center justify-center bg-gray-100 px-3 rounded-l-md border border-r-0 border-gray-300">
-                  <FontAwesomeIcon icon={faSackDollar} className="text-gray-500" />
+                  <FontAwesomeIcon
+                    icon={faSackDollar}
+                    className="text-gray-500"
+                  />
                 </div>
-                <TextField.Root 
-                  placeholder="you@youremail.com" 
-                  value={email} 
-                  onChange={(e) => { setEmail(e.target.value); }}
+                <TextField.Root
+                  placeholder="you@youremail.com"
+                  value={email}
+                  onChange={e => {
+                    setEmail(e.target.value)
+                  }}
                   className="flex-1 rounded-l-none !border-l-0"
                   required
                 />
@@ -83,26 +105,33 @@ const Login = () => {
             </div>
 
             <div>
-              <Text as="label" size="2" weight="medium" className="block mb-1.5">
+              <Text
+                as="label"
+                size="2"
+                weight="medium"
+                className="block mb-1.5"
+              >
                 Password
               </Text>
               <Flex>
                 <div className="flex items-center justify-center bg-gray-100 px-3 rounded-l-md border border-r-0 border-gray-300">
                   <FontAwesomeIcon icon={faLock} className="text-gray-500" />
                 </div>
-                <TextField.Root 
-                  type="password" 
-                  placeholder="Password" 
-                  value={password} 
-                  onChange={(e) => { setPassword(e.target.value); }}
+                <TextField.Root
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={e => {
+                    setPassword(e.target.value)
+                  }}
                   className="flex-1 rounded-l-none !border-l-0"
                   required
                 />
               </Flex>
             </div>
 
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               className="w-full bg-blue-800 hover:bg-blue-700"
               disabled={isLoading}
             >
@@ -111,7 +140,10 @@ const Login = () => {
 
             <div className="text-center mt-4">
               <Text size="1" color="gray">
-                Don't have an account? <Text as="span" color="blue">Create one</Text>
+                Don't have an account?{" "}
+                <Text as="span" color="blue">
+                  Create one
+                </Text>
               </Text>
             </div>
           </form>

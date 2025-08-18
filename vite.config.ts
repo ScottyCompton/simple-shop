@@ -7,6 +7,17 @@ import tailwindcss from "@tailwindcss/vite"
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+      "@css": path.resolve(__dirname, "./src/css"),
+      "@hooks": path.resolve(__dirname, "./src/app/hooks"),
+      "@app/hooks": path.resolve(__dirname, "./src/app/hooks"),
+      "@types": path.resolve(__dirname, "./src/types"),
+      "@features": path.resolve(__dirname, "./src/features"),
+      "@components": path.resolve(__dirname, "./src/components"),
+    },
+  },
   server: {
     open: true,
   },

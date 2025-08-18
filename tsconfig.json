@@ -3,5 +3,34 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "compilerOptions": {
+    "composite": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@css": ["src/css"],
+      "@css/*": ["src/css/*"],
+      "@hooks": ["src/app/hooks"],
+      "@app/hooks": ["src/app/hooks"],
+      "@types": ["src/types"],
+      "@types/*": ["src/types/*"],
+      "@features": ["src/features"],
+      "@features/*": ["src/features/*"],
+      "@components": ["src/components"],
+      "@components/*": ["src/components/*"]
+    },
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "esnext",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true
+  }
 }
