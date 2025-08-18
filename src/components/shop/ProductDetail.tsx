@@ -1,6 +1,6 @@
 import { Flex } from "@radix-ui/themes"
 import { useGetProductDetailsQuery } from "@/features/shop/productsApiSlice"
-import QuantitySelect from "./QuantitySelect"
+import QuantitySelect from "../ui/QuantitySelect"
 
 type ProductDetailProps = {
   id: number

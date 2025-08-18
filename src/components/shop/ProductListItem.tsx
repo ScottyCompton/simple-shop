@@ -1,6 +1,6 @@
 import type { Product } from "@/types"
 import { Flex } from "@radix-ui/themes"
-import QuantitySelect from "./QuantitySelect"
+import QuantitySelect from "../ui/QuantitySelect"
 import { Link } from "react-router-dom"
 
 type ProductListItemProps = {
