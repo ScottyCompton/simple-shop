@@ -1,5 +1,5 @@
 import * as Dialog from "@radix-ui/react-dialog"
-import CheckoutBillingShippingEdit from "../CheckoutBillingShippingEdit"
+import CheckoutBillingShippingEdit from "./BillShipEditForm"
 import { useState } from "react"
 import { Button } from "@radix-ui/themes"
 import "@/css/dialog.css"

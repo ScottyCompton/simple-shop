@@ -1,5 +1,5 @@
 import { useGetProductDetailsQuery } from "../../../features/shop/productsApiSlice"
-import QuantitySelect from "../QuantitySelect"
+import QuantitySelect from "../../ui/QuantitySelect"
 import { useAppSelector } from "../../../app/hooks"
 import { cartItems } from "../../../features/shop/cartSlice"
 import { Link } from "react-router-dom"

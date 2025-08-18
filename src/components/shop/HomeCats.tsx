@@ -1,4 +1,4 @@
-import { useGetHomeProductCategoriesQuery } from "../../features/shop/productsApiSlice"
+import { useGetHomeProductCategoriesQuery } from "@/features/shop/productsApiSlice"
 import { useNavigate } from "react-router-dom"
 import { useAppDispatch } from "@/app/hooks"
 import { setCartCategory } from "@/features/shop/cartSlice"

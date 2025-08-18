@@ -4,7 +4,7 @@ import CartSummaryItem from "./CartSummaryItem"
 import { Flex, Button } from "@radix-ui/themes"
 import { Link } from "react-router-dom"
 import { useState, useEffect } from "react"
-import ShippingSelect from "../checkout/components/ShippingSelect"
+import ShippingSelect from "../../ui/ShippingSelect"
 
 type CartSummaryProps = {
   isCheckout?: boolean
