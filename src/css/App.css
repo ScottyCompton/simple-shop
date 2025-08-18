@@ -1,4 +1,10 @@
 @import "tailwindcss";
+
+/* Global z-index fixes for Radix UI popover content */
+[data-radix-popper-content-wrapper] {
+  z-index: 1500 !important;
+}
+
 .App {
   text-align: center;
 }

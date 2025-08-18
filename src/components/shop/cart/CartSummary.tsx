@@ -68,11 +68,16 @@ const CartSummary: React.FC<CartSummaryProps> = ({
               <Flex justify="between" className="mb-3">
                 <span className="text-gray-600">Shipping:</span>
                 <div className="pt-2 text-sm flex grow justify-end">
-                  <label className="mt-2 pr-2">Select Shipping Method: </label>
                   {isCheckout ? (
-                    <ShippingSelect
-                      onSelectShippingType={handleSelectShippingType}
-                    />
+                    <>
+                      <label className="mt-2 pr-2">
+                        Select Shipping Method:{" "}
+                      </label>
+
+                      <ShippingSelect
+                        onSelectShippingType={handleSelectShippingType}
+                      />
+                    </>
                   ) : (
                     <span className="text-gray-600">---</span>
                   )}

@@ -7,12 +7,18 @@ import { Button, Flex } from "@radix-ui/themes"
 import CheckoutPayment from "./CheckoutPayment"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons"
+import { useNavigate } from "react-router"
 
 const CheckoutForm = () => {
   const [activeAccordion, setActiveAccordion] = useState<string>("checkout-1")
+  const navigate = useNavigate()
 
   const handleAccordionToggle = (value: string) => {
     setActiveAccordion(value)
+  }
+
+  const handleBackClick = () => {
+    void navigate(-1)
   }
 
   return (
@@ -41,18 +47,30 @@ const CheckoutForm = () => {
             <div className="p-4">
               <CartSummary isCheckout={true} />
             </div>
-            <div className="flex justify-end mt-2 px-4">
-              <Button
-                size="1"
-                onClick={() => {
-                  handleAccordionToggle("checkout-2")
-                }}
-              >
-                <span className="cursor-pointer">
-                  2. Billing And Shipping{" "}
-                  <FontAwesomeIcon icon={faArrowRight} size="sm" />
-                </span>
-              </Button>
+            <div className="px-4 w-full">
+              <Flex className="justify-between w-full mt-4">
+                <div className="grow">
+                  <Button size="1" onClick={handleBackClick}>
+                    <span className="cursor-pointer">
+                      <FontAwesomeIcon icon={faArrowLeft} size="sm" /> Continue
+                      Shopping
+                    </span>
+                  </Button>
+                </div>
+                <div className="grow flex justify-end">
+                  <Button
+                    size="1"
+                    onClick={() => {
+                      handleAccordionToggle("checkout-2")
+                    }}
+                  >
+                    <span className="cursor-pointer">
+                      2. Billing And Shipping{" "}
+                      <FontAwesomeIcon icon={faArrowRight} size="sm" />
+                    </span>
+                  </Button>
+                </div>
+              </Flex>
             </div>
           </Accordion.Content>
         </Accordion.Item>
@@ -83,7 +101,7 @@ const CheckoutForm = () => {
                   >
                     <span className="cursor-pointer">
                       <FontAwesomeIcon icon={faArrowLeft} size="sm" /> 1. Cart
-                      Contents
+                      Summary
                     </span>
                   </Button>
                 </div>

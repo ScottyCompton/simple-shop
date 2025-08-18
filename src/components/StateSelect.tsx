@@ -1,35 +1,90 @@
-import { Select } from '@radix-ui/themes'
-import { useGetUserStatesQuery } from '../features/shop/userApiSlice'
+import { Select } from "@radix-ui/themes"
+import { useGetUserStatesQuery } from "../features/shop/userApiSlice"
+import "../css/stateselect.css"
+import { useState } from "react"
 
 type StateSelectProps = {
-  value?: string;
+  value?: string
+  onChange?: (value: string) => void
+  name?: string
 }
 
-const StateSelect:React.FC<StateSelectProps> = ({value}: StateSelectProps) => {
-  const { data, isLoading, isError, isUninitialized } = useGetUserStatesQuery(undefined);
+const StateSelect: React.FC<StateSelectProps> = ({
+  value,
+  onChange,
+  name,
+}: StateSelectProps) => {
+  const [selectedState, setSelectedState] = useState(value ?? "")
+  const { data, isLoading, isError, isUninitialized } =
+    useGetUserStatesQuery(undefined)
 
   if (isLoading || isUninitialized) {
-    return <div>Loading...</div>;
+    return (
+      <div className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm bg-gray-50 text-gray-500 text-sm">
+        Loading states...
+      </div>
+    )
   }
 
   if (isError) {
-    return <div>Error loading states</div>;
+    return (
+      <div className="w-full rounded-md border border-red-300 px-3 py-2 shadow-sm bg-red-50 text-red-500 text-sm">
+        Error loading states
+      </div>
+    )
   }
 
-  const {states} = data
-  
+  const { states } = data
+
+  const handleValueChange = (val: string) => {
+    setSelectedState(val)
+    if (onChange) {
+      onChange(val)
+    }
+
+    // Create and dispatch a custom change event for react-hook-form
+    if (name) {
+      const event = new CustomEvent("stateSelect", {
+        bubbles: true,
+        detail: { name, value: val },
+      })
+      document.dispatchEvent(event)
+    }
+  }
+
   return (
-    <Select.Root defaultValue={value}>
-	<Select.Trigger />
-	<Select.Content>
-		<Select.Group>
-			<Select.Label>State</Select.Label>
-            {states.map((state) => (
-			<Select.Item key={state.abbr} value={state.abbr}>{state.state}  </Select.Item>
-		))}
-		</Select.Group>
-	</Select.Content>
-</Select.Root>
+    <div className="select-in-dialog">
+      <input type="hidden" name={name} value={selectedState} />
+      <Select.Root
+        size="2"
+        defaultValue={value}
+        value={selectedState}
+        onValueChange={handleValueChange}
+      >
+        <Select.Trigger className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-left flex items-center justify-between" />
+        <Select.Content
+          position="popper"
+          aria-describedby={undefined}
+          sideOffset={5}
+          align="start"
+          avoidCollisions
+          style={{ zIndex: 2000 }}
+        >
+          <Select.Group>
+            <Select.Label className="px-3 py-2 text-sm font-medium text-gray-700 border-b border-gray-100">
+              State
+            </Select.Label>
+            <div className="max-h-[300px] overflow-y-auto p-1">
+              {states.map(state => (
+                <Select.Item key={state.abbr} value={state.abbr}>
+                  {state.state}
+                </Select.Item>
+              ))}
+            </div>
+          </Select.Group>
+        </Select.Content>
+      </Select.Root>
+    </div>
   )
 }
 
