@@ -1,7 +1,7 @@
 import { Box, Flex } from "@radix-ui/themes"
-import { useAppSelector } from "../../../../app/hooks"
-import { selectUser } from "../../../../features/shop/usersSlice"
-import { useGetUserByIdQuery } from "../../../../features/shop/userApiSlice"
+import { useAppSelector } from "@/app/hooks"
+import { selectUser } from "@/features/shop/usersSlice"
+import { useGetUserByIdQuery } from "@/features/shop/userApiSlice"
 import BillShipEditDialog from "./BillShipEditDialog"
 
 type BillShipBoxProps = {

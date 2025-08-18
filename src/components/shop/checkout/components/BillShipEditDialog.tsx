@@ -2,7 +2,7 @@ import * as Dialog from "@radix-ui/react-dialog"
 import CheckoutBillingShippingEdit from "../CheckoutBillingShippingEdit"
 import { useState } from "react"
 import { Button } from "@radix-ui/themes"
-import "../../../../css/dialog.css"
+import "@/css/dialog.css"
 
 type BillShipEditDialogProps = {
   editType: "billing" | "shipping"

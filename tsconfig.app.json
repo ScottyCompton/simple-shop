@@ -6,6 +6,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "baseUrl": ".",
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -15,6 +16,19 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "resolveJsonModule": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@css": ["./src/css"],
+      "@css/*": ["./src/css/*"],
+      "@hooks": ["./src/app/hooks"],
+      "@app/hooks": ["./src/app/hooks"],
+      "@types": ["./src/types"],
+      "@types/*": ["./src/types/*"],
+      "@features": ["./src/features"],
+      "@features/*": ["./src/features/*"],
+      "@components": ["./src/components"],
+      "@components/*": ["./src/components/*"]
+    },
 
     /* Linting */
     "strict": true,

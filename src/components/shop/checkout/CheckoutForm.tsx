@@ -1,7 +1,7 @@
 import CartSummary from "../cart/CartSummary"
 import CheckoutBillingShipping from "./CheckoutBillingShipping"
 import * as Accordion from "@radix-ui/react-accordion"
-import "../../../css/accordion.css"
+import "@css/accordion.css"
 import { useState } from "react"
 import { Button, Flex } from "@radix-ui/themes"
 import CheckoutPayment from "./CheckoutPayment"

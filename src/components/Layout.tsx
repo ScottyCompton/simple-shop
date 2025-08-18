@@ -1,22 +1,22 @@
-import Header from './Header/Header'
-import Footer from './Footer'
-import { Outlet } from 'react-router-dom'
-import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { selectUser, setUser } from '../features/shop/usersSlice';
-import type { User } from '../types';
+import Header from "./Header/Header"
+import Footer from "./Footer"
+import { Outlet } from "react-router-dom"
+import { useAppSelector, useAppDispatch } from "@/app/hooks"
+import { selectUser, setUser } from "@/features/shop/usersSlice"
+import type { User } from "../types"
 
 const Layout = () => {
   const dispatch = useAppDispatch()
-  const isLoggedIn = useAppSelector(selectUser) !== null;
+  const isLoggedIn = useAppSelector(selectUser) !== null
 
   if (!isLoggedIn) {
-    const localUserData: User | null = JSON.parse(localStorage.getItem('user') ?? 'null') as User | null;
+    const localUserData: User | null = JSON.parse(
+      localStorage.getItem("user") ?? "null",
+    ) as User | null
     if (localUserData) {
-      dispatch(setUser(localUserData));
+      dispatch(setUser(localUserData))
     }
   }
-
-
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">

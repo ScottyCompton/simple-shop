@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import type { ShippingType, ShippingTypesApiResponse } from "../../../../types"
+import type { ShippingType, ShippingTypesApiResponse } from "@/types"
 import { Select } from "@radix-ui/themes"
 
 type ShippingSelectProps = {

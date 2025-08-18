@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form"
 import { useEffect } from "react"
-import type { UserBilling as BillingFormData } from "../../../types"
-import "../../../css/checkout.css"
+import type { UserBilling as BillingFormData } from "@/types"
+import "@/css/checkout.css"
 import StateSelect from "../../StateSelect"
-import { useAppSelector } from "../../../app/hooks"
-import { selectUser } from "../../../features/shop/usersSlice"
-import { useGetUserByIdQuery } from "../../../features/shop/userApiSlice"
+import { useAppSelector } from "@/app/hooks"
+import { selectUser } from "@/features/shop/usersSlice"
+import { useGetUserByIdQuery } from "@/features/shop/userApiSlice"
 
 type CheckoutBillingShippingEditProps = {
   editType: "billing" | "shipping"
