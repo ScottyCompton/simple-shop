@@ -1,6 +1,6 @@
 import { Select } from "@radix-ui/themes"
-import { useGetUserStatesQuery } from "../features/shop/userApiSlice"
-import "../css/stateselect.css"
+import { useGetUserStatesQuery } from "@/features/shop/userApiSlice"
+import "@/css/stateselect.css"
 import { useState } from "react"
 
 type StateSelectProps = {

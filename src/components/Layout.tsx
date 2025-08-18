@@ -3,7 +3,7 @@ import Footer from "./Footer"
 import { Outlet } from "react-router-dom"
 import { useAppSelector, useAppDispatch } from "@/app/hooks"
 import { selectUser, setUser } from "@/features/shop/usersSlice"
-import type { User } from "../types"
+import type { User } from "@/types"
 
 const Layout = () => {
   const dispatch = useAppDispatch()
