@@ -53,7 +53,7 @@ const StateSelect: React.FC<StateSelectProps> = ({
   }
 
   return (
-    <div className="select-in-dialog">
+    <div className="select-in-dialog w-full" id="state-select-container">
       <input type="hidden" name={name} value={selectedState} />
       <Select.Root
         size="2"
@@ -61,14 +61,29 @@ const StateSelect: React.FC<StateSelectProps> = ({
         value={selectedState}
         onValueChange={handleValueChange}
       >
-        <Select.Trigger className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-left flex items-center justify-between" />
+        <Select.Trigger
+          className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-left flex items-center justify-between bg-white h-[38px]"
+          style={{
+            boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+            appearance: "none",
+          }}
+        >
+          {selectedState ? (
+            <span>
+              {states.find(s => s.abbr === selectedState)?.state ??
+                selectedState}
+            </span>
+          ) : (
+            <span className="text-gray-400">Select a state</span>
+          )}
+        </Select.Trigger>
         <Select.Content
           position="popper"
           aria-describedby={undefined}
           sideOffset={5}
           align="start"
           avoidCollisions
-          style={{ zIndex: 2000 }}
+          style={{ zIndex: 2500 }}
         >
           <Select.Group>
             <Select.Label className="px-3 py-2 text-sm font-medium text-gray-700 border-b border-gray-100">
@@ -76,7 +91,11 @@ const StateSelect: React.FC<StateSelectProps> = ({
             </Select.Label>
             <div className="max-h-[300px] overflow-y-auto p-1">
               {states.map(state => (
-                <Select.Item key={state.abbr} value={state.abbr}>
+                <Select.Item
+                  key={state.abbr}
+                  value={state.abbr}
+                  className="cursor-pointer hover:bg-gray-50"
+                >
                   {state.state}
                 </Select.Item>
               ))}

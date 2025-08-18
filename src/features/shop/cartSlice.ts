@@ -1,12 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit"
 import type { PayloadAction } from "@reduxjs/toolkit"
 import type { CartItem } from "../../types"
-import type { ShippingType } from "../../types"
 
 const initialState = {
   items: [] as CartItem[],
   category: "",
-  shippingTypes: [] as ShippingType[],
 }
 
 export const cartSlice = createSlice({

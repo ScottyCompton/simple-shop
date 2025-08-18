@@ -1,36 +1,51 @@
 /* Override default z-index for select dropdown inside dialog */
 /* This targets all Radix UI select components */
 [data-radix-popper-content-wrapper] {
-  z-index: 1500 !important;
+  z-index: 2500 !important;
 }
 
 .select-in-dialog [data-radix-select-content] {
-  z-index: 1500 !important;
-  /* border-radius: 0.375rem !important; */
+  z-index: 2500 !important;
+  border-radius: 0.375rem !important;
   box-shadow:
     0 1px 3px rgba(0, 0, 0, 0.1),
     0 1px 2px rgba(0, 0, 0, 0.06) !important;
   overflow: hidden !important;
-  /* border: 1px solid rgba(209, 213, 219, 1) !important; */
+  border: 1px solid rgba(209, 213, 219, 1) !important;
 }
 
-/* Ensure the trigger button is fully clickable */
+/* Ensure the trigger button is fully clickable and styled like other inputs */
 .select-in-dialog [data-radix-select-trigger] {
   position: relative;
   z-index: 1050;
   height: 38px;
   display: flex;
   align-items: center;
+  background-color: white !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 0.375rem !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+  padding: 0.5rem 0.75rem !important;
+  width: 100% !important;
 }
 
 /* Style the select dropdown items */
 .select-in-dialog [data-radix-select-item] {
   transition: background-color 0.2s ease;
+  padding: 5px 8px !important;
+  margin: 2px !important;
+  border-radius: 4px !important;
 }
 
 .select-in-dialog [data-radix-select-item][data-highlighted] {
   background-color: rgba(59, 130, 246, 0.1) !important;
   color: rgba(30, 64, 175, 1) !important;
+}
+
+.select-in-dialog [data-radix-select-item][data-state="checked"] {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+  color: rgba(30, 64, 175, 1) !important;
+  font-weight: 500 !important;
 }
 
 /* Style the select icon */
@@ -39,4 +54,26 @@
   font-size: 0.7em;
   margin-left: auto;
   color: #6b7280;
+  margin-right: 4px;
+}
+
+/* Fix placeholder text */
+.select-in-dialog [data-placeholder] {
+  color: #9ca3af !important;
+}
+
+#state-select-container button {
+  padding: 9px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  --tw-shadow:
+    0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)),
+    0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+  box-shadow:
+    var(--tw-inset-shadow), var(--tw-inset-ring-shadow),
+    var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+}
+
+#state-select-container svg {
+  margin-left: 5px;
 }

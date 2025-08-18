@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form"
 import { useEffect } from "react"
 import type { UserBilling as BillingFormData } from "../../../types"
-// import "../../../css/checkout.css"
+import "../../../css/checkout.css"
 import StateSelect from "../../StateSelect"
 import { useAppSelector } from "../../../app/hooks"
 import { selectUser } from "../../../features/shop/usersSlice"
@@ -33,11 +33,6 @@ const CheckoutBillingShippingEdit: React.FC<
         : data.user.shipping
       : undefined,
   })
-
-  // Log the type of edit (billing or shipping)
-  useEffect(() => {
-    console.log(editType)
-  }, [editType])
 
   // Update form values when user data is loaded
   useEffect(() => {
@@ -210,7 +205,7 @@ const CheckoutBillingShippingEdit: React.FC<
             >
               State
             </label>
-            <div className="relative z-[1100]">
+            <div className="relative" style={{ zIndex: 2000 }}>
               {/* Higher z-index to ensure dropdown is visible */}
               <input
                 type="hidden"
