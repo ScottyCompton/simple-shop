@@ -23,6 +23,7 @@
       "@hooks": ["./src/app/hooks"],
       "@app/hooks": ["./src/app/hooks"],
       "@types": ["./src/types"],
+      "@ui": ["./src/components/ui"],
       "@types/*": ["./src/types/*"],
       "@features": ["./src/features"],
       "@features/*": ["./src/features/*"],

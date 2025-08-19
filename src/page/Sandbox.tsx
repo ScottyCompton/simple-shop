@@ -1,5 +1,11 @@
+import StateSelectTest from "@/components/ui/StateSelectTest"
+
 const Sandbox = () => {
-  return <div>Sandbox</div>
+  return (
+    <div>
+      <StateSelectTest />
+    </div>
+  )
 }
 
 export default Sandbox

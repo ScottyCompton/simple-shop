@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import type {
-  StatesApiResponse,
   StatesApiDataResponse,
   UserApiDataLoginResponse,
   UserApiLoginResponse,
@@ -21,7 +20,6 @@ export const userApiSlice = createApi({
     getUserStates: build.query<StatesApiDataResponse, undefined>({
       query: () => "/states/abbr",
       providesTags: (_result, _error, id) => [{ type: "User", id }],
-      transformResponse: (response: StatesApiResponse) => response.data,
     }),
     authenticateUser: build.mutation<
       UserApiDataLoginResponse,

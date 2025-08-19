@@ -1,10 +1,10 @@
-import { useAppSelector } from "../../../app/hooks"
-import { cartItems } from "../../../features/shop/cartSlice"
+import { useAppSelector } from "@/app/hooks"
+import { cartItems } from "@/features/shop/cartSlice"
 import CartSummaryItem from "./CartSummaryItem"
 import { Flex, Button } from "@radix-ui/themes"
 import { Link } from "react-router-dom"
 import { useState, useEffect } from "react"
-import ShippingSelect from "../../ui/ShippingSelect"
+import { ShippingSelect } from "@/components/ui"
 
 type CartSummaryProps = {
   isCheckout?: boolean

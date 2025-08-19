@@ -142,22 +142,42 @@ export type ShippingTypesResponse = {
   shippingTypes: ShippingType[]
 }
 
-export type UseFetchDataHookResult = {
-  data: FetchData | null
-  loading: boolean
-  error: string | null
-  apiUrl: string | null
+export type UserBillingTypes = keyof UserBilling
+
+export const getProperty = <T, K extends keyof T>(obj: T, key: K) => {
+  return obj[key]
 }
 
-export type FetchDataResult = {
-  result: FetchData
-}
+export type MakePick<T, K extends keyof T> = { [key in K]: T[key] }
 
-export type FetchData =
-  | StateItem[]
-  | ShippingType[]
-  | Product[]
-  | HomeCategory[]
-  | UserDetail
-  | User
-  | Product
+export type MakePartial<T> = { [key in keyof T]?: T[key] }
+
+export type MakeRequired<T> = { [key in keyof T]-?: T[key] }
+
+export type MakeCopy<T> = { [key in keyof T]: T[key] }
+
+export type Omit<T, K> = Pick<T, Exclude<keyof T, K>>
+
+export type PartialUserBilling = Partial<UserBilling>
+
+export type RequiredUserBilling = Required<UserBilling>
+
+export type UserBillingCopy = MakeCopy<UserBilling>
+
+export type UserBillingRequired = MakeRequired<UserBillingCopy>
+
+export type UserBillingOptional = MakePartial<UserBillingRequired>
+
+export type MakeIntersect<T, U> = T extends U ? T : never
+
+export type MakeExclude<T, U> = T extends U ? never : T
+
+export type CartProductIntersect = MakeIntersect<keyof CartItem, keyof Product>
+
+export type ProductCartIntersect = MakeIntersect<keyof Product, keyof CartItem>
+
+export type CartProductExcludes = MakeExclude<keyof CartItem, keyof Product>
+
+export type ProductCartExcludes = MakeExclude<keyof Product, keyof CartItem>
+
+export type MakPickProductCart = MakePick<CartItem, "id" | "name" | "price">

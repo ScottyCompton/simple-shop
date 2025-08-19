@@ -23,6 +23,10 @@ declare module "@types" {
   export * from "./types"
 }
 
+declare module "@ui" {
+  export * from "./app/components/ui"
+}
+
 declare module "@features/*" {
   // Using unknown instead of any for better type safety
   export * from "./features/*"

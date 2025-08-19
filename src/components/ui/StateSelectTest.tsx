@@ -10,7 +10,7 @@ type StateSelectProps = {
   name?: string
 }
 
-const StateSelect: React.FC<StateSelectProps> = ({
+const StateSelectTest: React.FC<StateSelectProps> = ({
   value,
   onChange,
   name,
@@ -109,4 +109,4 @@ const StateSelect: React.FC<StateSelectProps> = ({
   )
 }
 
-export default StateSelect
+export default StateSelectTest
