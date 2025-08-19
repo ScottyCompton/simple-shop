@@ -1,5 +1,5 @@
 import { Select } from "@radix-ui/themes"
-import { useFetchData, FETCHTYPE } from "@/hooks/useFetchData"
+import { useAxiosGet, FETCHTYPE } from "@/hooks/useAxiosGet"
 import "@/css/stateselect.css"
 import { useState } from "react"
 import type { StateItem } from "@/types"
@@ -16,7 +16,7 @@ const StateSelect: React.FC<StateSelectProps> = ({
   name,
 }: StateSelectProps) => {
   const [selectedState, setSelectedState] = useState(value ?? "")
-  const { data: states, error, loading } = useFetchData(FETCHTYPE.STATES)
+  const { data: states, error, loading } = useAxiosGet(FETCHTYPE.STATES)
 
   if (loading) {
     return (

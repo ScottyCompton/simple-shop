@@ -1,7 +1,7 @@
 import { useState } from "react"
 import type { ShippingType } from "@/types"
 import { Select } from "@radix-ui/themes"
-import { useFetchData, FETCHTYPE } from "@/hooks/useFetchData"
+import { useAxiosGet, FETCHTYPE } from "@/hooks/useAxiosGet"
 
 type ShippingSelectProps = {
   onSelectShippingType: (value: number) => void
@@ -15,7 +15,7 @@ const ShippingSelect: React.FC<ShippingSelectProps> = ({
     data: shippingTypes,
     error,
     loading,
-  } = useFetchData(FETCHTYPE.SHIPPING)
+  } = useAxiosGet(FETCHTYPE.SHIPPING)
 
   if (error) {
     return <div>---</div>
@@ -24,6 +24,8 @@ const ShippingSelect: React.FC<ShippingSelectProps> = ({
   if (loading) {
     return <div>...</div>
   }
+
+  console.log(shippingTypes)
 
   const handleSelectShippingType = (value: string) => {
     setSelectedShippingType(value)
@@ -51,11 +53,12 @@ const ShippingSelect: React.FC<ShippingSelectProps> = ({
       <Select.Content>
         <Select.Group className="w-min-150">
           <Select.Label>Shipping Method</Select.Label>
-          {(shippingTypes as ShippingType[]).map(option => (
-            <Select.Item key={option.value} value={option.value}>
-              {option.label} - ${option.price}
-            </Select.Item>
-          ))}
+          {Array.isArray(shippingTypes) &&
+            (shippingTypes as ShippingType[]).map(option => (
+              <Select.Item key={option.value} value={option.value}>
+                {option.label} - ${option.price}
+              </Select.Item>
+            ))}
         </Select.Group>
       </Select.Content>
     </Select.Root>
