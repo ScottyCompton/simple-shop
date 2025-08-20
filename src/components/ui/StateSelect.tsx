@@ -1,8 +1,7 @@
 import { Select } from "@radix-ui/themes"
-import { useAxiosGet, FETCHTYPE } from "@/hooks/useAxiosGet"
+import { useAxiosGet } from "@/hooks/useAxiosGet"
 import "@/css/stateselect.css"
 import { useState } from "react"
-import type { StateItem } from "@/types"
 
 type StateSelectProps = {
   value?: string
@@ -16,9 +15,9 @@ const StateSelect: React.FC<StateSelectProps> = ({
   name,
 }: StateSelectProps) => {
   const [selectedState, setSelectedState] = useState(value ?? "")
-  const { data: states, error, loading } = useAxiosGet(FETCHTYPE.STATES)
+  const { data: states, isError, isLoading } = useAxiosGet("states")
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm bg-gray-50 text-gray-500 text-sm">
         Loading states...
@@ -26,7 +25,7 @@ const StateSelect: React.FC<StateSelectProps> = ({
     )
   }
 
-  if (error) {
+  if (isError) {
     return (
       <div className="w-full rounded-md border border-red-300 px-3 py-2 shadow-sm bg-red-50 text-red-500 text-sm">
         Error loading states
@@ -69,10 +68,8 @@ const StateSelect: React.FC<StateSelectProps> = ({
         >
           {selectedState ? (
             <span>
-              {Array.isArray(states)
-                ? ((states as StateItem[]).find(s => s.abbr === selectedState)
-                    ?.state ?? selectedState)
-                : selectedState}
+              {states?.find(s => s.abbr === selectedState)?.state ??
+                selectedState}
             </span>
           ) : (
             <span className="text-gray-400">Select a state</span>
@@ -91,16 +88,15 @@ const StateSelect: React.FC<StateSelectProps> = ({
               State
             </Select.Label>
             <div className="max-h-[300px] overflow-y-auto p-1">
-              {Array.isArray(states) &&
-                (states as StateItem[]).map((state: StateItem) => (
-                  <Select.Item
-                    key={state.abbr}
-                    value={state.abbr}
-                    className="cursor-pointer hover:bg-gray-50"
-                  >
-                    {state.state}
-                  </Select.Item>
-                ))}
+              {states?.map(state => (
+                <Select.Item
+                  key={state.abbr}
+                  value={state.abbr}
+                  className="cursor-pointer hover:bg-gray-50"
+                >
+                  {state.state}
+                </Select.Item>
+              ))}
             </div>
           </Select.Group>
         </Select.Content>

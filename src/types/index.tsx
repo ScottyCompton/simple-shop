@@ -80,10 +80,6 @@ export type UserDetailApiResponse = {
   }
 }
 
-export type StatesApiDataResponse = {
-  states: StateItem[]
-}
-
 export type UserDetailApiDataResponse = {
   user: UserDetail
 }
@@ -131,6 +127,10 @@ export type StateItem = {
   state: string
 }
 
+export type StateItems = {
+  states: StateItem[]
+}
+
 export type ShippingType = {
   id: number
   value: string
@@ -138,26 +138,25 @@ export type ShippingType = {
   price: number
 }
 
+export type ShippingTypes = {
+  shippingTypes: ShippingType[]
+}
+
 export type ShippingTypesResponse = {
   shippingTypes: ShippingType[]
 }
 
-export type UseFetchDataHookResult = {
-  data: FetchData | null
-  loading: boolean
-  error: string | null
-  apiUrl: string | null
+// Generic API response structure
+export type ApiResponse<T> = {
+  data: Record<string, T>
 }
 
-export type FetchDataResult = {
-  result: FetchData
+// Type mapping for different endpoints
+export type EndpointDataMap = {
+  states: StateItem[]
+  shippingtypes: ShippingType[]
+  // Add new endpoints here as needed, following this pattern:
+  // endpoint: ResultType[]
 }
 
-export type FetchData =
-  | StateItem[]
-  | ShippingType[]
-  | Product[]
-  | HomeCategory[]
-  | UserDetail
-  | User
-  | Product
+export type EndpointKeys = keyof EndpointDataMap

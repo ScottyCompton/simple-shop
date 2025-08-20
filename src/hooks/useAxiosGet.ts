@@ -1,16 +1,7 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
 import type { AxiosError } from "axios"
-import type {
-  FetchData,
-  UseFetchDataHookResult,
-  FetchDataResult,
-} from "@/types"
-
-export enum FETCHTYPE {
-  SHIPPING = "/shippingtypes",
-  STATES = "/states",
-}
+import type { EndpointKeys, EndpointDataMap } from "@/types"
 
 type IErrorBase<T> = {
   error: Error | AxiosError<T>
@@ -44,38 +35,55 @@ export function axiosErrorHandler<T>(
   }
 }
 
-export const useAxiosGet = (fetchType: FETCHTYPE): UseFetchDataHookResult => {
-  const [data, setData] = useState<FetchData | null>(null)
-  const [loading, setLoading] = useState<boolean>(true)
-  const [error, setError] = useState<string | null>(null)
-  const [apiUrl, setApiUrl] = useState<string>("")
+export function useAxiosGet<T extends EndpointKeys>(fetchType: T) {
+  type ResultType = EndpointDataMap[T]
 
-  const baseUrl = import.meta.env.VITE_API_URL as string
+  const [data, setData] = useState<ResultType | null>(null)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [isError, setIsError] = useState<string | null>(null)
+
+  const apiUrl = `${import.meta.env.VITE_API_URL as string}/${fetchType}`
+
   useEffect(() => {
-    setApiUrl(`${baseUrl}${fetchType}`)
-
     const fetchData = async () => {
       await axios
         .get(apiUrl)
         .then(response => {
-          const { result } = response.data as FetchDataResult
-          setData(result)
+          // Get the response data with type safety
+          type ApiResponseStructure = {
+            data?: Record<string, unknown>
+          }
+
+          const responseBody = response.data as ApiResponseStructure
+
+          if (responseBody.data) {
+            // Extract the data property name and value dynamically
+            const entries = Object.entries(responseBody.data)
+
+            // Find the first array in the response data
+            for (const [, value] of entries) {
+              if (Array.isArray(value)) {
+                setData(value as ResultType)
+                break
+              }
+            }
+          }
         })
         .catch(
-          axiosErrorHandler<FetchDataResult>(res => {
+          axiosErrorHandler<unknown>(res => {
             if (res.type === "axios-error") {
-              setError(res.error.message || "")
+              setIsError(res.error.message || "")
             } else {
-              setError("An unexpected error occurred.")
+              setIsError("An unexpected error occurred.")
             }
           }),
         )
         .finally(() => {
-          setLoading(false)
+          setIsLoading(false)
         })
     }
     void fetchData()
-  }, [apiUrl, baseUrl, fetchType])
+  }, [apiUrl, fetchType])
 
-  return { data, loading, error, apiUrl }
+  return { data, isLoading, isError, apiUrl }
 }
