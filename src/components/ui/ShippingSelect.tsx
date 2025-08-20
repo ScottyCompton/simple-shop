@@ -1,7 +1,6 @@
 import { useState } from "react"
-import type { ShippingType } from "@/types"
 import { Select } from "@radix-ui/themes"
-import { useFetchData, FETCHTYPE } from "@/hooks/useFetchData"
+import { useAxiosGet } from "@/hooks/useAxiosGet"
 
 type ShippingSelectProps = {
   onSelectShippingType: (value: number) => void
@@ -13,25 +12,22 @@ const ShippingSelect: React.FC<ShippingSelectProps> = ({
   const [selectedShippingType, setSelectedShippingType] = useState("standard")
   const {
     data: shippingTypes,
-    error,
-    loading,
-  } = useFetchData(FETCHTYPE.SHIPPING)
+    isError,
+    isLoading,
+  } = useAxiosGet("shippingtypes")
 
-  if (error) {
+  if (isError) {
     return <div>---</div>
   }
 
-  if (loading) {
+  if (isLoading) {
     return <div>...</div>
   }
 
   const handleSelectShippingType = (value: string) => {
     setSelectedShippingType(value)
-    if (Array.isArray(shippingTypes)) {
-      const price =
-        (shippingTypes as ShippingType[]).find(
-          (type: ShippingType) => type.value === value,
-        )?.price ?? 0
+    if (shippingTypes) {
+      const price = shippingTypes.find(type => type.value === value)?.price ?? 0
       onSelectShippingType(price)
     }
   }
@@ -40,10 +36,7 @@ const ShippingSelect: React.FC<ShippingSelectProps> = ({
     <Select.Root
       value={selectedShippingType}
       defaultValue={
-        Array.isArray(shippingTypes) &&
-        (shippingTypes as ShippingType[]).length > 0
-          ? (shippingTypes as ShippingType[])[0].value
-          : ""
+        shippingTypes && shippingTypes.length > 0 ? shippingTypes[0].value : ""
       }
       onValueChange={handleSelectShippingType}
     >
@@ -51,7 +44,7 @@ const ShippingSelect: React.FC<ShippingSelectProps> = ({
       <Select.Content>
         <Select.Group className="w-min-150">
           <Select.Label>Shipping Method</Select.Label>
-          {(shippingTypes as ShippingType[]).map(option => (
+          {shippingTypes?.map(option => (
             <Select.Item key={option.value} value={option.value}>
               {option.label} - ${option.price}
             </Select.Item>
