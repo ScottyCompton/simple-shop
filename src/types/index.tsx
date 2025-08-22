@@ -67,11 +67,13 @@ export type HomeCategory = {
 export type UserApiLoginResponse = {
   data: {
     user: User
+    token?: string
   }
 }
 
 export type UserApiDataLoginResponse = {
   user: User
+  token?: string
 }
 
 export type UserDetailApiResponse = {
@@ -84,12 +86,24 @@ export type UserDetailApiDataResponse = {
   user: UserDetail
 }
 
+export type Auth = {
+  id: number
+  provider: string
+  providerId: string
+  avatar?: string | null
+  userId: number
+  createdAt: string
+  lastUsedAt: string
+}
+
 export type User = {
   id: number
   firstName: string
   lastName: string
   email: string
-  // Add any other user fields you need
+  avatar?: string | null
+  auths?: Auth[]
+  authProviders?: string[]
 }
 
 export type UserDetail = {
@@ -147,8 +161,8 @@ export type ShippingTypesResponse = {
 }
 
 // Generic API response structure
-export type ApiResponse<T> = {
-  data: Record<string, T>
+export type ApiResponseStructure = {
+  data?: Record<string, unknown>
 }
 
 // Type mapping for different endpoints
@@ -160,3 +174,17 @@ export type EndpointDataMap = {
 }
 
 export type EndpointKeys = keyof EndpointDataMap
+
+export type UserAuthApiResponse = {
+  id: number
+  firstName: string
+  lastName: string
+  email: string
+  avatar: string
+  authProviders: string[]
+}
+
+export type UserAuthApiTransformedResponse = {
+  isValid: boolean
+  user: UserAuthApiResponse
+}
