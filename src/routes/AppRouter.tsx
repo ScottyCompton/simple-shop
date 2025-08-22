@@ -1,4 +1,13 @@
-import { Home, Cart, Shop, ProductDetails, Checkout, Login } from "../page/"
+import {
+  Home,
+  Cart,
+  Shop,
+  ProductDetails,
+  Checkout,
+  Login,
+  AuthCallback,
+  Profile,
+} from "../page/"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import ProtectedRoute from "./ProtectedRoute"
 import Layout from "@/components/Layout"
@@ -25,6 +34,15 @@ const AppRouter = () => {
             }
           />
           <Route path="/login" element={<Login />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
         </Route>
       </Routes>
     </Router>

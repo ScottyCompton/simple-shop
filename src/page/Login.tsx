@@ -14,6 +14,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLock, faSackDollar } from "@fortawesome/free-solid-svg-icons"
+import { faGoogle, faGithub } from "@fortawesome/free-brands-svg-icons"
 
 const Login = () => {
   const [authenticateUser] = useAuthenticateUserMutation()
@@ -23,6 +24,7 @@ const Login = () => {
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
+  const apiUrl = import.meta.env.VITE_API_URL as string
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -137,6 +139,61 @@ const Login = () => {
             >
               {isLoading && <Spinner />} Sign in
             </Button>
+
+            <div className="flex items-center my-4">
+              <div className="flex-1 border-t border-gray-300"></div>
+              <Text size="2" color="gray" className="mx-4">
+                OR
+              </Text>
+              <div className="flex-1 border-t border-gray-300"></div>
+            </div>
+
+            <div className="space-y-3">
+              <Button
+                type="button"
+                className="w-full bg-white border border-gray-300 hover:bg-gray-50 text-black"
+                onClick={() => {
+                  // Store intent in localStorage to handle session persistence
+                  localStorage.setItem("authIntent", "google")
+                  // Store redirect path for after authentication
+                  const searchParams = new URLSearchParams(
+                    window.location.search,
+                  )
+                  const redirect = searchParams.get("redirect")
+                  if (redirect) {
+                    localStorage.setItem("authRedirect", redirect)
+                  }
+                  window.location.href = `${apiUrl}/auth/google`
+                }}
+              >
+                <FontAwesomeIcon
+                  icon={faGoogle}
+                  className="mr-2 text-red-500"
+                />{" "}
+                Sign in with Google
+              </Button>
+
+              <Button
+                type="button"
+                className="w-full bg-gray-800 hover:bg-gray-900"
+                onClick={() => {
+                  // Store intent in localStorage to handle session persistence
+                  localStorage.setItem("authIntent", "github")
+                  // Store redirect path for after authentication
+                  const searchParams = new URLSearchParams(
+                    window.location.search,
+                  )
+                  const redirect = searchParams.get("redirect")
+                  if (redirect) {
+                    localStorage.setItem("authRedirect", redirect)
+                  }
+                  window.location.href = `${apiUrl}/auth/github`
+                }}
+              >
+                <FontAwesomeIcon icon={faGithub} className="mr-2" /> Sign in
+                with GitHub
+              </Button>
+            </div>
 
             <div className="text-center mt-4">
               <Text size="1" color="gray">

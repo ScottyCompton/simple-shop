@@ -1,7 +1,7 @@
 import CartContents from "./ui/CartContents"
 import UserDisplay from "./ui/UserDisplay"
 import CategorySelect from "./ui/CategorySelect"
-import { Link } from "react-router"
+import { Link } from "react-router-dom"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { library } from "@fortawesome/fontawesome-svg-core"

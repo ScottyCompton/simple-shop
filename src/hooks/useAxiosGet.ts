@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
 import type { AxiosError } from "axios"
-import type { EndpointKeys, EndpointDataMap } from "@/types"
+import type {
+  EndpointKeys,
+  EndpointDataMap,
+  ApiResponseStructure,
+} from "@/types"
 
 type IErrorBase<T> = {
   error: Error | AxiosError<T>
@@ -50,10 +54,6 @@ export function useAxiosGet<T extends EndpointKeys>(fetchType: T) {
         .get(apiUrl)
         .then(response => {
           // Get the response data with type safety
-          type ApiResponseStructure = {
-            data?: Record<string, unknown>
-          }
-
           const responseBody = response.data as ApiResponseStructure
 
           if (responseBody.data) {
