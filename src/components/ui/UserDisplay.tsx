@@ -60,8 +60,19 @@ const UserDisplay = () => {
           setIsOpen(!isOpen)
         }}
       >
-        <FontAwesomeIcon icon={faUser} className="mr-1" />
-        {user.firstName}
+        {!user.avatar && (
+          <>
+            <FontAwesomeIcon icon={faUser} className="mr-1" />
+            {user.firstName}
+          </>
+        )}
+        {user.avatar && (
+          <img
+            src={user.avatar}
+            alt="User Avatar"
+            className="w-6 h-6 rounded-full object-cover mr-1"
+          />
+        )}
         <FontAwesomeIcon icon={faChevronDown} className="ml-1" />
       </button>
 

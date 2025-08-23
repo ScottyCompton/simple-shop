@@ -14,7 +14,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLock, faSackDollar } from "@fortawesome/free-solid-svg-icons"
-import { faGoogle, faGithub } from "@fortawesome/free-brands-svg-icons"
+import SocialLoginButton from "@/components/ui/SocialLoginButton"
 
 const Login = () => {
   const [authenticateUser] = useAuthenticateUserMutation()
@@ -24,7 +24,6 @@ const Login = () => {
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
-  const apiUrl = import.meta.env.VITE_API_URL as string
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -52,6 +51,26 @@ const Login = () => {
     }
   }
 
+  // const handleGoogleLogin = () => {
+  //   handleSocialLogin("google")
+  // }
+
+  // const handleGithubLogin = () => {
+  //   handleSocialLogin("github")
+  // }
+
+  // const handleSocialLogin = (which: string) => {
+  //   // Store intent in localStorage to handle session persistence
+  //   localStorage.setItem("authIntent", which)
+  //   // Store redirect path for after authentication
+  //   const searchParams = new URLSearchParams(window.location.search)
+  //   const redirect = searchParams.get("redirect")
+  //   if (redirect) {
+  //     localStorage.setItem("authRedirect", redirect)
+  //   }
+  //   window.location.href = `${apiUrl}/auth/${which}`
+  // }
+
   return (
     <div className="grid place-items-center h-[70vh]">
       <Card className="w-full max-w-md mx-4">
@@ -78,68 +97,75 @@ const Login = () => {
             }}
             className="space-y-4"
           >
-            <div>
-              <Text
-                as="label"
-                size="2"
-                weight="medium"
-                className="block mb-1.5"
-              >
-                Email
-              </Text>
-              <Flex>
-                <div className="flex items-center justify-center bg-gray-100 px-3 rounded-l-md border border-r-0 border-gray-300">
-                  <FontAwesomeIcon
-                    icon={faSackDollar}
-                    className="text-gray-500"
-                  />
+            <Flex direction="column" gap="2">
+              <div>
+                <div>
+                  <Text
+                    as="label"
+                    size="2"
+                    weight="medium"
+                    className="block mb-1.5"
+                  >
+                    Email
+                  </Text>
+                  <Flex>
+                    <div className="flex items-center justify-center bg-gray-100 px-3 rounded-l-md border border-r-0 border-gray-300">
+                      <FontAwesomeIcon
+                        icon={faSackDollar}
+                        className="text-gray-500"
+                      />
+                    </div>
+                    <TextField.Root
+                      placeholder="you@youremail.com"
+                      value={email}
+                      onChange={e => {
+                        setEmail(e.target.value)
+                      }}
+                      className="flex-1 rounded-l-none !border-l-0"
+                      required
+                    />
+                  </Flex>
                 </div>
-                <TextField.Root
-                  placeholder="you@youremail.com"
-                  value={email}
-                  onChange={e => {
-                    setEmail(e.target.value)
-                  }}
-                  className="flex-1 rounded-l-none !border-l-0"
-                  required
-                />
-              </Flex>
-            </div>
 
-            <div>
-              <Text
-                as="label"
-                size="2"
-                weight="medium"
-                className="block mb-1.5"
-              >
-                Password
-              </Text>
-              <Flex>
-                <div className="flex items-center justify-center bg-gray-100 px-3 rounded-l-md border border-r-0 border-gray-300">
-                  <FontAwesomeIcon icon={faLock} className="text-gray-500" />
+                <div>
+                  <Text
+                    as="label"
+                    size="2"
+                    weight="medium"
+                    className="block mb-1.5"
+                  >
+                    Password
+                  </Text>
+                  <Flex>
+                    <div className="flex items-center justify-center bg-gray-100 px-3 rounded-l-md border border-r-0 border-gray-300">
+                      <FontAwesomeIcon
+                        icon={faLock}
+                        className="text-gray-500"
+                      />
+                    </div>
+                    <TextField.Root
+                      type="password"
+                      placeholder="Password"
+                      value={password}
+                      onChange={e => {
+                        setPassword(e.target.value)
+                      }}
+                      className="flex-1 rounded-l-none !border-l-0"
+                      required
+                    />
+                  </Flex>
                 </div>
-                <TextField.Root
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={e => {
-                    setPassword(e.target.value)
-                  }}
-                  className="flex-1 rounded-l-none !border-l-0"
-                  required
-                />
-              </Flex>
-            </div>
-
-            <Button
-              type="submit"
-              className="w-full bg-blue-800 hover:bg-blue-700"
-              disabled={isLoading}
-            >
-              {isLoading && <Spinner />} Sign in
-            </Button>
-
+              </div>
+              <div>
+                <Button
+                  type="submit"
+                  className="!w-full bg-blue-800 hover:bg-blue-700 !cursor-pointer"
+                  disabled={isLoading}
+                >
+                  {isLoading && <Spinner />} Sign in
+                </Button>
+              </div>
+            </Flex>
             <div className="flex items-center my-4">
               <div className="flex-1 border-t border-gray-300"></div>
               <Text size="2" color="gray" className="mx-4">
@@ -147,54 +173,14 @@ const Login = () => {
               </Text>
               <div className="flex-1 border-t border-gray-300"></div>
             </div>
-
-            <div className="space-y-3">
-              <Button
-                type="button"
-                className="w-full bg-white border border-gray-300 hover:bg-gray-50 text-black"
-                onClick={() => {
-                  // Store intent in localStorage to handle session persistence
-                  localStorage.setItem("authIntent", "google")
-                  // Store redirect path for after authentication
-                  const searchParams = new URLSearchParams(
-                    window.location.search,
-                  )
-                  const redirect = searchParams.get("redirect")
-                  if (redirect) {
-                    localStorage.setItem("authRedirect", redirect)
-                  }
-                  window.location.href = `${apiUrl}/auth/google`
-                }}
-              >
-                <FontAwesomeIcon
-                  icon={faGoogle}
-                  className="mr-2 text-red-500"
-                />{" "}
-                Sign in with Google
-              </Button>
-
-              <Button
-                type="button"
-                className="w-full bg-gray-800 hover:bg-gray-900"
-                onClick={() => {
-                  // Store intent in localStorage to handle session persistence
-                  localStorage.setItem("authIntent", "github")
-                  // Store redirect path for after authentication
-                  const searchParams = new URLSearchParams(
-                    window.location.search,
-                  )
-                  const redirect = searchParams.get("redirect")
-                  if (redirect) {
-                    localStorage.setItem("authRedirect", redirect)
-                  }
-                  window.location.href = `${apiUrl}/auth/github`
-                }}
-              >
-                <FontAwesomeIcon icon={faGithub} className="mr-2" /> Sign in
-                with GitHub
-              </Button>
-            </div>
-
+            <Flex direction="column" gap="2">
+              <div className="flex-1 w-full my-4">
+                <SocialLoginButton loginType="Google" />
+              </div>
+              <div className="flex-1 w-full">
+                <SocialLoginButton loginType="GitHub" />
+              </div>
+            </Flex>
             <div className="text-center mt-4">
               <Text size="1" color="gray">
                 Don't have an account?{" "}
