@@ -104,6 +104,8 @@ export type User = {
   avatar?: string | null
   auths?: Auth[]
   authProviders?: string[]
+  hasBilling: boolean
+  hasShipping: boolean
 }
 
 export type UserDetail = {
@@ -182,6 +184,8 @@ export type UserAuthApiResponse = {
   email: string
   avatar: string
   authProviders: string[]
+  hasBilling: boolean
+  hasShipping: boolean
 }
 
 export type UserAuthApiTransformedResponse = {

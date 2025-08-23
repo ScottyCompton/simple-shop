@@ -14,6 +14,16 @@ export const userSlice = createSlice({
       state.user = action.payload
       localStorage.setItem("user", JSON.stringify(action.payload))
     },
+    setUserHasBilling: (state, action: PayloadAction<boolean>) => {
+      if (state.user) {
+        state.user.hasBilling = action.payload
+      }
+    },
+    setUserHasShipping: (state, action: PayloadAction<boolean>) => {
+      if (state.user) {
+        state.user.hasShipping = action.payload
+      }
+    },
     clearUser: state => {
       state.user = null
     },
@@ -23,5 +33,6 @@ export const userSlice = createSlice({
   },
 })
 
-export const { setUser, clearUser } = userSlice.actions
+export const { setUser, clearUser, setUserHasBilling, setUserHasShipping } =
+  userSlice.actions
 export const { selectUser } = userSlice.selectors

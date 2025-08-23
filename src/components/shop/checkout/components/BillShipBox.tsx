@@ -43,20 +43,28 @@ const BillShipBox: React.FC<BillShipBoxProps> = ({
             </div>
           </Flex>
         </div>
-        <div className="space-y-1 text-sm sm:text-base text-gray-700">
-          <div className="font-medium">
-            {fData.firstName} {fData.lastName}
+        {type === "billing" && !fData.address1 && (
+          <div>Provide your billing address to continue.</div>
+        )}
+        {type === "shipping" && !fData.address1 && (
+          <div>Provide your shipping address to continue.</div>
+        )}
+        {fData.address1 && (
+          <div className="space-y-1 text-sm sm:text-base text-gray-700">
+            <div className="font-medium">
+              {fData.firstName} {fData.lastName}
+            </div>
+            <div>{fData.address1}</div>
+            {fData.address2 && <div>{fData.address2}</div>}
+            <div>
+              {fData.city}, {fData.state} {fData.zip}
+            </div>
+            <div className="flex items-center pt-1">
+              <span className="text-gray-500">Phone:</span>
+              <span className="ml-2">{fData.phone}</span>
+            </div>
           </div>
-          <div>{fData.address1}</div>
-          {fData.address2 && <div>{fData.address2}</div>}
-          <div>
-            {fData.city}, {fData.state} {fData.zip}
-          </div>
-          <div className="flex items-center pt-1">
-            <span className="text-gray-500">Phone:</span>
-            <span className="ml-2">{fData.phone}</span>
-          </div>
-        </div>
+        )}
       </Box>
     </>
   )
