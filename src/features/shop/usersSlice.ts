@@ -17,11 +17,13 @@ export const userSlice = createSlice({
     setUserHasBilling: (state, action: PayloadAction<boolean>) => {
       if (state.user) {
         state.user.hasBilling = action.payload
+        state.user.lastUpdate = new Date().toISOString()
       }
     },
     setUserHasShipping: (state, action: PayloadAction<boolean>) => {
       if (state.user) {
         state.user.hasShipping = action.payload
+        state.user.lastUpdate = new Date().toISOString()
       }
     },
     clearUser: state => {
@@ -30,9 +32,17 @@ export const userSlice = createSlice({
   },
   selectors: {
     selectUser: state => state.user,
+    selectHasBilling: state => state.user?.hasBilling,
+    selectHasShipping: state => state.user?.hasShipping,
+    selectUserLastUpdate: state => state.user?.lastUpdate,
   },
 })
 
 export const { setUser, clearUser, setUserHasBilling, setUserHasShipping } =
   userSlice.actions
-export const { selectUser } = userSlice.selectors
+export const {
+  selectUser,
+  selectHasBilling,
+  selectHasShipping,
+  selectUserLastUpdate,
+} = userSlice.selectors

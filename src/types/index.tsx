@@ -106,6 +106,7 @@ export type User = {
   authProviders?: string[]
   hasBilling: boolean
   hasShipping: boolean
+  lastUpdate: Date | string
 }
 
 export type UserDetail = {
@@ -123,6 +124,7 @@ export type UserShipping = {
   state: string
   zip: string
   phone: string
+  useAsBilling: boolean
   shippingMethod?: string
 }
 
@@ -134,7 +136,8 @@ export type UserBilling = {
   city: string
   state: string
   zip: string
-  sameAsShipping: boolean
+  useAsShipping?: boolean
+  useAsBilling?: boolean
   phone: string
 }
 

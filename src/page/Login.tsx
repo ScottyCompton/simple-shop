@@ -35,7 +35,9 @@ const Login = () => {
 
       if (data) {
         console.log("Login successful:", data)
-        dispatch(setUser(data.user))
+        dispatch(
+          setUser({ ...data.user, lastUpdate: new Date().toISOString() }),
+        )
         const prev = document.referrer
         if (prev.includes("/checkout")) {
           void navigate("/checkout")
