@@ -34,7 +34,10 @@ const Login = () => {
       const { data } = await authenticateUser({ email, password })
 
       if (data) {
-        dispatch(setUser(data.user))
+        console.log("Login successful:", data)
+        dispatch(
+          setUser({ ...data.user, lastUpdate: new Date().toISOString() }),
+        )
         const prev = document.referrer
         if (prev.includes("/checkout")) {
           void navigate("/checkout")
@@ -50,26 +53,6 @@ const Login = () => {
       setIsLoading(false)
     }
   }
-
-  // const handleGoogleLogin = () => {
-  //   handleSocialLogin("google")
-  // }
-
-  // const handleGithubLogin = () => {
-  //   handleSocialLogin("github")
-  // }
-
-  // const handleSocialLogin = (which: string) => {
-  //   // Store intent in localStorage to handle session persistence
-  //   localStorage.setItem("authIntent", which)
-  //   // Store redirect path for after authentication
-  //   const searchParams = new URLSearchParams(window.location.search)
-  //   const redirect = searchParams.get("redirect")
-  //   if (redirect) {
-  //     localStorage.setItem("authRedirect", redirect)
-  //   }
-  //   window.location.href = `${apiUrl}/auth/${which}`
-  // }
 
   return (
     <div className="grid place-items-center h-[70vh]">

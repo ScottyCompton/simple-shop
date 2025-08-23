@@ -4,8 +4,15 @@ import type { UserBilling as BillingFormData } from "@/types"
 import "@/css/checkout.css"
 import { StateSelect } from "@/components/ui"
 import { useAppSelector } from "@/app/hooks"
-import { selectUser } from "@/features/shop/usersSlice"
+import {
+  selectUser,
+  setUserHasBilling,
+  setUserHasShipping,
+} from "@/features/shop/usersSlice"
 import { useGetUserByIdQuery } from "@/features/shop/userApiSlice"
+import { useAppDispatch } from "@/app/hooks"
+import axios from "axios"
+import type { AxiosError } from "axios"
 
 type CheckoutBillingShippingEditProps = {
   editType: "billing" | "shipping"
@@ -16,6 +23,7 @@ const CheckoutBillingShippingEdit: React.FC<
 > = ({ editType }: CheckoutBillingShippingEditProps) => {
   const currUser = useAppSelector(selectUser)
   const userId = currUser?.id ?? -1
+  const dispatch = useAppDispatch()
 
   // Fetch user data from API
   const { data, isLoading, isError } = useGetUserByIdQuery(userId)
@@ -52,6 +60,31 @@ const CheckoutBillingShippingEdit: React.FC<
     console.log(`Updated ${editType} data:`, formData)
     // In a real app, you would save this data to the API
     // TODO: Add API call to update user data
+
+    const submitData = {
+      userId,
+      [editType]: formData,
+    }
+
+    axios
+      .post(
+        `${import.meta.env.VITE_API_URL as string}/user/${editType}`,
+        submitData,
+      )
+      .then((response: { data: { id: number } }) => {
+        console.log(`Successfully updated ${editType} data:`, response.data)
+        if (editType === "billing") {
+          dispatch(setUserHasBilling(true))
+        } else {
+          dispatch(setUserHasShipping(true))
+        }
+      })
+      .catch((error: unknown) => {
+        console.error(
+          `Error updating ${editType} data:`,
+          (error as AxiosError).message,
+        )
+      })
 
     // Close the dialog after submission by finding the dialog close button and clicking it
     const closeButton = document.querySelector(".DialogContent .IconButton")

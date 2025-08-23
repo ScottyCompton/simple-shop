@@ -104,6 +104,9 @@ export type User = {
   avatar?: string | null
   auths?: Auth[]
   authProviders?: string[]
+  hasBilling: boolean
+  hasShipping: boolean
+  lastUpdate: Date | string
 }
 
 export type UserDetail = {
@@ -121,6 +124,7 @@ export type UserShipping = {
   state: string
   zip: string
   phone: string
+  useAsBilling: boolean
   shippingMethod?: string
 }
 
@@ -132,7 +136,8 @@ export type UserBilling = {
   city: string
   state: string
   zip: string
-  sameAsShipping: boolean
+  useAsShipping?: boolean
+  useAsBilling?: boolean
   phone: string
 }
 
@@ -182,6 +187,8 @@ export type UserAuthApiResponse = {
   email: string
   avatar: string
   authProviders: string[]
+  hasBilling: boolean
+  hasShipping: boolean
 }
 
 export type UserAuthApiTransformedResponse = {

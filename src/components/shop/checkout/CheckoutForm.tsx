@@ -8,12 +8,19 @@ import CheckoutPayment from "./CheckoutPayment"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router"
+import { useAppSelector } from "@/app/hooks"
+import { selectUser } from "@/features/shop/usersSlice"
 
 const CheckoutForm = () => {
   const [activeAccordion, setActiveAccordion] = useState<string>("checkout-1")
   const navigate = useNavigate()
+  const user = useAppSelector(selectUser)
+  const hasBillingAndShipping = user?.hasBilling && user.hasShipping
 
   const handleAccordionToggle = (value: string) => {
+    if (!hasBillingAndShipping && value === "checkout-3") {
+      return
+    }
     setActiveAccordion(value)
   }
 
@@ -108,6 +115,7 @@ const CheckoutForm = () => {
                 <div className="grow flex justify-end">
                   <Button
                     size="1"
+                    disabled={!hasBillingAndShipping}
                     onClick={() => {
                       handleAccordionToggle("checkout-3")
                     }}

@@ -37,7 +37,9 @@ const AuthCallback = () => {
             const userData = userDataResult
 
             // Save user to Redux state
-            dispatch(setUser(userData))
+            dispatch(
+              setUser({ ...userData, lastUpdate: new Date().toISOString() }),
+            )
 
             // Check if this was a "connect account" flow from the profile page
             const authIntent = localStorage.getItem("authIntent")
