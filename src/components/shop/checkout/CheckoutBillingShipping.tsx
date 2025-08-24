@@ -104,14 +104,14 @@ const CheckoutBillingShipping = () => {
       >
         <div className="w-full">
           <BillShipBox
-            data-id={fData?.billingLastUpdate}
+            data-id={`${String(fData?.billingLastUpdate ?? "")}-billing`}
             type="billing"
             data={fData?.billing}
           />
         </div>
         <div className="w-full">
           <BillShipBox
-            data-id={fData?.shippingLastUpdate}
+            data-id={`${String(fData?.shippingLastUpdate ?? "")}-shipping`}
             type="shipping"
             data={fData?.shipping}
           />
