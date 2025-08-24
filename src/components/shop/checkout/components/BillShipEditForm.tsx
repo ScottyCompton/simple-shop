@@ -58,8 +58,6 @@ const CheckoutBillingShippingEdit: React.FC<
   // Handle form submission
   const submitHandler = (formData: BillingFormData) => {
     console.log(`Updated ${editType} data:`, formData)
-    // In a real app, you would save this data to the API
-    // TODO: Add API call to update user data
 
     const submitData = {
       userId,
