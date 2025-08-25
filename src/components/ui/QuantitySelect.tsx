@@ -40,9 +40,6 @@ const QuantitySelect: React.FC<QuantitySelectProps> = ({
     qtyInCart !== "" ? BTNTEXT.UPDATE : BTNTEXT.ADD,
   )
 
-  // the button disabled state if conditions are met
-  // const [btnDisabled, setBtnDisabled] = useState<boolean>(true)
-
   useEffect(() => {
     // user selects quantiy of zero, and item is already in the cart
     if (selectedValue === "0" && !!qtyInCart) {
@@ -125,7 +122,12 @@ const QuantitySelect: React.FC<QuantitySelectProps> = ({
         </Select.Root>
       </div>
       <div className="flex-none flex-grow sm:flex-grow-0">
-        <Button size="1" onClick={handleClick} className="w-full sm:w-auto">
+        <Button
+          disabled={qtyInCart === "" && selectedValue === ""}
+          size="1"
+          onClick={handleClick}
+          className="w-full sm:w-auto"
+        >
           <span className="cursor-pointer whitespace-nowrap">{btnText}</span>
         </Button>
       </div>

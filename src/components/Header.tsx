@@ -17,7 +17,6 @@ const Header = () => {
         backgroundColor: "var(--color-primary)",
         color: "white", // Ensure text is white regardless of theme
         boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-        borderRadius: 0,
       }}
     >
       <div className="flex flex-col sm:flex-row justify-between items-center max-w-7xl mx-auto">
