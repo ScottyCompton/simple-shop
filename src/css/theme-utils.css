@@ -1,0 +1,66 @@
+/* src/css/theme-utils.css */
+/* Default theme (Light Blue) */
+:root {
+  /* Default blue light theme */
+  --color-primary: #3b82f6;
+  --color-secondary: #60a5fa;
+  --color-background: #f8fafc;
+  --color-page-background: #e2e8f0;
+  --color-text: #1e293b;
+  --color-muted: #64748b;
+}
+
+/* Theme-specific classes */
+.theme-blue-light {
+  --color-primary: #3b82f6;
+  --color-secondary: #60a5fa;
+  --color-background: #f8fafc;
+  --color-page-background: #e2e8f0;
+  --color-text: #1e293b;
+  --color-muted: #64748b;
+}
+
+.theme-green-light {
+  --color-primary: #22c55e;
+  --color-secondary: #4ade80;
+  --color-background: #f0fdf4;
+  --color-page-background: #dcfce7;
+  --color-text: #14532d;
+  --color-muted: #65a30d;
+}
+
+.theme-purple-light {
+  --color-primary: #a855f7;
+  --color-secondary: #c084fc;
+  --color-background: #faf5ff;
+  --color-page-background: #f3e8ff;
+  --color-text: #581c87;
+  --color-muted: #7e22ce;
+}
+
+.theme-blue-dark {
+  --color-primary: #3b82f6;
+  --color-secondary: #1d4ed8;
+  --color-background: #0f172a;
+  --color-page-background: #020617;
+  --color-text: #f8fafc;
+  --color-muted: #94a3b8;
+}
+
+.theme-green-dark {
+  --color-primary: #22c55e;
+  --color-secondary: #16a34a;
+  --color-background: #0f1b1d;
+  --color-page-background: #05120e;
+  --color-text: #ecfdf5;
+  --color-muted: #86efac;
+}
+
+.theme-purple-dark {
+  --color-primary: #a855f7;
+  --color-secondary: #9333ea;
+  --color-background: #1a1025;
+  --color-page-background: #0c0515;
+  --color-text: #f5f3ff;
+  --color-muted: #c084fc;
+}

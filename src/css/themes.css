@@ -1,0 +1,44 @@
+/* src/css/themes.css */
+:root {
+  /* Light Theme 1: Blue (Default) */
+  --theme-blue-primary: #3b82f6;
+  --theme-blue-secondary: #60a5fa;
+  --theme-blue-background: #f8fafc;
+  --theme-blue-text: #1e293b;
+  --theme-blue-muted: #64748b;
+
+  /* Light Theme 2: Green */
+  --theme-green-primary: #22c55e;
+  --theme-green-secondary: #4ade80;
+  --theme-green-background: #f0fdf4;
+  --theme-green-text: #14532d;
+  --theme-green-muted: #65a30d;
+
+  /* Light Theme 3: Purple */
+  --theme-purple-primary: #a855f7;
+  --theme-purple-secondary: #c084fc;
+  --theme-purple-background: #faf5ff;
+  --theme-purple-text: #581c87;
+  --theme-purple-muted: #7e22ce;
+
+  /* Dark Theme 1: Dark Blue */
+  --theme-dark-blue-primary: #3b82f6;
+  --theme-dark-blue-secondary: #1d4ed8;
+  --theme-dark-blue-background: #0f172a;
+  --theme-dark-blue-text: #f8fafc;
+  --theme-dark-blue-muted: #94a3b8;
+
+  /* Dark Theme 2: Dark Green */
+  --theme-dark-green-primary: #22c55e;
+  --theme-dark-green-secondary: #16a34a;
+  --theme-dark-green-background: #0f1b1d;
+  --theme-dark-green-text: #ecfdf5;
+  --theme-dark-green-muted: #86efac;
+
+  /* Dark Theme 3: Dark Purple */
+  --theme-dark-purple-primary: #a855f7;
+  --theme-dark-purple-secondary: #9333ea;
+  --theme-dark-purple-background: #1a1025;
+  --theme-dark-purple-text: #f5f3ff;
+  --theme-dark-purple-muted: #c084fc;
+}

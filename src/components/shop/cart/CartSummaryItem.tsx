@@ -22,15 +22,24 @@ const CartSummaryItem: React.FC<CartSummaryItemProps> = ({
 
   if (isLoading || isUninitialized) {
     return (
-      <div className="bg-slate-50 p-4 rounded-lg shadow-sm animate-pulse">
-        <div className="h-24 w-full bg-gray-200 rounded"></div>
+      <div
+        className="bg-slate-50 p-4 rounded-lg shadow-sm animate-pulse"
+        style={{ backgroundColor: "var(--component-bg)" }}
+      >
+        <div
+          className="h-24 w-full bg-gray-200 rounded"
+          style={{ backgroundColor: "var(--component-bg-alt)" }}
+        ></div>
       </div>
     )
   }
 
   if (isError || !cartItem) {
     return (
-      <div className="bg-slate-50 p-4 rounded-lg shadow-sm">
+      <div
+        className="bg-slate-50 p-4 rounded-lg shadow-sm"
+        style={{ backgroundColor: "var(--component-bg)" }}
+      >
         <div className="text-red-500">Error loading product details</div>
       </div>
     )
@@ -40,7 +49,10 @@ const CartSummaryItem: React.FC<CartSummaryItemProps> = ({
   const subtotal = product.price * cartItem.qty
 
   return (
-    <div className="bg-slate-50 p-3 sm:p-4 rounded-lg shadow-sm">
+    <div
+      className="bg-slate-50 p-3 sm:p-4 rounded-lg shadow-sm"
+      style={{ backgroundColor: "var(--component-bg)" }}
+    >
       {/* Mobile layout (stacked) */}
       <div className="block sm:hidden">
         <Flex direction="row" gap="3" align="start" className="mb-3">
@@ -50,6 +62,7 @@ const CartSummaryItem: React.FC<CartSummaryItemProps> = ({
                 src={product.imgUrl}
                 alt={product.name}
                 className="border border-gray-300 rounded-sm w-16 h-16 object-cover"
+                style={{ borderColor: "var(--border-color)" }}
               />
             </Link>
           </div>
@@ -60,26 +73,52 @@ const CartSummaryItem: React.FC<CartSummaryItemProps> = ({
             >
               {product.mfgName} {product.name}
             </Link>
-            <div className="text-sm text-gray-600 mt-1">
+            <div
+              className="text-sm text-gray-600 mt-1"
+              style={{ color: "var(--text-secondary)" }}
+            >
               {product.shortDesc}
             </div>
           </div>
         </Flex>
         <Flex justify="between" className="mb-2 text-sm">
-          <span>Price:</span>
-          <span className="font-medium">${product.price}</span>
+          <span style={{ color: "var(--text-primary)" }}>Price:</span>
+          <span
+            className="font-medium"
+            style={{ color: "var(--text-primary)" }}
+          >
+            ${product.price}
+          </span>
         </Flex>
         <Flex justify="between" className="mb-3">
-          <span className="text-sm">Quantity:</span>
+          <span className="text-sm" style={{ color: "var(--text-primary)" }}>
+            Quantity:
+          </span>
           {isCheckout ? (
-            <span className="font-medium">{cartItem.qty}</span>
+            <span
+              className="font-medium"
+              style={{ color: "var(--text-primary)" }}
+            >
+              {cartItem.qty}
+            </span>
           ) : (
             <QuantitySelect product={product} className="max-w-[180px]" />
           )}
         </Flex>
-        <Flex justify="between" className="pt-2 border-t border-gray-200">
-          <span className="font-medium">Subtotal:</span>
-          <span className="font-bold">${subtotal.toFixed(2)}</span>
+        <Flex
+          justify="between"
+          className="pt-2 border-t border-gray-200"
+          style={{ borderColor: "var(--border-color)" }}
+        >
+          <span
+            className="font-medium"
+            style={{ color: "var(--text-primary)" }}
+          >
+            Subtotal:
+          </span>
+          <span className="font-bold" style={{ color: "var(--text-primary)" }}>
+            ${subtotal.toFixed(2)}
+          </span>
         </Flex>
       </div>
 
@@ -103,21 +142,37 @@ const CartSummaryItem: React.FC<CartSummaryItemProps> = ({
               >
                 {product.mfgName} {product.name}
               </Link>
-              <div className="text-sm text-gray-600 mt-1">
+              <div
+                className="text-sm text-gray-600 mt-1"
+                style={{ color: "var(--text-secondary)" }}
+              >
                 {product.shortDesc}
               </div>
             </div>
           </Flex>
         </div>
-        <div className="col-span-2 text-center">${product.price}</div>
+        <div
+          className="col-span-2 text-center"
+          style={{ color: "var(--text-primary)" }}
+        >
+          ${product.price}
+        </div>
         <div className="col-span-2 text-center">
           {isCheckout ? (
-            <span className="font-medium">{cartItem.qty}</span>
+            <span
+              className="font-medium"
+              style={{ color: "var(--text-primary)" }}
+            >
+              {cartItem.qty}
+            </span>
           ) : (
             <QuantitySelect product={product} className="max-w-[180px]" />
           )}
         </div>
-        <div className="col-span-2 text-right font-bold">
+        <div
+          className="col-span-2 text-right font-bold"
+          style={{ color: "var(--text-primary)" }}
+        >
           ${subtotal.toFixed(2)}
         </div>
       </div>

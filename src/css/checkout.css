@@ -2,9 +2,9 @@
 
 /* Shipping method radio custom styling */
 input[type="radio"]:checked + label {
-  background-color: #f0f9ff;
-  border-color: #3b82f6 !important;
-  box-shadow: 0 0 0 1px #3b82f6;
+  background-color: var(--component-bg-alt, #f0f9ff);
+  border-color: var(--color-primary, #3b82f6) !important;
+  box-shadow: 0 0 0 1px var(--color-primary, #3b82f6);
 }
 
 input[type="radio"]:checked + label .shipping-method-dot {
@@ -14,6 +14,31 @@ input[type="radio"]:checked + label .shipping-method-dot {
 /* Form focus states */
 input:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 1px #3b82f6;
+  border-color: var(--color-primary, #3b82f6);
+  box-shadow: 0 0 0 1px var(--color-primary, #3b82f6);
+}
+
+/* Dark theme form input overrides */
+.theme-blue-dark input,
+.theme-green-dark input,
+.theme-purple-dark input {
+  color: var(--text-primary);
+  background-color: var(--component-bg);
+  border-color: var(--border-color);
+}
+
+.theme-blue-dark input::placeholder,
+.theme-green-dark input::placeholder,
+.theme-purple-dark input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Adjust form elements for better theming */
+input,
+select,
+textarea {
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s;
 }

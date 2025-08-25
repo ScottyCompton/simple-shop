@@ -1,0 +1,31 @@
+/* src/css/layout-enhancements.css */
+
+/* Enhanced layout styling */
+.content-container {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Remove responsive margin adjustments */
+@media (min-width: 640px) {
+  .content-container {
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  .content-container {
+    margin: 0 auto;
+  }
+}
+
+/* Remove header corner radius */
+.content-container header {
+  border-radius: 0;
+}
+
+/* Remove footer corner radius */
+.content-container footer {
+  border-radius: 0;
+}

@@ -21,6 +21,12 @@ const ProductList = () => {
   return (
     <>
       <div className="grid gap-4 w-full">
+        <h1
+          className="text-2xl font-bold mb-6"
+          style={{ color: "var(--color-primary)" }}
+        >
+          {category}
+        </h1>
         {products.map(product => {
           return <ProductListItem key={product.id} product={product} />
         })}

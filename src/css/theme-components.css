@@ -1,0 +1,125 @@
+/* Theme-specific styles for components */
+
+/* Common component background colors */
+:root {
+  /* Light theme variables */
+  --component-bg-light: #f9fafb;
+  --component-bg-alt-light: #f3f4f6;
+  --text-primary-light: #111827;
+  --text-secondary-light: #4b5563;
+  --text-muted-light: #6b7280;
+  --border-light: #e5e7eb;
+
+  /* Dark theme variables */
+  --component-bg-dark: #1f2937;
+  --component-bg-alt-dark: #374151;
+  --text-primary-dark: #f9fafb;
+  --text-secondary-dark: #e5e7eb;
+  --text-muted-dark: #9ca3af;
+  --border-dark: #4b5563;
+}
+
+/* Blue theme variations */
+.theme-blue-light {
+  --component-bg: var(--component-bg-light);
+  --component-bg-alt: var(--component-bg-alt-light);
+  --text-primary: var(--text-primary-light);
+  --text-secondary: var(--text-secondary-light);
+  --text-muted: var(--text-muted-light);
+  --border-color: var(--border-light);
+}
+
+.theme-blue-dark {
+  --component-bg: var(--component-bg-dark);
+  --component-bg-alt: var(--component-bg-alt-dark);
+  --text-primary: var(--text-primary-dark);
+  --text-secondary: var(--text-secondary-dark);
+  --text-muted: var(--text-muted-dark);
+  --border-color: var(--border-dark);
+}
+
+/* Green theme variations */
+.theme-green-light {
+  --component-bg: var(--component-bg-light);
+  --component-bg-alt: var(--component-bg-alt-light);
+  --text-primary: var(--text-primary-light);
+  --text-secondary: var(--text-secondary-light);
+  --text-muted: var(--text-muted-light);
+  --border-color: var(--border-light);
+}
+
+.theme-green-dark {
+  --component-bg: var(--component-bg-dark);
+  --component-bg-alt: var(--component-bg-alt-dark);
+  --text-primary: var(--text-primary-dark);
+  --text-secondary: var(--text-secondary-dark);
+  --text-muted: var(--text-muted-dark);
+  --border-color: var(--border-dark);
+}
+
+/* Purple theme variations */
+.theme-purple-light {
+  --component-bg: var(--component-bg-light);
+  --component-bg-alt: var(--component-bg-alt-light);
+  --text-primary: var(--text-primary-light);
+  --text-secondary: var(--text-secondary-light);
+  --text-muted: var(--text-muted-light);
+  --border-color: var(--border-light);
+}
+
+.theme-purple-dark {
+  --component-bg: var(--component-bg-dark);
+  --component-bg-alt: var(--component-bg-alt-dark);
+  --text-primary: var(--text-primary-dark);
+  --text-secondary: var(--text-secondary-dark);
+  --text-muted: var(--text-muted-dark);
+  --border-color: var(--border-dark);
+}
+
+/* Apply theme variables to components with hardcoded colors */
+
+/* Replace bg-slate-50 and bg-gray-100 with theme variables */
+.bg-slate-50,
+.bg-gray-100 {
+  background-color: var(--component-bg) !important;
+}
+
+/* Replace text-gray-600, text-gray-700 with theme variables */
+.text-gray-600,
+.text-gray-700 {
+  color: var(--text-secondary) !important;
+}
+
+/* Border colors */
+.border-gray-200,
+.border-gray-300 {
+  border-color: var(--border-color) !important;
+}
+
+/* Background for form elements */
+.bg-gray-200 {
+  background-color: var(--component-bg-alt) !important;
+}
+
+/* Other specific component styling */
+/* CartSummaryItem */
+.theme-blue-dark .bg-slate-50,
+.theme-green-dark .bg-slate-50,
+.theme-purple-dark .bg-slate-50,
+.theme-blue-dark .bg-gray-100,
+.theme-green-dark .bg-gray-100,
+.theme-purple-dark .bg-gray-100 {
+  background-color: var(--component-bg) !important;
+}
+
+/* Link colors in dark themes */
+.theme-blue-dark a:not(.hover\:text-blue-600),
+.theme-green-dark a:not(.hover\:text-blue-600),
+.theme-purple-dark a:not(.hover\:text-blue-600) {
+  color: var(--text-primary);
+}
+
+/* Product details - hover states for links */
+.hover\:text-blue-600:hover {
+  color: var(--color-primary) !important;
+}

@@ -102,11 +102,22 @@ const CheckoutBillingShippingEdit: React.FC<
     return (
       <div className="p-4 text-center">
         <div className="animate-pulse flex flex-col items-center">
-          <div className="h-6 w-24 bg-slate-200 rounded mb-4"></div>
-          <div className="h-4 w-36 bg-slate-200 rounded mb-2"></div>
-          <div className="h-4 w-32 bg-slate-200 rounded"></div>
+          <div
+            className="h-6 w-24 rounded mb-4"
+            style={{ backgroundColor: "var(--component-bg-alt)" }}
+          ></div>
+          <div
+            className="h-4 w-36 rounded mb-2"
+            style={{ backgroundColor: "var(--component-bg-alt)" }}
+          ></div>
+          <div
+            className="h-4 w-32 rounded"
+            style={{ backgroundColor: "var(--component-bg-alt)" }}
+          ></div>
         </div>
-        <p className="mt-4 text-gray-600">Loading address data...</p>
+        <p className="mt-4" style={{ color: "var(--text-secondary)" }}>
+          Loading address data...
+        </p>
       </div>
     )
   }
@@ -115,7 +126,7 @@ const CheckoutBillingShippingEdit: React.FC<
     return (
       <div className="p-4 text-center">
         <div className="text-red-500 mb-2">Error loading user data</div>
-        <p className="text-gray-600">Please try again later</p>
+        <p style={{ color: "var(--text-secondary)" }}>Please try again later</p>
       </div>
     )
   }
@@ -128,7 +139,8 @@ const CheckoutBillingShippingEdit: React.FC<
           <div className="space-y-2">
             <label
               htmlFor="firstName"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium"
+              style={{ color: "var(--text-primary)" }}
             >
               First Name
             </label>
@@ -136,7 +148,14 @@ const CheckoutBillingShippingEdit: React.FC<
               id="firstName"
               type="text"
               {...register("firstName", { required: "First name is required" })}
-              className={`w-full rounded-md border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 ${errors.firstName ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"}`}
+              className={`w-full rounded-md border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 ${errors.firstName ? "border-red-500 focus:ring-red-500" : ""}`}
+              style={{
+                backgroundColor: "var(--component-bg)",
+                color: "var(--text-primary)",
+                borderColor: errors.firstName
+                  ? "rgb(239, 68, 68)"
+                  : "var(--border-color)",
+              }}
               placeholder="John"
             />
             {errors.firstName && (
@@ -149,7 +168,8 @@ const CheckoutBillingShippingEdit: React.FC<
           <div className="space-y-2">
             <label
               htmlFor="lastName"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium"
+              style={{ color: "var(--text-primary)" }}
             >
               Last Name
             </label>
@@ -157,7 +177,14 @@ const CheckoutBillingShippingEdit: React.FC<
               id="lastName"
               type="text"
               {...register("lastName", { required: "Last name is required" })}
-              className={`w-full rounded-md border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 ${errors.lastName ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"}`}
+              className={`w-full rounded-md border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 ${errors.lastName ? "border-red-500 focus:ring-red-500" : ""}`}
+              style={{
+                backgroundColor: "var(--component-bg)",
+                color: "var(--text-primary)",
+                borderColor: errors.lastName
+                  ? "rgb(239, 68, 68)"
+                  : "var(--border-color)",
+              }}
               placeholder="Doe"
             />
             {errors.lastName && (
@@ -172,7 +199,8 @@ const CheckoutBillingShippingEdit: React.FC<
         <div className="space-y-2">
           <label
             htmlFor="address1"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium"
+            style={{ color: "var(--text-primary)" }}
           >
             Address Line 1
           </label>
@@ -180,7 +208,14 @@ const CheckoutBillingShippingEdit: React.FC<
             id="address1"
             type="text"
             {...register("address1", { required: "Address is required" })}
-            className={`w-full rounded-md border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 ${errors.address1 ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"}`}
+            className={`w-full rounded-md border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 ${errors.address1 ? "border-red-500 focus:ring-red-500" : ""}`}
+            style={{
+              backgroundColor: "var(--component-bg)",
+              color: "var(--text-primary)",
+              borderColor: errors.address1
+                ? "rgb(239, 68, 68)"
+                : "var(--border-color)",
+            }}
             placeholder="123 Main St"
           />
           {errors.address1 && (
@@ -194,16 +229,24 @@ const CheckoutBillingShippingEdit: React.FC<
         <div className="space-y-2">
           <label
             htmlFor="address2"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium"
+            style={{ color: "var(--text-primary)" }}
           >
             Address Line 2{" "}
-            <span className="text-gray-400 text-xs">(optional)</span>
+            <span style={{ color: "var(--text-muted)" }} className="text-xs">
+              (optional)
+            </span>
           </label>
           <input
             id="address2"
             type="text"
             {...register("address2")}
-            className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-md border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary"
+            style={{
+              backgroundColor: "var(--component-bg)",
+              color: "var(--text-primary)",
+              borderColor: "var(--border-color)",
+            }}
             placeholder="Apt 4B"
           />
         </div>
@@ -213,7 +256,8 @@ const CheckoutBillingShippingEdit: React.FC<
           <div className="space-y-2">
             <label
               htmlFor="city"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium"
+              style={{ color: "var(--text-primary)" }}
             >
               City
             </label>
@@ -221,7 +265,14 @@ const CheckoutBillingShippingEdit: React.FC<
               id="city"
               type="text"
               {...register("city", { required: "City is required" })}
-              className={`w-full rounded-md border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 ${errors.city ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"}`}
+              className={`w-full rounded-md border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 ${errors.city ? "border-red-500 focus:ring-red-500" : ""}`}
+              style={{
+                backgroundColor: "var(--component-bg)",
+                color: "var(--text-primary)",
+                borderColor: errors.city
+                  ? "rgb(239, 68, 68)"
+                  : "var(--border-color)",
+              }}
               placeholder="Los Angeles"
             />
             {errors.city && (
@@ -232,7 +283,8 @@ const CheckoutBillingShippingEdit: React.FC<
           <div className="space-y-2">
             <label
               htmlFor="state"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium"
+              style={{ color: "var(--text-primary)" }}
             >
               State
             </label>
@@ -267,7 +319,8 @@ const CheckoutBillingShippingEdit: React.FC<
           <div className="space-y-2">
             <label
               htmlFor="zip"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium"
+              style={{ color: "var(--text-primary)" }}
             >
               ZIP Code
             </label>
@@ -281,7 +334,14 @@ const CheckoutBillingShippingEdit: React.FC<
                   message: "Invalid ZIP code format",
                 },
               })}
-              className={`w-full rounded-md border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 ${errors.zip ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"}`}
+              className={`w-full rounded-md border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 ${errors.zip ? "border-red-500 focus:ring-red-500" : ""}`}
+              style={{
+                backgroundColor: "var(--component-bg)",
+                color: "var(--text-primary)",
+                borderColor: errors.zip
+                  ? "rgb(239, 68, 68)"
+                  : "var(--border-color)",
+              }}
               placeholder="90028"
             />
             {errors.zip && (
@@ -294,7 +354,8 @@ const CheckoutBillingShippingEdit: React.FC<
         <div className="space-y-2">
           <label
             htmlFor="phone"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium"
+            style={{ color: "var(--text-primary)" }}
           >
             Phone Number
           </label>
@@ -308,7 +369,14 @@ const CheckoutBillingShippingEdit: React.FC<
                 message: "Invalid phone number format",
               },
             })}
-            className={`w-full rounded-md border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 ${errors.phone ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"}`}
+            className={`w-full rounded-md border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 ${errors.phone ? "border-red-500 focus:ring-red-500" : ""}`}
+            style={{
+              backgroundColor: "var(--component-bg)",
+              color: "var(--text-primary)",
+              borderColor: errors.phone
+                ? "rgb(239, 68, 68)"
+                : "var(--border-color)",
+            }}
             placeholder="(555) 123-4567"
           />
           {errors.phone && (
@@ -320,7 +388,17 @@ const CheckoutBillingShippingEdit: React.FC<
         <div className="flex justify-end">
           <button
             type="submit"
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="text-white font-semibold py-2 px-4 rounded-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2"
+            style={{
+              backgroundColor: "var(--color-primary)",
+              boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+            }}
+            onMouseOver={e => {
+              e.currentTarget.style.filter = "brightness(110%)"
+            }}
+            onMouseOut={e => {
+              e.currentTarget.style.filter = "brightness(100%)"
+            }}
           >
             Save Address
           </button>

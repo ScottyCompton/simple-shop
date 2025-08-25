@@ -1,0 +1,134 @@
+/* src/css/theme-direct.css */
+/* This file provides direct CSS background color application for themes */
+
+/* Header and Footer - Light Themes */
+.theme-blue-light header {
+  background-color: #3b82f6 !important;
+}
+.theme-blue-light footer {
+  background-color: #60a5fa !important;
+}
+
+.theme-green-light header {
+  background-color: #22c55e !important;
+}
+.theme-green-light footer {
+  background-color: #4ade80 !important;
+}
+
+.theme-purple-light header {
+  background-color: #a855f7 !important;
+}
+.theme-purple-light footer {
+  background-color: #c084fc !important;
+}
+
+/* Header and Footer - Dark Themes */
+.theme-blue-dark header {
+  background-color: #3b82f6 !important;
+}
+.theme-blue-dark footer {
+  background-color: #1d4ed8 !important;
+}
+
+.theme-green-dark header {
+  background-color: #22c55e !important;
+}
+.theme-green-dark footer {
+  background-color: #16a34a !important;
+}
+
+.theme-purple-dark header {
+  background-color: #a855f7 !important;
+}
+.theme-purple-dark footer {
+  background-color: #9333ea !important;
+}
+
+/* Page Background Colors - Light Themes */
+.theme-blue-light .flex.flex-col.min-h-screen {
+  background-color: #e2e8f0 !important;
+}
+.theme-green-light .flex.flex-col.min-h-screen {
+  background-color: #dcfce7 !important;
+}
+.theme-purple-light .flex.flex-col.min-h-screen {
+  background-color: #f3e8ff !important;
+}
+
+/* Page Background Colors - Dark Themes */
+.theme-blue-dark .flex.flex-col.min-h-screen {
+  background-color: #020617 !important;
+}
+.theme-green-dark .flex.flex-col.min-h-screen {
+  background-color: #05120e !important;
+}
+.theme-purple-dark .flex.flex-col.min-h-screen {
+  background-color: #0c0515 !important;
+}
+
+/* Main Content Area Background Colors - Light Themes */
+.theme-blue-light .max-w-7xl.w-full.mx-auto.flex-1.flex.flex-col {
+  background-color: #f8fafc !important;
+}
+.theme-green-light .max-w-7xl.w-full.mx-auto.flex-1.flex.flex-col {
+  background-color: #f0fdf4 !important;
+}
+.theme-purple-light .max-w-7xl.w-full.mx-auto.flex-1.flex.flex-col {
+  background-color: #faf5ff !important;
+}
+
+/* Main Content Area Background Colors - Dark Themes */
+.theme-blue-dark .max-w-7xl.w-full.mx-auto.flex-1.flex.flex-col {
+  background-color: #0f172a !important;
+}
+.theme-green-dark .max-w-7xl.w-full.mx-auto.flex-1.flex.flex-col {
+  background-color: #0f1b1d !important;
+}
+.theme-purple-dark .max-w-7xl.w-full.mx-auto.flex-1.flex.flex-col {
+  background-color: #1a1025 !important;
+}
+
+/* Text colors - Light Themes */
+.theme-blue-light main {
+  color: #1e293b !important;
+}
+.theme-green-light main {
+  color: #14532d !important;
+}
+.theme-purple-light main {
+  color: #581c87 !important;
+}
+
+/* Text colors - Dark Themes */
+.theme-blue-dark main {
+  color: #f8fafc !important;
+}
+.theme-green-dark main {
+  color: #ecfdf5 !important;
+}
+.theme-purple-dark main {
+  color: #f5f3ff !important;
+}
+
+/* Heading colors - Light Themes */
+.theme-blue-light h1 {
+  color: #3b82f6 !important;
+}
+.theme-green-light h1 {
+  color: #22c55e !important;
+}
+.theme-purple-light h1 {
+  color: #a855f7 !important;
+}
+
+/* Heading colors - Dark Themes */
+.theme-blue-dark h1 {
+  color: #60a5fa !important;
+}
+.theme-green-dark h1 {
+  color: #4ade80 !important;
+}
+.theme-purple-dark h1 {
+  color: #c084fc !important;
+}
