@@ -29,8 +29,13 @@ const CheckoutForm = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-4 bg-white">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">Checkout</h1>
+    <div className="w-full px-4 sm:px-6 md:px-8">
+      <h1
+        className="text-2xl font-bold mb-6"
+        style={{ color: "var(--color-primary)" }}
+      >
+        Checkout
+      </h1>
       <Accordion.Root
         type="single"
         value={activeAccordion}
@@ -42,8 +47,14 @@ const CheckoutForm = () => {
         <Accordion.Item className="AccordionItem" value="checkout-1">
           <Accordion.Header className="AccordionHeader">
             <Accordion.Trigger>
-              <h2 className="text-lg font-bold text-gray-800 flex items-center py-5 cursor-pointer">
-                <span className="flex items-center justify-center w-7 h-7 rounded-full bg-blue-600 text-white text-sm font-medium mr-3">
+              <h2
+                className="text-lg font-bold flex items-center py-5 px-3 cursor-pointer"
+                style={{ color: "var(--color-text)" }}
+              >
+                <span
+                  className="flex items-center justify-center w-7 h-7 rounded-full text-white text-sm font-medium mr-3"
+                  style={{ backgroundColor: "var(--color-primary)" }}
+                >
                   1
                 </span>
                 Shopping Cart Contents
@@ -85,8 +96,14 @@ const CheckoutForm = () => {
         <Accordion.Item className="AccordionItem" value="checkout-2">
           <Accordion.Header className="AccordionHeader">
             <Accordion.Trigger>
-              <h2 className="text-lg font-bold text-gray-800 flex items-center py-5 cursor-pointer">
-                <span className="flex items-center justify-center w-7 h-7 rounded-full bg-blue-600 text-white text-sm font-medium mr-3">
+              <h2
+                className="text-lg font-bold flex items-center py-5 px-3 cursor-pointer"
+                style={{ color: "var(--color-text)" }}
+              >
+                <span
+                  className="flex items-center justify-center w-7 h-7 rounded-full text-white text-sm font-medium mr-3"
+                  style={{ backgroundColor: "var(--color-primary)" }}
+                >
                   2
                 </span>
                 Billing and Shipping Information
@@ -134,8 +151,14 @@ const CheckoutForm = () => {
         <Accordion.Item className="AccordionItem" value="checkout-3">
           <Accordion.Header className="AccordionHeader">
             <Accordion.Trigger>
-              <h2 className="text-lg font-bold text-gray-800 flex items-center py-5 cursor-pointer">
-                <span className="flex items-center justify-center w-7 h-7 rounded-full bg-blue-600 text-white text-sm font-medium mr-3">
+              <h2
+                className="text-lg font-bold flex items-center py-5 px-3 cursor-pointer"
+                style={{ color: "var(--color-text)" }}
+              >
+                <span
+                  className="flex items-center justify-center w-7 h-7 rounded-full text-white text-sm font-medium mr-3"
+                  style={{ backgroundColor: "var(--color-primary)" }}
+                >
                   3
                 </span>
                 Payment Information
@@ -164,7 +187,17 @@ const CheckoutForm = () => {
                 <div className="grow flex justify-end">
                   <button
                     type="submit"
-                    className="cursor-pointer bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-md shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                    className="cursor-pointer text-white font-bold py-3 px-6 rounded-md shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2"
+                    style={{
+                      backgroundColor: "var(--color-primary)",
+                      boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                    }}
+                    onMouseOver={e => {
+                      e.currentTarget.style.filter = "brightness(110%)"
+                    }}
+                    onMouseOut={e => {
+                      e.currentTarget.style.filter = "brightness(100%)"
+                    }}
                   >
                     Complete Purchase
                   </button>

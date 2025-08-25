@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import ProtectedRoute from "./ProtectedRoute"
 import Layout from "@/components/Layout"
 import Sandbox from "@/page/Sandbox"
+import ThemeTest from "@/page/ThemeTest"
 
 const AppRouter = () => {
   return (
@@ -20,6 +21,7 @@ const AppRouter = () => {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="/sandbox" element={<Sandbox />} />
+          <Route path="/theme-test" element={<ThemeTest />} />
           <Route path="/shop">
             <Route index element={<Shop />} />
             <Route path="products/:productId" element={<ProductDetails />} />

@@ -2,7 +2,7 @@
 
 .AccordionRoot {
   border-radius: 0.75rem;
-  background-color: white;
+  background-color: var(--component-bg, white);
   box-shadow:
     0 1px 3px rgba(0, 0, 0, 0.1),
     0 1px 2px rgba(0, 0, 0, 0.06);
@@ -14,7 +14,7 @@
 }
 
 .AccordionItem {
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
   overflow: hidden;
 }
 
@@ -37,7 +37,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: white;
+  background-color: var(--component-bg, white);
+  color: var(--text-primary, black);
   padding: 1rem 1.5rem;
   transition: background-color 0.2s ease;
   user-select: none;
@@ -45,13 +46,13 @@
 }
 
 .AccordionTrigger:hover {
-  background-color: #f9fafb;
+  background-color: var(--component-bg-alt, #f9fafb);
 }
 
 .AccordionContent {
   overflow: hidden;
-  background-color: white;
-  border-top: 1px solid #f3f4f6;
+  background-color: var(--component-bg, white);
+  border-top: 1px solid var(--border-color, #f3f4f6);
   padding: 1rem 0;
 }
 
@@ -64,8 +65,8 @@
 }
 
 .AccordionTrigger[data-state="open"] {
-  background-color: #f9fafb;
-  border-bottom: 1px solid #f3f4f6;
+  background-color: var(--component-bg-alt, #f9fafb);
+  border-bottom: 1px solid var(--border-color, #f3f4f6);
 }
 
 /* Animation keyframes */

@@ -19,7 +19,14 @@ const StateSelect: React.FC<StateSelectProps> = ({
 
   if (isLoading) {
     return (
-      <div className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm bg-gray-50 text-gray-500 text-sm">
+      <div
+        className="w-full rounded-md border px-3 py-2 shadow-sm text-sm"
+        style={{
+          backgroundColor: "var(--component-bg-alt)",
+          color: "var(--text-muted)",
+          borderColor: "var(--border-color)",
+        }}
+      >
         Loading states...
       </div>
     )
@@ -60,19 +67,22 @@ const StateSelect: React.FC<StateSelectProps> = ({
       >
         <Select.Trigger
           placeholder="Select a state"
-          className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-left flex items-center justify-between bg-white h-[38px]"
+          className="w-full rounded-md border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 text-left flex items-center justify-between h-[38px]"
           style={{
             boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
             appearance: "none",
+            backgroundColor: "var(--component-bg)",
+            color: "var(--text-primary)",
+            borderColor: "var(--border-color)",
           }}
         >
           {selectedState ? (
-            <span>
+            <span style={{ color: "var(--text-primary)" }}>
               {states?.find(s => s.abbr === selectedState)?.state ??
                 selectedState}
             </span>
           ) : (
-            <span className="text-gray-400">Select a state</span>
+            <span style={{ color: "var(--text-muted)" }}>Select a state</span>
           )}
         </Select.Trigger>
         <Select.Content
