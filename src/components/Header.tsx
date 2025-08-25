@@ -1,7 +1,7 @@
 import CartContents from "./ui/CartContents"
 import UserDisplay from "./ui/UserDisplay"
 import CategorySelect from "./ui/CategorySelect"
-import ThemeSwitcher from "./ui/ThemeSwitcher"
+// import ThemeSwitcher from "./ui/ThemeSwitcher"
 import { Link } from "react-router-dom"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -40,9 +40,9 @@ const Header = () => {
             <span className="mr-2 text-xs">Explore</span>
             <CategorySelect />
           </div>
-          <div className="text-xs p-1 rounded">
+          {/* <div className="text-xs p-1 rounded">
             <ThemeSwitcher />
-          </div>
+          </div> */}
           <div>
             <UserDisplay />
           </div>

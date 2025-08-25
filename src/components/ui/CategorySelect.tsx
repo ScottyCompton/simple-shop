@@ -1,15 +1,12 @@
 import { useGetProductCategoriesQuery } from "@/features/shop/productsApiSlice"
 import { Select } from "@radix-ui/themes"
-import { setCartCategory, cartCategory } from "@/features/shop/cartSlice"
-import { useAppDispatch, useAppSelector } from "@/app/hooks"
+import { cartCategory } from "@/features/shop/cartSlice"
+import { useAppSelector } from "@/app/hooks"
 import { useState } from "react"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 const CategorySelect = () => {
-  const dispatch = useAppDispatch()
-  // const cartCategory = useAppSelector(cartCategory)
   const [category, setCategory] = useState<string>(useAppSelector(cartCategory))
-  const location = useLocation()
   const navigate = useNavigate()
 
   const { data, isError, isLoading, isUninitialized } =
@@ -34,12 +31,8 @@ const CategorySelect = () => {
 
   const onValueChange = (value: string) => {
     const newCat = value.replace("-1", "")
-    dispatch(setCartCategory(newCat))
     setCategory(newCat)
-
-    if (location.pathname !== "/shop") {
-      void navigate("/shop")
-    }
+    void navigate(`/shop/${newCat.toLowerCase()}`)
   }
 
   return (

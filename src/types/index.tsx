@@ -1,11 +1,20 @@
+export type PaginationInfo = {
+  totalItems: number
+  totalPages: number
+  currentPage: number
+  pageSize: number
+}
+
 export type ProductListApiResponse = {
   data: {
     products: Product[]
+    pagination?: PaginationInfo
   }
 }
 
 export type ProductListApiDataResponse = {
   products: Product[]
+  pagination?: PaginationInfo
 }
 
 export type CategoryApiResponse = {

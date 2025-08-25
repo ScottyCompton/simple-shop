@@ -24,6 +24,9 @@ const AppRouter = () => {
           <Route path="/theme-test" element={<ThemeTest />} />
           <Route path="/shop">
             <Route index element={<Shop />} />
+            <Route path="page/:page" element={<Shop />} />
+            <Route path=":category" element={<Shop />} />
+            <Route path=":category/:page" element={<Shop />} />
             <Route path="products/:productId" element={<ProductDetails />} />
           </Route>
           <Route path="/cart" element={<Cart />} />
