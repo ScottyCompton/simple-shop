@@ -5,6 +5,7 @@ import type { CartItem } from "@/types"
 const initialState = {
   items: [] as CartItem[],
   category: "",
+  shippingTypeId: "",
 }
 
 export const cartSlice = createSlice({
@@ -30,16 +31,26 @@ export const cartSlice = createSlice({
     setCartCategory: (state, action: PayloadAction<string>) => {
       state.category = action.payload
     },
+    setCartShippingType: (state, action: PayloadAction<string>) => {
+      state.shippingTypeId = action.payload
+    },
   },
   selectors: {
     cartItems: state => state.items,
     cartCount: state => state.items.length,
     cartCategory: state => state.category,
+    cartShippingType: state => state.shippingTypeId,
   },
 })
 
-export const { addUpdateCart, removeFromCart, clearCart, setCartCategory } =
-  cartSlice.actions
-export const { cartItems, cartCount, cartCategory } = cartSlice.selectors
+export const {
+  addUpdateCart,
+  removeFromCart,
+  clearCart,
+  setCartCategory,
+  setCartShippingType,
+} = cartSlice.actions
+export const { cartItems, cartCount, cartCategory, cartShippingType } =
+  cartSlice.selectors
 export const selectCartItems = (state: { cart: { items: CartItem[] } }) =>
   state.cart.items
