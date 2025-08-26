@@ -12,14 +12,16 @@ import "@/css/App.css"
 import AppRouter from "./routes/AppRouter"
 import { Toaster } from "react-hot-toast"
 import { ThemeProvider } from "@/context/ThemeContext"
-
+import { ProductDataProvider } from "@/context/DataContext"
 export const App = () => {
   return (
     <StrictMode>
       <Provider store={store}>
-        <ThemeProvider>
-          <AppRouter />
-        </ThemeProvider>
+        <ProductDataProvider>
+          <ThemeProvider>
+            <AppRouter />
+          </ThemeProvider>
+        </ProductDataProvider>
         <Toaster />
       </Provider>
     </StrictMode>
