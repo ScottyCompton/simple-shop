@@ -31,8 +31,8 @@ export const productsApiSlice = createApi({
       query: ({ category, page }) => {
         if (category !== "") {
           return page
-            ? `products/category/${category}/${page.toString()}`
-            : `products/category/${category}`
+            ? `products/${category}/${page.toString()}`
+            : `products/${category}`
         } else {
           return page ? `products/page/${page.toString()}` : "products"
         }
@@ -61,7 +61,7 @@ export const productsApiSlice = createApi({
       },
     }),
     getProductDetails: build.query<ProductDetailApiDataResponse, number>({
-      query: id => `products/${id.toString()}`,
+      query: id => `product/${id.toString()}`,
       providesTags: (_result, _error, id) => [{ type: "Products", id }],
       transformResponse: (response: ProductDetailApiResponse) => {
         return response.data
