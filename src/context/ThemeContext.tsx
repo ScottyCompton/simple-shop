@@ -36,7 +36,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     // Save theme to localStorage when it changes
     localStorage.setItem("theme", currentTheme)
 
-    console.log("Theme changed to:", currentTheme)
+    // console.log("Theme changed to:", currentTheme)
 
     // Apply theme class to document element
     // First, remove any existing theme classes
@@ -69,7 +69,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   // Initialize theme on mount
   useEffect(() => {
     // Apply initial theme class to document element immediately on mount
-    console.log("Initializing theme to:", currentTheme)
+    // console.log("Initializing theme to:", currentTheme)
     document.documentElement.classList.add(`theme-${currentTheme}`)
     logCSSVariables()
   }, [currentTheme])

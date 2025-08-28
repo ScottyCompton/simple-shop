@@ -20,34 +20,34 @@ type ResponseData = {
 }
 
 type DataContextType = {
-  data: ProductData[]
+  products: ProductData[]
   loading: boolean
   error: string | null
+  setCat: (cat: string) => void
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined)
-
 const ROOT_ENDPOINT = `${import.meta.env.VITE_API_URL as string}/products/`
 
 export const ProductDataProvider = ({ children }: { children: ReactNode }) => {
-  //   const [products, setProducts] = useState<ProductData[] | []>([])
+  const [products, setProducts] = useState<ProductData[] | []>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
-  //   const [cat, setCat] = useState<string>("")
-  const [data, setData] = useState<ProductData[] | []>([])
+  const [cat, setCat] = useState<string>("")
 
   useEffect(() => {
     const fetchData = async () => {
+      const endpoint = cat ? `${ROOT_ENDPOINT}/category/${cat}` : ROOT_ENDPOINT
       try {
         // load the data`
-        await fetch(ROOT_ENDPOINT)
+        await fetch(endpoint)
           .then(res => res.json())
           .then(resData => {
             const { data } = resData as ResponseData
-            setData(data.products)
+            setProducts(data.products)
           })
       } catch (error) {
-        setData([])
+        setProducts([])
         if (error instanceof Error) {
           setError(error.message)
         } else {
@@ -59,17 +59,10 @@ export const ProductDataProvider = ({ children }: { children: ReactNode }) => {
     }
 
     void fetchData()
-  }, [])
-
-  //   useEffect(() => {
-  //     const filteredData = products.filter(item => {
-  //       return (item.category = cat)
-  //     })
-  //     setData(filteredData)
-  //   }, [cat, products])
+  }, [cat])
 
   return (
-    <DataContext.Provider value={{ data, loading, error }}>
+    <DataContext.Provider value={{ products, loading, error, setCat }}>
       {children}
     </DataContext.Provider>
   )

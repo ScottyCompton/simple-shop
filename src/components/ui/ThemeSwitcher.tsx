@@ -60,8 +60,16 @@ const ThemeSwitcher = () => {
                 handleThemeChange(themeName as ThemeName)
               }}
             >
-              {getThemeIcon(themeName as ThemeName)}
-              {getThemeLabel(themeName as ThemeName)}
+              <span
+                style={
+                  themeName === currentTheme
+                    ? { color: "var(--text-secondary)" }
+                    : {}
+                }
+              >
+                {getThemeIcon(themeName as ThemeName)}
+                {getThemeLabel(themeName as ThemeName)}
+              </span>
             </button>
           ))}
         </div>
@@ -71,3 +79,9 @@ const ThemeSwitcher = () => {
 }
 
 export default ThemeSwitcher
+
+/*
+
+{themeName === currentTheme ?  'style={{ color: "var(--text-secondary)" }}' : undefined }
+
+*/

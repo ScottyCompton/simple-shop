@@ -1,27 +1,14 @@
 import { useData } from "@/context/DataContext"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
 const Sandbox = () => {
   const [selected, setSelected] = useState("")
-  const { data, loading, error } = useData()
-  const [products, setProducts] = useState(data)
-  // if (loading) {
-  //   return <div>Loading data...</div>
-  // }
-
-  // if (error) {
-  //   return <div>Error loading provider data</div>
-  // }
-
-  useEffect(() => {
-    setProducts(data)
-  }, [data])
+  const { products, loading, error, setCat } = useData()
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const val = e.target.value
-    const result = data.filter(item => item.category === val)
-    setProducts(result)
     setSelected(val)
+    setCat(val)
   }
 
   return (
@@ -41,7 +28,7 @@ const Sandbox = () => {
         {loading && <div>Loading data...</div>}
         {error && <div>Error loading data: {error}</div>}
         {products.map(product => (
-          <div>{product.name}</div>
+          <div key={product.id}>{product.name}</div>
         ))}
       </div>
     </>
