@@ -204,3 +204,9 @@ export type UserAuthApiTransformedResponse = {
   isValid: boolean
   user: UserAuthApiResponse
 }
+
+export type CardData = {
+  ccNumber: string
+  ccExpiry: string
+  ccCVV: string
+}

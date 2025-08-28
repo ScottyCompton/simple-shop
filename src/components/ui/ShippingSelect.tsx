@@ -54,7 +54,7 @@ const ShippingSelect: React.FC<ShippingSelectProps> = ({
         <Select.Group className="w-min-150">
           <Select.Label>Shipping Method</Select.Label>
           {shippingTypes?.map(option => (
-            <Select.Item key={option.value} value={option.value}>
+            <Select.Item key={option.id} value={option.id.toString()}>
               {option.label} - ${option.price}
             </Select.Item>
           ))}

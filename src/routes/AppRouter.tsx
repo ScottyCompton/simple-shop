@@ -7,6 +7,7 @@ import {
   Login,
   AuthCallback,
   Profile,
+  ThankYou,
 } from "../page/"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import ProtectedRoute from "./ProtectedRoute"
@@ -25,6 +26,7 @@ const AppRouter = () => {
           <Route path="/shop">
             <Route index element={<Shop />} />
             <Route path="page/:page" element={<Shop />} />
+            <Route path="thank-you" element={<ThankYou />} />
             <Route path=":category" element={<Shop />} />
             <Route path=":category/:page" element={<Shop />} />
             <Route path="product/:productId" element={<ProductDetails />} />

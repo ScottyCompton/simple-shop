@@ -27,6 +27,8 @@ export const cartSlice = createSlice({
     },
     clearCart: state => {
       state.items = []
+      state.category = ""
+      state.shippingTypeId = ""
     },
     setCartCategory: (state, action: PayloadAction<string>) => {
       state.category = action.payload
