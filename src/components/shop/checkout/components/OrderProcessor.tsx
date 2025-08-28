@@ -1,10 +1,14 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useAppSelector, useAppDispatch } from "@/app/hooks"
 import {
   cartShippingType,
   cartItems,
   clearCart,
+  setCartOrderCreationState,
+  cartOPOrderCreationState,
 } from "@/features/shop/cartSlice"
+import { CartOrderCreationState } from "@/types"
+
 import { selectUser } from "@/features/shop/usersSlice"
 import axios from "axios"
 
@@ -26,7 +30,9 @@ const OrderProcessor = ({ setIsOpen, paymentReference }: Props) => {
   const shippingTypeId = useAppSelector(cartShippingType)
   const orderProducts = useAppSelector(cartItems)
   const user = useAppSelector(selectUser)
+  const orderCreationState = useAppSelector(cartOPOrderCreationState)
   const dispatch = useAppDispatch()
+  const orderProcessed = useRef(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,8 +63,10 @@ const OrderProcessor = ({ setIsOpen, paymentReference }: Props) => {
             },
           )
           .then((response: Result) => {
+            orderProcessed.current = true
             setOrderNumber(response.data.orderNumber)
             dispatch(clearCart())
+            dispatch(setCartOrderCreationState(CartOrderCreationState.Created))
           })
       } catch (error: unknown) {
         if (error instanceof Error) {
@@ -66,19 +74,23 @@ const OrderProcessor = ({ setIsOpen, paymentReference }: Props) => {
         } else {
           setError(String(error))
         }
+        dispatch(setCartOrderCreationState(CartOrderCreationState.Failed))
       } finally {
         setLoading(false)
       }
     }
 
-    void fetchData()
-  }, [orderProducts, shippingTypeId, user?.id, paymentReference, dispatch])
+    if (!orderProcessed.current) {
+      void fetchData()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [orderCreationState])
 
-  if (loading) {
+  if (loading || orderCreationState === CartOrderCreationState.Creating) {
     return <div>Creating your order</div>
   }
 
-  if (error) {
+  if (error || orderCreationState === CartOrderCreationState.Failed) {
     return <div>Could not create your order! Error: {error}</div>
   }
 

@@ -1,10 +1,16 @@
 import type { CardData } from "@/types"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
+import { useAppDispatch, useAppSelector } from "@/app/hooks"
+import {
+  setCartPaymentState,
+  setCartOrderCreationState,
+  cartOPPaymentState,
+} from "@/features/shop/cartSlice"
+import { CartPaymentState, CartOrderCreationState } from "@/types"
 
 type Props = {
   ccData: CardData | null
   setIsOpen: (isOpen: boolean) => void
-  setProcessingOrder: (isProcessing: boolean) => void
   setPaymentReference: (reference: string | null) => void
 }
 
@@ -22,10 +28,10 @@ const generateRandomString = (length = 16) => {
 const PaymentProcessor = ({
   ccData,
   setIsOpen,
-  setProcessingOrder,
   setPaymentReference,
 }: Props) => {
-  const [paymentFailed, setPaymentFailed] = useState<boolean>(false)
+  const dispatch = useAppDispatch()
+  const paymentState = useAppSelector(cartOPPaymentState)
 
   useEffect(() => {
     console.log(ccData)
@@ -33,23 +39,26 @@ const PaymentProcessor = ({
       try {
         // Simulate payment processing
         await new Promise(resolve => setTimeout(resolve, 2000))
-        setProcessingOrder(true)
         setPaymentReference(generateRandomString(16))
+        dispatch(setCartPaymentState(CartPaymentState.Succeeded))
+        dispatch(setCartOrderCreationState(CartOrderCreationState.Creating))
       } catch (error) {
         console.error("Payment processing failed:", error)
-        setProcessingOrder(false)
+        dispatch(setCartPaymentState(CartPaymentState.Failed))
         setPaymentReference(null)
-        setPaymentFailed(true)
       }
     }
 
     void processPayment()
-  }, [ccData, setProcessingOrder, setPaymentReference])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div>
-      {!paymentFailed && <div>Processing Your Payment...</div>}
-      {paymentFailed && (
+      {paymentState == CartPaymentState.Processing && (
+        <div>Processing Your Payment...</div>
+      )}
+      {paymentState == CartPaymentState.Failed && (
         <div>
           Payment Failed. Please try again.{" "}
           <div

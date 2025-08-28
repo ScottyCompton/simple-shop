@@ -2,33 +2,73 @@ import CartSummary from "../cart/CartSummary"
 import CheckoutBillingShipping from "./CheckoutBillingShipping"
 import * as Accordion from "@radix-ui/react-accordion"
 import "@css/accordion.css"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Button, Flex } from "@radix-ui/themes"
 import CheckoutPayment from "./CheckoutPayment"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router"
-import { useAppSelector } from "@/app/hooks"
+import { useAppSelector, useAppDispatch } from "@/app/hooks"
 import { selectUser } from "@/features/shop/usersSlice"
-import { cartShippingType } from "@/features/shop/cartSlice"
+import {
+  cartShippingType,
+  cartOPOrderCreationState,
+  cartOPPaymentState,
+} from "@/features/shop/cartSlice"
 import ProcessOrderDialog from "./components/ProcessOrderDialog"
 import type { CardData } from "@/types"
+import { CartOrderCreationState, CartPaymentState } from "@/types"
+import { resetCartOPState } from "@/features/shop/cartSlice"
 
 const CheckoutForm = () => {
   const shippingTypeId = useAppSelector(cartShippingType)
+  const orderCreationState = useAppSelector(cartOPOrderCreationState)
+  const cartOrderPaymentState = useAppSelector(cartOPPaymentState)
+  const [showDialog, setShowDialog] = useState<boolean>(false)
+
   const [activeAccordion, setActiveAccordion] = useState<string>("checkout-1")
+  const user = useAppSelector(selectUser)
   const [hasShippingType, setHasShippingType] = useState<boolean>(
     shippingTypeId != "",
   )
-  const [showDialog, setShowDialog] = useState<boolean>(false)
   const [cardData, setCardData] = useState<CardData | null>(null)
-  const navigate = useNavigate()
-  const user = useAppSelector(selectUser)
   const hasBillingAndShipping = user?.hasBilling && user.hasShipping
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const isAlreadyMounted = useRef(false)
 
   useEffect(() => {
     setHasShippingType(shippingTypeId !== "")
   }, [shippingTypeId])
+
+  useEffect(() => {
+    if (
+      orderCreationState === CartOrderCreationState.Created &&
+      cartOrderPaymentState === CartPaymentState.Succeeded &&
+      !showDialog
+    ) {
+      // clear the credit card data
+      setCardData(null)
+      // reset the cart order processing state
+      dispatch(resetCartOPState())
+      // say thank you :-)
+      void navigate("/shop/thank-you")
+    }
+  }, [
+    dispatch,
+    navigate,
+    orderCreationState,
+    cartOrderPaymentState,
+    showDialog,
+  ])
+
+  useEffect(() => {
+    if (!isAlreadyMounted.current) {
+      dispatch(resetCartOPState())
+      isAlreadyMounted.current = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleAccordionToggle = (value: string) => {
     switch (value) {
@@ -48,14 +88,8 @@ const CheckoutForm = () => {
   }
 
   const handleSubmitPayment = () => {
+    dispatch(resetCartOPState())
     setShowDialog(true)
-  }
-
-  const handleComplete = (orderSuccess: boolean) => {
-    setShowDialog(false)
-    if (orderSuccess) {
-      void navigate("/shop/thank-you")
-    }
   }
 
   return (
@@ -241,12 +275,13 @@ const CheckoutForm = () => {
           </Accordion.Item>
         </Accordion.Root>
       </div>
-      <ProcessOrderDialog
-        ccData={cardData}
-        isOpen={showDialog}
-        setIsOpen={setShowDialog}
-        onComplete={handleComplete}
-      />
+      {showDialog && (
+        <ProcessOrderDialog
+          ccData={cardData}
+          isOpen={showDialog}
+          setIsOpen={setShowDialog}
+        />
+      )}
     </>
   )
 }

@@ -1,11 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit"
 import type { PayloadAction } from "@reduxjs/toolkit"
 import type { CartItem } from "@/types"
+import { CartOrderCreationState, CartPaymentState } from "@/types"
 
 const initialState = {
   items: [] as CartItem[],
   category: "",
   shippingTypeId: "",
+  cartOPState: {
+    cartOPPaymentState: CartPaymentState.Idle,
+    cartOPOrderCreationState: CartOrderCreationState.Idle,
+  },
 }
 
 export const cartSlice = createSlice({
@@ -36,12 +41,31 @@ export const cartSlice = createSlice({
     setCartShippingType: (state, action: PayloadAction<string>) => {
       state.shippingTypeId = action.payload
     },
+    setCartPaymentState: (state, action: PayloadAction<CartPaymentState>) => {
+      state.cartOPState.cartOPPaymentState = action.payload
+    },
+    setCartOrderCreationState: (
+      state,
+      action: PayloadAction<CartOrderCreationState>,
+    ) => {
+      state.cartOPState.cartOPOrderCreationState = action.payload
+    },
+    resetCartOPState: state => {
+      state.cartOPState = {
+        cartOPPaymentState: CartPaymentState.Idle,
+        cartOPOrderCreationState: CartOrderCreationState.Idle,
+      }
+    },
   },
   selectors: {
     cartItems: state => state.items,
     cartCount: state => state.items.length,
     cartCategory: state => state.category,
     cartShippingType: state => state.shippingTypeId,
+    cartOPOrderCreationState: state =>
+      state.cartOPState.cartOPOrderCreationState,
+    cartOPPaymentState: state => state.cartOPState.cartOPPaymentState,
+    cartOPState: state => state.cartOPState,
   },
 })
 
@@ -51,8 +75,18 @@ export const {
   clearCart,
   setCartCategory,
   setCartShippingType,
+  setCartOrderCreationState,
+  setCartPaymentState,
+  resetCartOPState,
 } = cartSlice.actions
-export const { cartItems, cartCount, cartCategory, cartShippingType } =
-  cartSlice.selectors
+export const {
+  cartItems,
+  cartCount,
+  cartCategory,
+  cartShippingType,
+  cartOPOrderCreationState,
+  cartOPPaymentState,
+  cartOPState,
+} = cartSlice.selectors
 export const selectCartItems = (state: { cart: { items: CartItem[] } }) =>
   state.cart.items

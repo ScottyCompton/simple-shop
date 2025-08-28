@@ -210,3 +210,22 @@ export type CardData = {
   ccExpiry: string
   ccCVV: string
 }
+
+export enum CartPaymentState {
+  Idle,
+  Processing,
+  Succeeded,
+  Failed,
+}
+
+export enum CartOrderCreationState {
+  Idle,
+  Creating,
+  Created,
+  Failed,
+}
+
+export type CartOrderProcessingState = {
+  cartPaymentState: CartPaymentState
+  cartOrderCreationState: CartOrderCreationState
+}

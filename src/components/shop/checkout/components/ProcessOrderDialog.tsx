@@ -3,41 +3,38 @@ import { useEffect, useState } from "react"
 import type { CardData } from "@/types"
 import PaymentProcessor from "./PaymentProcessor"
 import OrderProcessor from "./OrderProcessor"
+import { useAppSelector, useAppDispatch } from "@/app/hooks"
+import {
+  cartOPOrderCreationState,
+  cartOPPaymentState,
+  setCartPaymentState,
+} from "@/features/shop/cartSlice"
+import { CartPaymentState, CartOrderCreationState } from "@/types"
+
 type ProcessOrderDialogProps = {
   ccData: CardData | null
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
-  onComplete: (orderSuccess: boolean) => void
 }
 
 const ProcessOrderDialog = ({
   ccData,
   isOpen,
   setIsOpen,
-  onComplete,
 }: ProcessOrderDialogProps) => {
-  //   const shippingTypeId = useAppSelector(cartShippingType)
-  const [processingPayment, setProcessingPayment] = useState<boolean>(false)
-  const [processingOrder, setProcessingOrder] = useState<boolean>(false)
   const [paymentReference, setPaymentReference] = useState<string | null>(null)
+  const cartOrderCreationState = useAppSelector(cartOPOrderCreationState)
+  const cartOrderPaymentState = useAppSelector(cartOPPaymentState)
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     if (isOpen) {
-      setProcessingPayment(true)
+      dispatch(setCartPaymentState(CartPaymentState.Processing))
     }
-  }, [ccData, isOpen])
-
-  useEffect(() => {
-    if (!paymentReference && !processingPayment) {
-      setProcessingOrder(processingOrder)
-    }
-  }, [paymentReference, processingOrder, processingPayment])
+  }, [ccData, isOpen, dispatch])
 
   const handleOpenChange = () => {
-    setProcessingPayment(false)
-    setProcessingOrder(false)
     setIsOpen(false)
-    onComplete(paymentReference !== null)
   }
 
   return (
@@ -49,22 +46,20 @@ const ProcessOrderDialog = ({
             Completing Your Order...
           </Dialog.Title>
           <div className="dialog-content-container">
-            {processingPayment && (
+            {cartOrderCreationState === CartOrderCreationState.Idle && (
               <PaymentProcessor
                 ccData={ccData}
                 setIsOpen={setIsOpen}
-                setProcessingOrder={setProcessingOrder}
                 setPaymentReference={setPaymentReference}
               />
             )}
-            {processingOrder && paymentReference && (
-              <div>
+            {paymentReference &&
+              cartOrderPaymentState === CartPaymentState.Succeeded && (
                 <OrderProcessor
                   setIsOpen={setIsOpen}
                   paymentReference={paymentReference}
                 />
-              </div>
-            )}
+              )}
           </div>
 
           <Dialog.Close asChild>
