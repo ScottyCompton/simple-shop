@@ -1,33 +1,50 @@
 import { Flex } from "@radix-ui/themes"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
+import { useEffect } from "react"
+import type { CardData } from "@/types"
 
-type CCFormData = {
-  ccNumber: string
-  ccExpiry: string
-  ccCVV: string
+type Props = {
+  onChange: (cardData: CardData) => void
 }
 
-const CheckoutPayment = () => {
+const CheckoutPayment: React.FC<Props> = ({ onChange }: Props) => {
+  const defaultValues = {
+    ccNumber: "",
+    ccExpiry: "",
+    ccCVV: "",
+  }
+
   const {
     register,
-    handleSubmit,
     formState: { errors },
-  } = useForm<CCFormData>()
+    control,
+  } = useForm<CardData>({
+    defaultValues,
+  })
 
-  // Handle form submission
-  const submitHandler = (data: CCFormData) => {
-    console.log(data)
-    // In a real app, you would save this data or pass it to a parent component
-  }
+  // Watch all form fields
+  const formValues = useWatch({
+    control,
+  })
 
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    void handleSubmit(submitHandler)()
-    // do the submit thing here
-  }
+  // Call onChange prop when form values change
+  useEffect(() => {
+    // Only call onChange when we have actual values
+    if (
+      formValues.ccNumber !== undefined ||
+      formValues.ccExpiry !== undefined ||
+      formValues.ccCVV !== undefined
+    ) {
+      onChange({
+        ccNumber: formValues.ccNumber ?? "",
+        ccExpiry: formValues.ccExpiry ?? "",
+        ccCVV: formValues.ccCVV ?? "",
+      })
+    }
+  }, [formValues, onChange])
 
   return (
-    <form onSubmit={onSubmit} className="space-y-6">
+    <form className="space-y-6">
       <Flex gap="3" direction="row" className="w-full">
         <div className="space-y-2">
           <label

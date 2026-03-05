@@ -2,7 +2,7 @@ import CartSummary from "../cart/CartSummary"
 import CheckoutBillingShipping from "./CheckoutBillingShipping"
 import * as Accordion from "@radix-ui/react-accordion"
 import "@css/accordion.css"
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Button, Flex } from "@radix-ui/themes"
 import CheckoutPayment from "./CheckoutPayment"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -10,17 +10,44 @@ import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router"
 import { useAppSelector } from "@/app/hooks"
 import { selectUser } from "@/features/shop/usersSlice"
+import { cartShippingType } from "@/features/shop/cartSlice"
+import ProcessOrderDialog from "./components/ProcessOrderDialog"
+import type { CardData } from "@/types"
 
 const CheckoutForm = () => {
+  const shippingTypeId = useAppSelector(cartShippingType)
+  const [showDialog, setShowDialog] = useState<boolean>(false)
+
   const [activeAccordion, setActiveAccordion] = useState<string>("checkout-1")
-  const navigate = useNavigate()
   const user = useAppSelector(selectUser)
+  const [hasShippingType, setHasShippingType] = useState<boolean>(
+    shippingTypeId != "",
+  )
+  const [cardData, setCardData] = useState<CardData | null>(null)
   const hasBillingAndShipping = user?.hasBilling && user.hasShipping
+  const navigate = useNavigate()
+  const isAlreadyMounted = useRef(false)
+
+  useEffect(() => {
+    setHasShippingType(shippingTypeId !== "")
+  }, [shippingTypeId])
+
+  useEffect(() => {
+    if (!isAlreadyMounted.current) {
+      isAlreadyMounted.current = true
+    }
+  }, [])
 
   const handleAccordionToggle = (value: string) => {
-    if (!hasBillingAndShipping && value === "checkout-3") {
-      return
+    switch (value) {
+      case "checkout-2":
+        if (!hasShippingType) return
+        break
+      case "checkout-3":
+        if (!hasBillingAndShipping || !hasShippingType) return
+        break
     }
+
     setActiveAccordion(value)
   }
 
@@ -28,186 +55,208 @@ const CheckoutForm = () => {
     void navigate(-1)
   }
 
+  const handleSubmitPayment = () => {
+    setShowDialog(true)
+  }
+
+  const doClose = (navTo?: string) => {
+    setShowDialog(false)
+    if (navTo) {
+      void navigate(navTo)
+    }
+  }
+
   return (
-    <div className="w-full px-4 sm:px-6 md:px-8">
-      <h1
-        className="text-2xl font-bold mb-6"
-        style={{ color: "var(--color-primary)" }}
-      >
-        Checkout
-      </h1>
-      <Accordion.Root
-        type="single"
-        value={activeAccordion}
-        onValueChange={handleAccordionToggle}
-        collapsible
-        defaultValue="checkout-1"
-        className="AccordionRoot"
-      >
-        <Accordion.Item className="AccordionItem" value="checkout-1">
-          <Accordion.Header className="AccordionHeader">
-            <Accordion.Trigger>
-              <h2
-                className="text-lg font-bold flex items-center py-5 px-3 cursor-pointer"
-                style={{ color: "var(--color-text)" }}
-              >
-                <span
-                  className="flex items-center justify-center w-7 h-7 rounded-full text-white text-sm font-medium mr-3"
-                  style={{ backgroundColor: "var(--color-primary)" }}
+    <>
+      <div className="w-full px-4 sm:px-6 md:px-8">
+        <h1
+          className="text-2xl font-bold mb-6"
+          style={{ color: "var(--color-primary)" }}
+        >
+          Checkout
+        </h1>
+        <Accordion.Root
+          type="single"
+          value={activeAccordion}
+          onValueChange={handleAccordionToggle}
+          collapsible
+          defaultValue="checkout-1"
+          className="AccordionRoot"
+        >
+          <Accordion.Item className="AccordionItem" value="checkout-1">
+            <Accordion.Header className="AccordionHeader">
+              <Accordion.Trigger>
+                <h2
+                  className="text-lg font-bold flex items-center py-5 px-3 cursor-pointer"
+                  style={{ color: "var(--color-text)" }}
                 >
-                  1
-                </span>
-                Shopping Cart Contents
-              </h2>
-            </Accordion.Trigger>
-          </Accordion.Header>
-          <Accordion.Content className="AccordionContent">
-            <div className="p-4">
-              <CartSummary isCheckout={true} />
-            </div>
-            <div className="px-4 w-full">
-              <Flex className="justify-between w-full mt-4">
-                <div className="grow">
-                  <Button size="1" onClick={handleBackClick}>
-                    <span className="cursor-pointer">
-                      <FontAwesomeIcon icon={faArrowLeft} size="sm" /> Continue
-                      Shopping
-                    </span>
-                  </Button>
-                </div>
-                <div className="grow flex justify-end">
-                  <Button
-                    size="1"
-                    onClick={() => {
-                      handleAccordionToggle("checkout-2")
-                    }}
+                  <span
+                    className="flex items-center justify-center w-7 h-7 rounded-full text-white text-sm font-medium mr-3"
+                    style={{ backgroundColor: "var(--color-primary)" }}
                   >
-                    <span className="cursor-pointer">
-                      2. Billing And Shipping{" "}
-                      <FontAwesomeIcon icon={faArrowRight} size="sm" />
-                    </span>
-                  </Button>
-                </div>
-              </Flex>
-            </div>
-          </Accordion.Content>
-        </Accordion.Item>
+                    1
+                  </span>
+                  Shopping Cart Contents
+                </h2>
+              </Accordion.Trigger>
+            </Accordion.Header>
+            <Accordion.Content className="AccordionContent">
+              <div className="p-4">
+                <CartSummary isCheckout={true} />
+              </div>
+              <div className="px-4 w-full">
+                <Flex className="justify-between w-full mt-4">
+                  <div className="grow">
+                    <Button size="1" onClick={handleBackClick}>
+                      <span className="cursor-pointer">
+                        <FontAwesomeIcon icon={faArrowLeft} size="sm" />{" "}
+                        Continue Shopping
+                      </span>
+                    </Button>
+                  </div>
+                  <div className="grow flex justify-end">
+                    <Button
+                      size="1"
+                      disabled={!hasShippingType}
+                      onClick={() => {
+                        handleAccordionToggle("checkout-2")
+                      }}
+                    >
+                      <span className="cursor-pointer">
+                        2. Billing And Shipping{" "}
+                        <FontAwesomeIcon icon={faArrowRight} size="sm" />
+                      </span>
+                    </Button>
+                  </div>
+                </Flex>
+              </div>
+            </Accordion.Content>
+          </Accordion.Item>
 
-        <Accordion.Item className="AccordionItem" value="checkout-2">
-          <Accordion.Header className="AccordionHeader">
-            <Accordion.Trigger>
-              <h2
-                className="text-lg font-bold flex items-center py-5 px-3 cursor-pointer"
-                style={{ color: "var(--color-text)" }}
-              >
-                <span
-                  className="flex items-center justify-center w-7 h-7 rounded-full text-white text-sm font-medium mr-3"
-                  style={{ backgroundColor: "var(--color-primary)" }}
+          <Accordion.Item className="AccordionItem" value="checkout-2">
+            <Accordion.Header className="AccordionHeader">
+              <Accordion.Trigger>
+                <h2
+                  className="text-lg font-bold flex items-center py-5 px-3 cursor-pointer"
+                  style={{ color: "var(--color-text)" }}
                 >
-                  2
-                </span>
-                Billing and Shipping Information
-              </h2>
-            </Accordion.Trigger>
-          </Accordion.Header>
-          <Accordion.Content className="AccordionContent">
-            <div className="p-4">
-              <CheckoutBillingShipping />
-            </div>
-            <div className="px-4 w-full">
-              <Flex className="justify-between w-full mt-4">
-                <div className="grow">
-                  <Button
-                    size="1"
-                    onClick={() => {
-                      handleAccordionToggle("checkout-1")
-                    }}
+                  <span
+                    className="flex items-center justify-center w-7 h-7 rounded-full text-white text-sm font-medium mr-3"
+                    style={{ backgroundColor: "var(--color-primary)" }}
                   >
-                    <span className="cursor-pointer">
-                      <FontAwesomeIcon icon={faArrowLeft} size="sm" /> 1. Cart
-                      Summary
-                    </span>
-                  </Button>
-                </div>
-                <div className="grow flex justify-end">
-                  <Button
-                    size="1"
-                    disabled={!hasBillingAndShipping}
-                    onClick={() => {
-                      handleAccordionToggle("checkout-3")
-                    }}
-                  >
-                    <span className="cursor-pointer">
-                      3. Payment Information{" "}
-                      <FontAwesomeIcon icon={faArrowRight} size="sm" />
-                    </span>
-                  </Button>
-                </div>
-              </Flex>
-            </div>
-          </Accordion.Content>
-        </Accordion.Item>
+                    2
+                  </span>
+                  Billing and Shipping Information
+                </h2>
+              </Accordion.Trigger>
+            </Accordion.Header>
+            <Accordion.Content className="AccordionContent">
+              <div className="p-4">
+                <CheckoutBillingShipping />
+              </div>
+              <div className="px-4 w-full">
+                <Flex className="justify-between w-full mt-4">
+                  <div className="grow">
+                    <Button
+                      size="1"
+                      onClick={() => {
+                        handleAccordionToggle("checkout-1")
+                      }}
+                    >
+                      <span className="cursor-pointer">
+                        <FontAwesomeIcon icon={faArrowLeft} size="sm" /> 1. Cart
+                        Summary
+                      </span>
+                    </Button>
+                  </div>
+                  <div className="grow flex justify-end">
+                    <Button
+                      size="1"
+                      disabled={!hasBillingAndShipping}
+                      onClick={() => {
+                        handleAccordionToggle("checkout-3")
+                      }}
+                    >
+                      <span className="cursor-pointer">
+                        3. Payment Information{" "}
+                        <FontAwesomeIcon icon={faArrowRight} size="sm" />
+                      </span>
+                    </Button>
+                  </div>
+                </Flex>
+              </div>
+            </Accordion.Content>
+          </Accordion.Item>
 
-        <Accordion.Item className="AccordionItem" value="checkout-3">
-          <Accordion.Header className="AccordionHeader">
-            <Accordion.Trigger>
-              <h2
-                className="text-lg font-bold flex items-center py-5 px-3 cursor-pointer"
-                style={{ color: "var(--color-text)" }}
-              >
-                <span
-                  className="flex items-center justify-center w-7 h-7 rounded-full text-white text-sm font-medium mr-3"
-                  style={{ backgroundColor: "var(--color-primary)" }}
+          <Accordion.Item className="AccordionItem" value="checkout-3">
+            <Accordion.Header className="AccordionHeader">
+              <Accordion.Trigger>
+                <h2
+                  className="text-lg font-bold flex items-center py-5 px-3 cursor-pointer"
+                  style={{ color: "var(--color-text)" }}
                 >
-                  3
-                </span>
-                Payment Information
-              </h2>
-            </Accordion.Trigger>
-          </Accordion.Header>
-          <Accordion.Content className="AccordionContent">
-            <div className="p-4">
-              <CheckoutPayment />
-            </div>
-            <div className="px-4 w-full">
-              <Flex className="justify-between w-full mt-4">
-                <div className="grow">
-                  <Button
-                    size="1"
-                    onClick={() => {
-                      handleAccordionToggle("checkout-2")
-                    }}
+                  <span
+                    className="flex items-center justify-center w-7 h-7 rounded-full text-white text-sm font-medium mr-3"
+                    style={{ backgroundColor: "var(--color-primary)" }}
                   >
-                    <span className="cursor-pointer">
-                      <FontAwesomeIcon icon={faArrowLeft} size="sm" /> 2.
-                      Shipping & Billing
-                    </span>
-                  </Button>
-                </div>
-                <div className="grow flex justify-end">
-                  <button
-                    type="submit"
-                    className="cursor-pointer text-white font-bold py-3 px-6 rounded-md shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2"
-                    style={{
-                      backgroundColor: "var(--color-primary)",
-                      boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                    }}
-                    onMouseOver={e => {
-                      e.currentTarget.style.filter = "brightness(110%)"
-                    }}
-                    onMouseOut={e => {
-                      e.currentTarget.style.filter = "brightness(100%)"
-                    }}
-                  >
-                    Complete Purchase
-                  </button>
-                </div>
-              </Flex>
-            </div>
-          </Accordion.Content>
-        </Accordion.Item>
-      </Accordion.Root>
-    </div>
+                    3
+                  </span>
+                  Payment Information
+                </h2>
+              </Accordion.Trigger>
+            </Accordion.Header>
+            <Accordion.Content className="AccordionContent">
+              <div className="p-4">
+                <CheckoutPayment onChange={setCardData} />
+              </div>
+              <div className="px-4 w-full">
+                <Flex className="justify-between w-full mt-4">
+                  <div className="grow">
+                    <Button
+                      size="1"
+                      onClick={() => {
+                        handleAccordionToggle("checkout-2")
+                      }}
+                    >
+                      <span className="cursor-pointer">
+                        <FontAwesomeIcon icon={faArrowLeft} size="sm" /> 2.
+                        Shipping & Billing
+                      </span>
+                    </Button>
+                  </div>
+                  <div className="grow flex justify-end">
+                    <button
+                      type="submit"
+                      onClick={handleSubmitPayment}
+                      className="cursor-pointer text-white font-bold py-3 px-6 rounded-md shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2"
+                      style={{
+                        backgroundColor: "var(--color-primary)",
+                        boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                      }}
+                      onMouseOver={e => {
+                        e.currentTarget.style.filter = "brightness(110%)"
+                      }}
+                      onMouseOut={e => {
+                        e.currentTarget.style.filter = "brightness(100%)"
+                      }}
+                    >
+                      Complete Purchase
+                    </button>
+                  </div>
+                </Flex>
+              </div>
+            </Accordion.Content>
+          </Accordion.Item>
+        </Accordion.Root>
+      </div>
+      {showDialog && (
+        <ProcessOrderDialog
+          ccData={cardData}
+          isOpen={showDialog}
+          doClose={doClose}
+        />
+      )}
+    </>
   )
 }
 

@@ -1,6 +1,11 @@
 import { useState } from "react"
 import { Select } from "@radix-ui/themes"
 import { useAxiosGet } from "@/hooks/useAxiosGet"
+import { useAppSelector, useAppDispatch } from "@/app/hooks"
+import {
+  cartShippingType,
+  setCartShippingType,
+} from "@/features/shop/cartSlice"
 
 type ShippingSelectProps = {
   onSelectShippingType: (value: number) => void
@@ -9,7 +14,10 @@ type ShippingSelectProps = {
 const ShippingSelect: React.FC<ShippingSelectProps> = ({
   onSelectShippingType,
 }: ShippingSelectProps) => {
-  const [selectedShippingType, setSelectedShippingType] = useState("standard")
+  const dispatch = useAppDispatch()
+  const [selectedShippingType, setSelectedShippingType] = useState(
+    useAppSelector(cartShippingType),
+  )
   const {
     data: shippingTypes,
     isError,
@@ -26,6 +34,7 @@ const ShippingSelect: React.FC<ShippingSelectProps> = ({
 
   const handleSelectShippingType = (value: string) => {
     setSelectedShippingType(value)
+    dispatch(setCartShippingType(value))
     if (shippingTypes) {
       const price = shippingTypes.find(type => type.value === value)?.price ?? 0
       onSelectShippingType(price)
@@ -45,7 +54,7 @@ const ShippingSelect: React.FC<ShippingSelectProps> = ({
         <Select.Group className="w-min-150">
           <Select.Label>Shipping Method</Select.Label>
           {shippingTypes?.map(option => (
-            <Select.Item key={option.value} value={option.value}>
+            <Select.Item key={option.id} value={option.id.toString()}>
               {option.label} - ${option.price}
             </Select.Item>
           ))}

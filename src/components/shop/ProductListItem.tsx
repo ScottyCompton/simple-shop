@@ -17,7 +17,7 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
       className="p-3 rounded shadow-sm mb-2 bg-slate-50 flex-col sm:flex-row"
     >
       <div className="flex-none mb-2 sm:mb-0">
-        <Link to={`/shop/products/${product.id.toString()}`}>
+        <Link to={`/shop/product/${product.id.toString()}`}>
           <img
             src={product.imgUrl}
             className="border border-gray-300 rounded-sm w-full h-auto sm:w-24 sm:h-24 object-cover"
@@ -27,7 +27,7 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
       </div>
       <div className="text-base text-left flex-grow">
         <span className="text-xl font-bold block mb-1">
-          <Link to={`/shop/products/${product.id.toString()}`}>
+          <Link to={`/shop/product/${product.id.toString()}`}>
             {product.mfgName} {product.name}
           </Link>
         </span>
