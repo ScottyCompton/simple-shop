@@ -1,16 +1,9 @@
 import type { CardData } from "@/types"
-import { useEffect } from "react"
-import { useAppDispatch, useAppSelector } from "@/app/hooks"
-import {
-  setCartPaymentState,
-  setCartOrderCreationState,
-  cartOPPaymentState,
-} from "@/features/shop/cartSlice"
-import { CartPaymentState, CartOrderCreationState } from "@/types"
+import { useEffect, useState } from "react"
 
 type Props = {
   ccData: CardData | null
-  setIsOpen: (isOpen: boolean) => void
+  doClose: () => void
   setPaymentReference: (reference: string | null) => void
 }
 
@@ -25,13 +18,8 @@ const generateRandomString = (length = 16) => {
   return result
 }
 
-const PaymentProcessor = ({
-  ccData,
-  setIsOpen,
-  setPaymentReference,
-}: Props) => {
-  const dispatch = useAppDispatch()
-  const paymentState = useAppSelector(cartOPPaymentState)
+const PaymentProcessor = ({ ccData, doClose, setPaymentReference }: Props) => {
+  const [paymentFailed, setPaymentFailed] = useState<boolean>(false)
 
   useEffect(() => {
     console.log(ccData)
@@ -40,11 +28,9 @@ const PaymentProcessor = ({
         // Simulate payment processing
         await new Promise(resolve => setTimeout(resolve, 2000))
         setPaymentReference(generateRandomString(16))
-        dispatch(setCartPaymentState(CartPaymentState.Succeeded))
-        dispatch(setCartOrderCreationState(CartOrderCreationState.Creating))
       } catch (error) {
         console.error("Payment processing failed:", error)
-        dispatch(setCartPaymentState(CartPaymentState.Failed))
+        setPaymentFailed(true)
         setPaymentReference(null)
       }
     }
@@ -55,15 +41,13 @@ const PaymentProcessor = ({
 
   return (
     <div>
-      {paymentState == CartPaymentState.Processing && (
-        <div>Processing Your Payment...</div>
-      )}
-      {paymentState == CartPaymentState.Failed && (
+      {!paymentFailed && <div>Processing Your Payment...</div>}
+      {paymentFailed && (
         <div>
           Payment Failed. Please try again.{" "}
           <div
             onClick={() => {
-              setIsOpen(false)
+              doClose()
             }}
           >
             Close

@@ -1,40 +1,24 @@
 import { Dialog } from "radix-ui"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import type { CardData } from "@/types"
 import PaymentProcessor from "./PaymentProcessor"
 import OrderProcessor from "./OrderProcessor"
-import { useAppSelector, useAppDispatch } from "@/app/hooks"
-import {
-  cartOPOrderCreationState,
-  cartOPPaymentState,
-  setCartPaymentState,
-} from "@/features/shop/cartSlice"
-import { CartPaymentState, CartOrderCreationState } from "@/types"
 
 type ProcessOrderDialogProps = {
   ccData: CardData | null
   isOpen: boolean
-  setIsOpen: (isOpen: boolean) => void
+  doClose: (navTo?: string) => void
 }
 
 const ProcessOrderDialog = ({
   ccData,
   isOpen,
-  setIsOpen,
+  doClose,
 }: ProcessOrderDialogProps) => {
   const [paymentReference, setPaymentReference] = useState<string | null>(null)
-  const cartOrderCreationState = useAppSelector(cartOPOrderCreationState)
-  const cartOrderPaymentState = useAppSelector(cartOPPaymentState)
-  const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    if (isOpen) {
-      dispatch(setCartPaymentState(CartPaymentState.Processing))
-    }
-  }, [ccData, isOpen, dispatch])
 
   const handleOpenChange = () => {
-    setIsOpen(false)
+    doClose()
   }
 
   return (
@@ -46,20 +30,19 @@ const ProcessOrderDialog = ({
             Completing Your Order...
           </Dialog.Title>
           <div className="dialog-content-container">
-            {cartOrderCreationState === CartOrderCreationState.Idle && (
+            {!paymentReference && (
               <PaymentProcessor
                 ccData={ccData}
-                setIsOpen={setIsOpen}
+                doClose={doClose}
                 setPaymentReference={setPaymentReference}
               />
             )}
-            {paymentReference &&
-              cartOrderPaymentState === CartPaymentState.Succeeded && (
-                <OrderProcessor
-                  setIsOpen={setIsOpen}
-                  paymentReference={paymentReference}
-                />
-              )}
+            {paymentReference && (
+              <OrderProcessor
+                doClose={doClose}
+                paymentReference={paymentReference}
+              />
+            )}
           </div>
 
           <Dialog.Close asChild>

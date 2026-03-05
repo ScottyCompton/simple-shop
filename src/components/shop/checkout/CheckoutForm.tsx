@@ -8,22 +8,14 @@ import CheckoutPayment from "./CheckoutPayment"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router"
-import { useAppSelector, useAppDispatch } from "@/app/hooks"
+import { useAppSelector } from "@/app/hooks"
 import { selectUser } from "@/features/shop/usersSlice"
-import {
-  cartShippingType,
-  cartOPOrderCreationState,
-  cartOPPaymentState,
-} from "@/features/shop/cartSlice"
+import { cartShippingType } from "@/features/shop/cartSlice"
 import ProcessOrderDialog from "./components/ProcessOrderDialog"
 import type { CardData } from "@/types"
-import { CartOrderCreationState, CartPaymentState } from "@/types"
-import { resetCartOPState } from "@/features/shop/cartSlice"
 
 const CheckoutForm = () => {
   const shippingTypeId = useAppSelector(cartShippingType)
-  const orderCreationState = useAppSelector(cartOPOrderCreationState)
-  const cartOrderPaymentState = useAppSelector(cartOPPaymentState)
   const [showDialog, setShowDialog] = useState<boolean>(false)
 
   const [activeAccordion, setActiveAccordion] = useState<string>("checkout-1")
@@ -34,7 +26,6 @@ const CheckoutForm = () => {
   const [cardData, setCardData] = useState<CardData | null>(null)
   const hasBillingAndShipping = user?.hasBilling && user.hasShipping
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
   const isAlreadyMounted = useRef(false)
 
   useEffect(() => {
@@ -42,32 +33,9 @@ const CheckoutForm = () => {
   }, [shippingTypeId])
 
   useEffect(() => {
-    if (
-      orderCreationState === CartOrderCreationState.Created &&
-      cartOrderPaymentState === CartPaymentState.Succeeded &&
-      !showDialog
-    ) {
-      // clear the credit card data
-      setCardData(null)
-      // reset the cart order processing state
-      dispatch(resetCartOPState())
-      // say thank you :-)
-      void navigate("/shop/thank-you")
-    }
-  }, [
-    dispatch,
-    navigate,
-    orderCreationState,
-    cartOrderPaymentState,
-    showDialog,
-  ])
-
-  useEffect(() => {
     if (!isAlreadyMounted.current) {
-      dispatch(resetCartOPState())
       isAlreadyMounted.current = true
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleAccordionToggle = (value: string) => {
@@ -88,8 +56,14 @@ const CheckoutForm = () => {
   }
 
   const handleSubmitPayment = () => {
-    dispatch(resetCartOPState())
     setShowDialog(true)
+  }
+
+  const doClose = (navTo?: string) => {
+    setShowDialog(false)
+    if (navTo) {
+      void navigate(navTo)
+    }
   }
 
   return (
@@ -279,7 +253,7 @@ const CheckoutForm = () => {
         <ProcessOrderDialog
           ccData={cardData}
           isOpen={showDialog}
-          setIsOpen={setShowDialog}
+          doClose={doClose}
         />
       )}
     </>

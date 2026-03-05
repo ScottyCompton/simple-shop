@@ -1,0 +1,34 @@
+.emptable {
+  width: 100%;
+  overflow-x: scroll;
+  max-height: 70vh;
+}
+
+.emptable .tablehead > td {
+  background-color: #000;
+  color: #fff;
+  min-width: 100px;
+  text-wrap: nowrap;
+  text-transform: capitalize;
+  cursor: pointer;
+  padding: 0 20px 0 20px;
+}
+
+.emptable .tablerec > td {
+  padding: 10px;
+  text-wrap: nowrap;
+}
+
+span.inverted {
+  display: inline-block;
+  transform: rotate(180deg);
+}
+
+.empdatarow {
+  width: 100%;
+}
+
+.empdatarow > div {
+  display: inline-block;
+  width: 25%;
+}
