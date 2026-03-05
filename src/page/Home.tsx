@@ -1,7 +1,17 @@
 import { Flex } from "@radix-ui/themes"
 import HomeCats from "@/components/shop/HomeCats"
+import { useAppDispatch } from "@/app/hooks"
+import { setCartCategory } from "@/features/shop/cartSlice"
+import { useEffect } from "react"
 
 const Home = () => {
+  const dispatch = useAppDispatch()
+
+  // Clear the selected category when navigating to home page
+  useEffect(() => {
+    dispatch(setCartCategory(""))
+  }, [dispatch])
+
   return (
     <>
       <Flex className="w-full flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
