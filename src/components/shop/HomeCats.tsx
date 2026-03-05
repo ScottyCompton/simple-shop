@@ -36,7 +36,7 @@ const HomeCats = () => {
     const categoryName =
       "alt" in e.currentTarget
         ? e.currentTarget.alt
-        : e.currentTarget.textContent || ""
+        : (e.currentTarget.dataset.categoryName ?? "")
 
     // Navigate to the shop page with the selected category
     dispatch(setCartCategory(categoryName))
@@ -57,9 +57,10 @@ const HomeCats = () => {
           </div>
           <span
             onClick={handleClick}
+            data-category-name={category.name}
             className="cursor-pointer mt-2 text-center text-sm sm:text-base font-medium hover:text-blue-600 transition-colors"
           >
-            {category.name}
+            {category.name} ({category.productCount})
           </span>
         </div>
       ))}
