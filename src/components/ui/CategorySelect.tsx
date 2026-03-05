@@ -1,13 +1,20 @@
 import { useGetProductCategoriesQuery } from "@/features/shop/productsApiSlice"
 import { Select } from "@radix-ui/themes"
-import { cartCategory } from "@/features/shop/cartSlice"
-import { useAppSelector } from "@/app/hooks"
-import { useState } from "react"
+import { cartCategory, setCartCategory } from "@/features/shop/cartSlice"
+import { useAppSelector, useAppDispatch } from "@/app/hooks"
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
 const CategorySelect = () => {
-  const [category, setCategory] = useState<string>(useAppSelector(cartCategory))
+  const reduxCategory = useAppSelector(cartCategory)
+  const [category, setCategory] = useState<string>(reduxCategory)
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
+  // Update local state when Redux category changes
+  useEffect(() => {
+    setCategory(reduxCategory)
+  }, [reduxCategory])
 
   const { data, isError, isLoading, isUninitialized } =
     useGetProductCategoriesQuery(undefined)
@@ -30,14 +37,22 @@ const CategorySelect = () => {
   const { categories } = data
 
   const onValueChange = (value: string) => {
-    const newCat = value.replace("-1", "")
-    setCategory(newCat)
-    void navigate(`/shop/${newCat.toLowerCase()}`)
+    if (value === "-1") {
+      dispatch(setCartCategory(""))
+      void navigate("/shop")
+    } else {
+      dispatch(setCartCategory(value))
+      void navigate(`/shop/${value}`)
+    }
   }
 
   return (
     <div className="min-w-[120px] sm:min-w-[150px]">
-      <Select.Root size="1" value={category} onValueChange={onValueChange}>
+      <Select.Root
+        size="1"
+        value={category || "-1"}
+        onValueChange={onValueChange}
+      >
         <Select.Trigger placeholder="Select Category" className="w-full" />
         <Select.Content>
           <Select.Group>
@@ -45,9 +60,9 @@ const CategorySelect = () => {
             <Select.Item value="-1" key="-1">
               All Items
             </Select.Item>
-            {categories.map(category => (
-              <Select.Item value={category} key={category}>
-                {category}
+            {categories.map(cat => (
+              <Select.Item value={cat.toLowerCase()} key={cat}>
+                {cat}
               </Select.Item>
             ))}
           </Select.Group>

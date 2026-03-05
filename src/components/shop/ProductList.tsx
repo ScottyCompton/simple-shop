@@ -1,11 +1,12 @@
 import { useGetProductsByCategoryQuery } from "@/features/shop/productsApiSlice"
 import ProductListItem from "./ProductListItem"
-// import { useAppSelector } from "@/app/hooks"
-// import { cartCategory } from "@/features/shop/cartSlice"
+import { useAppDispatch } from "@/app/hooks"
+import { setCartCategory } from "@/features/shop/cartSlice"
 import { Link, useParams } from "react-router-dom"
+import { useEffect } from "react"
 
 const ProductList = () => {
-  // const category = useAppSelector(cartCategory)
+  const dispatch = useAppDispatch()
   // get parameters from the url params
   const params = useParams()
   const { category, page } = params
@@ -16,6 +17,11 @@ const ProductList = () => {
 
   // If we're on the /shop/page/:page route, we should use empty category
   const effectiveCategory = isPageRoute ? "" : (category ?? "")
+
+  // Sync Redux store with URL category parameter
+  useEffect(() => {
+    dispatch(setCartCategory(effectiveCategory))
+  }, [effectiveCategory, dispatch])
 
   const { isError, data, isLoading, isUninitialized } =
     useGetProductsByCategoryQuery({
@@ -45,7 +51,14 @@ const ProductList = () => {
           <Link to="/shop">All Products</Link>
           {category && (
             <>
-              &gt; <Link to={`/shop/${category}`}>{category}</Link>
+              {" "}
+              &gt;{" "}
+              <Link to={`/shop/${category}`}>
+                {category
+                  .split(" ")
+                  .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                  .join(" ")}
+              </Link>
             </>
           )}
         </h1>

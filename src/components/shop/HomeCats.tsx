@@ -40,7 +40,7 @@ const HomeCats = () => {
 
     // Navigate to the shop page with the selected category
     dispatch(setCartCategory(categoryName))
-    void navigate("/shop")
+    void navigate(`/shop/${categoryName.toLowerCase()}`)
   }
 
   return (
