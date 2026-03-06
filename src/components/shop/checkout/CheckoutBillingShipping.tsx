@@ -22,8 +22,7 @@ type UserBillShipData = {
 }
 
 const CheckoutBillingShipping = () => {
-  const lastUpdateState =
-    useAppSelector(selectUserLastUpdate) ?? Date.now().toString()
+  const lastUpdateState = useAppSelector(selectUserLastUpdate) ?? ""
   const [lastUpdate, setLastUpdate] = useState<string | Date>(lastUpdateState)
 
   useEffect(() => {

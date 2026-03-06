@@ -5,7 +5,7 @@ import { cartItems } from "../../../features/shop/cartSlice"
 import { Link } from "react-router-dom"
 import { Flex } from "@radix-ui/themes"
 
-type CartSummaryItemProps = {
+export type CartSummaryItemProps = {
   cartItemId: number
   isCheckout?: boolean
 }

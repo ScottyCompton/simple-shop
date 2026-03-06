@@ -7,7 +7,7 @@ import {
   setCartShippingType,
 } from "@/features/shop/cartSlice"
 
-type ShippingSelectProps = {
+export type ShippingSelectProps = {
   onSelectShippingType: (value: number) => void
 }
 

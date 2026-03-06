@@ -27,7 +27,10 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
       </div>
       <div className="text-base text-left flex-grow">
         <span className="text-xl font-bold block mb-1">
-          <Link to={`/shop/product/${product.id.toString()}`}>
+          <Link
+            to={`/shop/product/${product.id.toString()}`}
+            data-testid={`product-item-${product.id.toString()}`}
+          >
             {product.mfgName} {product.name}
           </Link>
         </span>

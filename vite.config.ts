@@ -35,6 +35,21 @@ export default defineConfig({
 
     globals: true,
     watch: false,
-    setupFiles: ["./src/setupTests.ts"],
+    setupFiles: ["./src/setupTests.ts", "./src/__tests__/integration/setup.ts"],
+    coverage: {
+      include: ["src/**/*.{ts,tsx}"],
+      exclude: [
+        "src/__tests__/**",
+        "src/setupTests.ts",
+        "node_modules/**",
+        "src/App.tsx",
+        "src/main.tsx",
+        "**/index.tsx",
+        "**/ThemeTest.tsx",
+        "src/utils/**",
+        "src/app/createAppSlice.ts",
+      ],
+      reporter: ["text", "json", "html"],
+    },
   },
 })
