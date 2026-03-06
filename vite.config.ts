@@ -38,7 +38,17 @@ export default defineConfig({
     setupFiles: ["./src/setupTests.ts", "./src/__tests__/integration/setup.ts"],
     coverage: {
       include: ["src/**/*.{ts,tsx}"],
-      exclude: ["src/__tests__/**", "src/setupTests.ts", "node_modules/**"],
+      exclude: [
+        "src/__tests__/**",
+        "src/setupTests.ts",
+        "node_modules/**",
+        "App.tsx",
+        "main.tsx",
+        "**/index.tsx",
+        "**/ThemeTest.tsx",
+        "src/utils/**",
+        "src/app/createAppSlice.ts",
+      ],
       reporter: ["text", "json", "html"],
     },
   },

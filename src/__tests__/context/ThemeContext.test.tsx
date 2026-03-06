@@ -27,7 +27,7 @@ Object.defineProperty(document, "documentElement", {
 })
 
 // Mock logCSSVariables
-vi.mock("../../../utils/debugTheme", () => ({
+vi.mock("@/utils/debugTheme", () => ({
   logCSSVariables: vi.fn(),
 }))
 
@@ -38,7 +38,11 @@ const TestComponent = () => {
     <div>
       <span data-testid="current-theme">{currentTheme}</span>
       <span data-testid="theme-appearance">{themeConfig.appearance}</span>
-      <button onClick={() => setTheme("dark-blue" as ThemeName)}>
+      <button
+        onClick={() => {
+          setTheme("blue-dark" as ThemeName)
+        }}
+      >
         Set Dark Blue
       </button>
     </div>
@@ -63,7 +67,7 @@ describe("ThemeContext", () => {
   })
 
   it("loads saved theme from localStorage", () => {
-    localStorageMock.getItem.mockReturnValue("dark-blue")
+    localStorageMock.getItem.mockReturnValue("blue-dark")
 
     render(
       <ThemeProvider>
@@ -71,7 +75,7 @@ describe("ThemeContext", () => {
       </ThemeProvider>,
     )
 
-    expect(screen.getByTestId("current-theme")).toHaveTextContent("dark-blue")
+    expect(screen.getByTestId("current-theme")).toHaveTextContent("blue-dark")
   })
 
   it("ignores invalid saved theme", () => {
@@ -99,11 +103,11 @@ describe("ThemeContext", () => {
     await waitFor(() => {
       expect(localStorageMock.setItem).toHaveBeenCalledWith(
         "theme",
-        "dark-blue",
+        "blue-dark",
       )
     })
 
-    expect(screen.getByTestId("current-theme")).toHaveTextContent("dark-blue")
+    expect(screen.getByTestId("current-theme")).toHaveTextContent("blue-dark")
   })
 
   it("applies theme class to document element", () => {

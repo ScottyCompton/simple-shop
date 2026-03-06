@@ -7,14 +7,14 @@ import { useAxiosGet } from "@/hooks/useAxiosGet"
 vi.mock("axios")
 const mockedAxios = vi.mocked(axios)
 
-// Mock environment variable
-vi.mock("import.meta.env", () => ({
-  VITE_API_URL: "https://api.example.com",
-}))
-
 describe("useAxiosGet", () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    vi.stubEnv("VITE_API_URL", "https://api.example.com")
+  })
+
+  afterEach(() => {
+    vi.unstubAllEnvs()
   })
 
   it("fetches data successfully", async () => {
@@ -50,6 +50,7 @@ describe("useAxiosGet", () => {
   it("handles axios error", async () => {
     const mockError = new Error("Network Error")
     mockedAxios.get.mockRejectedValueOnce(mockError)
+    mockedAxios.isAxiosError.mockReturnValueOnce(true)
 
     const { result } = renderHook(() => useAxiosGet("products"))
 

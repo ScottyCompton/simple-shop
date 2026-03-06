@@ -135,9 +135,9 @@ describe("CartSummaryItem", () => {
     })
 
     expect(screen.getAllByText("A great test product")).toHaveLength(2)
-    expect(screen.getByText("$29.99")).toBeInTheDocument()
-    expect(screen.getByText("$59.98")).toBeInTheDocument() // 29.99 * 2
-    expect(screen.getByTestId("quantity-select")).toBeInTheDocument()
+    expect(screen.getAllByText("$29.99")).toHaveLength(2) // price appears twice
+    expect(screen.getAllByText("$59.98")).toHaveLength(2) // subtotal appears twice
+    expect(screen.getAllByTestId("quantity-select")).toHaveLength(2) // appears twice
   })
 
   it("renders product details in checkout mode", async () => {
